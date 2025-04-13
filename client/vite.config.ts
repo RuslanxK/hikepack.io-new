@@ -5,6 +5,10 @@ import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
   plugins: [react()],
+
+  build: {
+    outDir: 'dist', // default for Vite, but make sure it's here
+  },
  
   css: {
     postcss: {
