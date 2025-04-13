@@ -57,7 +57,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     onSuccess: (data) => {
       setUser(data.user)
       Cookies.set("token", data.token, {secure: true, sameSite: "strict", expires: 7, });    
-      window.location.href = '/';
+      // window.location.href = '/';
     },
 
     
