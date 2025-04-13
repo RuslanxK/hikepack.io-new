@@ -79,7 +79,6 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     },
     onSuccess: (data) => {
       Cookies.set("token", data.token, { secure: true, sameSite: "strict", expires: 7 });
-      console.log(data)
       setUser(data.user);
       // window.location.href = "/";
     },
@@ -92,6 +91,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 
   const googleLogin = useGoogleLogin({
     onSuccess: (response) => {
+      console.log(response.access_token)
       googleLoginMutation.mutate(response.access_token);
      
     },
