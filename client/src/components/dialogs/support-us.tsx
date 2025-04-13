@@ -9,11 +9,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
 import { Input } from "../ui/input";
-import {
-  PayPalScriptProvider,
-  PayPalButtons,
-  usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
+// import {
+//   PayPalScriptProvider,
+//   PayPalButtons,
+//   usePayPalScriptReducer,
+// } from "@paypal/react-paypal-js";
 
 interface SupportUsDialogProps {
   isOpen: boolean;
