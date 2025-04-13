@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const axios = require("axios");
 const crypto = require("crypto");
-const { generateJwtToken, setTokenCookie, findOrCreateUser } = require("../utils/authUtils");
+const { generateJwtToken, findOrCreateUser } = require("../utils/authUtils");
 const { generateRegisterHTML, sendEmail, generateForgotPasswordHTML } = require("../emails/email");
 const uploadToS3 = require("../utils/uploadToS3");
 const deleteFromS3 = require("../utils/deleteFromS3");
@@ -71,7 +71,6 @@ exports.googleLogin = async (googleAccessToken, res) => {
 
   const user = await findOrCreateUser(profile);
   const jwtToken = generateJwtToken(user);
-  setTokenCookie(res, jwtToken);
 
   return { token: jwtToken, user };
 };

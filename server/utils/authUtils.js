@@ -56,6 +56,5 @@ const findOrCreateUser = async (profile) => {
 
 module.exports = {
   generateJwtToken,
-  setTokenCookie,
   findOrCreateUser,
 };
