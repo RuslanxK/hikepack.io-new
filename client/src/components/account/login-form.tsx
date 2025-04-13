@@ -91,6 +91,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 
   const googleLogin = useGoogleLogin({
     onSuccess: (response) => {
+      console.log(response.access_token)
       googleLoginMutation.mutate(response.access_token);
      
     },
