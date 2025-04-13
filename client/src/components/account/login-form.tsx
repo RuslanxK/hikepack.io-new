@@ -56,7 +56,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     mutationFn: (loginData) => apiService.login<LoginResponse>(loginData),
     onSuccess: (data) => {
       setUser(data.user)
-      Cookies.set("token", data.token, {expires: 7 });    
+      Cookies.set("token", data.token, {secure: true, sameSite: "strict", expires: 7, });    
       window.location.href = '/';
     },
 
@@ -78,7 +78,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       return await apiService.post<GoogleLoginResponse, { token: string }>("/user/google-login", { token: accessToken });
     },
     onSuccess: (data) => {
-      Cookies.set("token", data.token, { expires: 7 });
+      Cookies.set("token", data.token, { secure: true, sameSite: "strict", expires: 7 });
       setUser(data.user);
       window.location.href = "/";
     },
