@@ -10,9 +10,9 @@ const generateRandomPassword = async () => {
 
 const generateJwtToken = (user) => {
   return jwt.sign(
-    { id: user._id, email: user.email }, // payload
-    process.env.JWT_SECRET,              // secret key
-    { expiresIn: "7d" }                  // optional: token expiration
+    user.toObject(),
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
   );
 };
 
