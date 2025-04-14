@@ -35,7 +35,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Fragment>
         <div className="flex h-screen w-full flex-col md:flex-row relative">
           {/* Mobile Header */}
-          <MobileHeader />
+          
+          {!shouldHideSidebar && <MobileHeader />}
+
 
           {/* Sidebar (handled internally for both mobile Sheet and desktop sidebar) */}
           {!shouldHideSidebar && <AppSidebar />}
