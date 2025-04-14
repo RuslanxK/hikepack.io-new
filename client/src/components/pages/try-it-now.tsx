@@ -133,7 +133,7 @@ const handleDragEnd = (event: DragEndEvent) => {
   
 
   return (
-    <div className="w-full px-4 sm:px-6 py-12 max-w-6xl mx-auto">
+    <div className="w-full md:px-4 px-1 sm:px-6 py-12 max-w-6xl mx-auto">
     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-2">
       Try the Demo <span className="text-primary">Now</span>
     </h2>
