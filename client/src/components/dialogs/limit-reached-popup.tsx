@@ -25,7 +25,7 @@ const LimitReachedPopup: React.FC<LimitReachedPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="text-left">
           <DialogTitle>Limit Reached</DialogTitle>
           <DialogDescription>
           To continue using this feature for free, please log in or create an account.

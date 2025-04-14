@@ -27,7 +27,7 @@ const { countryNameArr } = useCountries();
 
   return (
     <div className="flex flex-wrap gap-y-6 gap-x-4">
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
         <Label>Country</Label>
         <Select
           onValueChange={(value) => updateFormData({ country: value })}
@@ -43,7 +43,7 @@ const { countryNameArr } = useCountries();
        </SelectContent>
         </Select>
       </div> 
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
   <Label>Birthdate</Label>
   <Popover>
     <PopoverTrigger asChild>
@@ -72,7 +72,7 @@ const { countryNameArr } = useCountries();
   </Popover>
 </div>
 
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
         <Label>Gender</Label>
         <Select
           onValueChange={(value) => updateFormData({ gender: value })}
@@ -88,7 +88,7 @@ const { countryNameArr } = useCountries();
           </SelectContent>
         </Select>
       </div>
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
         <Label>Distance Unit</Label>
         <Select
           onValueChange={(value) => updateFormData({ distanceUnit: value })}
@@ -103,7 +103,7 @@ const { countryNameArr } = useCountries();
           </SelectContent>
         </Select>
       </div>
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
         <Label>Weight Unit</Label>
         <Select
           onValueChange={(value) => updateFormData({ weightUnit: value })}
@@ -118,7 +118,7 @@ const { countryNameArr } = useCountries();
           </SelectContent>
         </Select>
       </div>
-      <div className="w-[47.9%] space-y-1">
+      <div className="w-full md:w-[47.9%] space-y-1">
         <Label>Activity Level</Label>
         <Select
           onValueChange={(value) => updateFormData({ activityLevel: value })}

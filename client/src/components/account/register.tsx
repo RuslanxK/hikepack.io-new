@@ -111,11 +111,10 @@ const RegisterPage = () => {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box">
-      <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
-        <div className="absolute top-10">
-          <img src="/logo-black.png" width={85} alt="Logo" />
-        </div>
-
+      <div className="flex flex-col h-full p-6 md:p-10">
+  <div className="mb-6">
+    <img src="/logo-black.png" width={85} alt="Logo" />
+  </div>
         <div className="flex flex-col justify-center">
           <div className="text-center mb-10">
             <h1 className="text-2xl font-bold mb-1">{steps[currentStep].name}</h1>
