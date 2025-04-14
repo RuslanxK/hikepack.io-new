@@ -115,7 +115,7 @@ const fileToBase64 = (file: File): Promise<string> =>
     <Fragment>
       <TableRow key={item._id} className="group relative hover:bg-gray-50 dark:hover:bg-dark w-full">
         <TableCell className="pl-5 flex items-center">
-          <Checkbox className="absolute top-4" onCheckedChange={handleCheckboxChange} />
+          <Checkbox className="md:absolute top-4" onCheckedChange={handleCheckboxChange} />
         </TableCell>
 
         <TableCell className="p-1">
@@ -124,7 +124,7 @@ const fileToBase64 = (file: File): Promise<string> =>
             name="name"
             value={formData.name}
             placeholder="Name"
-            className="h-8 text-xs bg-white rounded-none dark:bg-dark-item"
+            className="w-52 md:w-full h-8 text-xs bg-white rounded-none dark:bg-dark-item"
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -136,7 +136,7 @@ const fileToBase64 = (file: File): Promise<string> =>
             name="description"
             value={formData.description}
             placeholder="Description"
-            className="h-8 text-xs bg-white rounded-none dark:bg-dark-item"
+            className="w-80 md:w-full h-8 text-xs bg-white rounded-none dark:bg-dark-item"
             onChange={handleChange}
             onBlur={handleBlur}
           />
