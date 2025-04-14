@@ -133,49 +133,52 @@ const handleDragEnd = (event: DragEndEvent) => {
   
 
   return (
-    <div className='container mx-auto px-4 py-12 w-5/6'>
-      <h2 className='text-3xl font-bold text-center mb-2'>
-       Try the Demo <span className='text-primary'>Now</span>
-      </h2>
-      <p className='text-center text-gray-600 mb-6'>
-        Adventure Awaits. Pack Smart. Hike Confidently.
-      </p>
+    <div className="w-full px-4 sm:px-6 py-12 max-w-6xl mx-auto">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-2">
+      Try the Demo <span className="text-primary">Now</span>
+    </h2>
+    <p className="text-center text-gray-600 mb-6 text-sm sm:text-base">
+      Adventure Awaits. Pack Smart. Hike Confidently.
+    </p>
 
-      <div className='flex flex-col gap-6'>
-        <div className="w-full flex justify-center">
-          <ChartWithTable categories={categories} goal={"15"} />
-        </div>
-
-        <Button
-          onClick={addCategory}
-          className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box"
-          variant="outline"
-        >
-          <FaPlus className="text-xl dark:text-white" />
-        </Button>
-
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
-        <SortableContext items={sortedCategories.map(cat => cat._id)} strategy={verticalListSortingStrategy}>
-  {sortedCategories.map(cat => (
-    <LocalDataTable
-      key={cat._id}
-      data={cat}
-      onUpdateCategory={updateCategory}
-      onDeleteCategory={deleteCategory}
-    />
-  ))}
-</SortableContext>
-</DndContext>
+    <div className="flex flex-col gap-6">
+      {/* Chart */}
+      <div className="w-full flex justify-center">
+        <ChartWithTable categories={categories} goal={"15"} />
       </div>
 
-      <LimitReachedPopup
-  isOpen={showCategoryLimitPopup}
-  onClose={() => setShowCategoryLimitPopup(false)}
-  onLogin={() => redirect("/login")}
-  onRegister={() => redirect("/register")}
-/>
+      {/* Add Category Button */}
+      <Button
+        onClick={addCategory}
+        className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box"
+        variant="outline"
+      >
+        <FaPlus className="text-xl dark:text-white" />
+      </Button>
 
+      {/* Drag & Drop Categories */}
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
+        <SortableContext items={sortedCategories.map((cat) => cat._id)} strategy={verticalListSortingStrategy}>
+          {sortedCategories.map((cat) => (
+            <LocalDataTable
+              key={cat._id}
+              data={cat}
+              onUpdateCategory={updateCategory}
+              onDeleteCategory={deleteCategory}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
     </div>
+
+    {/* Popup */}
+    <LimitReachedPopup
+      isOpen={showCategoryLimitPopup}
+      onClose={() => setShowCategoryLimitPopup(false)}
+      onLogin={() => redirect("/login")}
+      onRegister={() => redirect("/register")}
+    />
+  </div>
   );
 };
 
