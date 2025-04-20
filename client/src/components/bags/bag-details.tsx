@@ -17,6 +17,12 @@ import EditBagSheet from "../sheets/edit-bag";
 import LoadingPage from "../loader";
 import { fetchBagById, createCategory, fetchCategoriesByBagId } from "@/lib/api";
 import { useIsSharedView } from "@/lib/isSharedView";
+import { useJoyride } from '../../hooks/useJoyride';
+import JoyrideWrapper from '../guide/JoyrideWrapper';
+import { getSteps } from '../guide/steps';
+import { bagStepsConfig } from '../guide/stepsConfig';
+
+
 
 
 const BagDetails: React.FC = () => {
@@ -35,6 +41,7 @@ const BagDetails: React.FC = () => {
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
   const sensors = useSensors(mouseSensor, touchSensor);
+  const isJoyrideRun = useJoyride('step-3');
 
   const { data: bag, isLoading, isError, error} = useQuery({ queryKey: ["bag", id, isSharedView],
     queryFn: () => fetchBagById(id!, !isSharedView),
@@ -218,11 +225,13 @@ const BagDetails: React.FC = () => {
 </div>
 <div className="flex h-5 items-center space-x-4 text-sm">
 
+  
+
 {!isSharedView && (
           <Fragment>
             <Button
               variant="ghost"
-              onClick={() => window.open(`http://localhost:5173/share/${bag?._id}`, "_blank")}
+              onClick={() => window.open(`${import.meta.env.VITE_REACT_APP_CLIENT}/share/${bag?._id}`, "_blank")}
               size="icon"
               className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark">
               <Share2 className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -249,7 +258,7 @@ const BagDetails: React.FC = () => {
     {!isSharedView && (
       <Button
         onClick={handleAddCategory}
-        className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box"
+        className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box add-category-button"
         variant="outline">
         <Plus className="text-xl dark:text-white"/>
       </Button>
@@ -264,6 +273,9 @@ const BagDetails: React.FC = () => {
     </DndContext>
 
   <EditBagSheet isOpen={isSheetEditOpen} onClose={handleCloseEditTripSheet} data={bag} onSubmit={handleEditBagSubmit} errorMessage={editBagError || ""} isUpdating={isUpdating} />
+
+  {isJoyrideRun && <JoyrideWrapper steps={getSteps(bagStepsConfig)} run={true} />}
+
 </Fragment>
 
    

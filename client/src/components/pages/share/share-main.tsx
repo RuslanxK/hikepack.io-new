@@ -30,7 +30,7 @@ const ShareMain = () => {
       <div className="flex flex-col mb-5 bg-transparent dark:bg-transparent">
         <div className="flex items-center bg-white rounded-lg gap-4 p-6">
           <img
-            src={data?.user.imageUrl || "/default-avatar.png"}
+            src={data?.user.imageUrl || "/default-profile-placeholder.png"}
             alt={data?.user.username}
             className="w-16 h-16 rounded-full object-cover"
           />

@@ -8,7 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ListRestart, ChevronRight, ChevronLeft, SquarePlus } from "lucide-react";
+import { ListRestart, ChevronRight, ChevronLeft } from "lucide-react";
 import { apiService } from "@/lib/apiService";
 import { Item } from "@/types/item";
 import { Category } from "@/types/category";
@@ -89,17 +89,17 @@ export function RecentItemsBar() {
   
 
   return (
-    <div className={`relative  ${isOpen ? "w-72" : "w-6"} h-screen border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
+    <div className={`relative  ${isOpen ? "w-72" : "w-6"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute -left-5 top-4 z-10 w-5 h-8 bg-secondary dark:bg-secondary  dark:border-dark-box rounded-r-md flex items-center justify-center"
+        className="fixed z-10 w-5 h-8 bg-secondary dark:bg-secondary  dark:border-dark-box rounded-r-md flex items-center justify-center"
       >
         {isOpen ? <ChevronRight className="w-4 h-4 text-white" /> : <ChevronLeft className="w-4 h-4 text-white" />}
       </button>
 
       {isOpen && (
-        <SidebarContent className="h-full flex flex-col">
-          <SidebarGroup>
+        <SidebarContent className="h-full flex flex-col fixed">
+          <SidebarGroup className="pl-6">
             <SidebarGroupLabel className="text-white">Recent Items</SidebarGroupLabel>
             <SidebarGroupContent className="overflow-y-auto flex-1">
               <SidebarMenu>
@@ -112,6 +112,7 @@ export function RecentItemsBar() {
                     <SidebarMenuItem
                       key={item._id}
                       className="flex items-center justify-between pr-2"
+                      onClick={() => handleOpenModal(item)}
                     >
                       <SidebarMenuButton className="hover:bg-transparent active:bg-transparent hover:text-white active:text-white focus:outline-none" asChild>
                         <a href="#" className="flex items-center gap-2 text-white">
@@ -122,12 +123,6 @@ export function RecentItemsBar() {
                         </a>
                       </SidebarMenuButton>
 
-                      <button
-                        className="p-1 rounded-md focus:outline-white"
-                        onClick={() => handleOpenModal(item)}
-                      >
-                        <SquarePlus className="w-4 h-4 text-white hover:text-green-300" />
-                      </button>
                     </SidebarMenuItem>
                   ))
                 )}
@@ -142,7 +137,7 @@ export function RecentItemsBar() {
       <DialogContent className="max-w-lg rounded-xl bg-white dark:bg-dark p-6 shadow-xl border border-gray-200 dark:border-gray-700">
   <DialogHeader>
     <DialogTitle className="text-lg font-bold text-gray-800 dark:text-white">
-      Add Item to Categories
+      Add "{selectedItem?.name}" to Categories
     </DialogTitle>
     <DialogDescription className="text-sm text-gray-500 dark:text-gray-400">
     {categories.length === 0 ? "No categories found. Please create a category first." : "Choose one or more categories below to assign the item." }

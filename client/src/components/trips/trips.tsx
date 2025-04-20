@@ -18,6 +18,11 @@ import { useToast } from "@/hooks/use-toast"
 import { fetchTrips } from '@/lib/api';
 import LastBagStatus from '../home/latest-bag';
 import { TripResponse } from '@/types/trip';
+import { useJoyride } from '../../hooks/useJoyride';
+import JoyrideWrapper from '../../components/guide/JoyrideWrapper';
+import { homeStepsConfig } from '../guide/stepsConfig';
+import { getSteps } from '../guide/steps';
+
 
 const TripPage: React.FC = () => {
 
@@ -33,6 +38,9 @@ const TripPage: React.FC = () => {
   const { tripSearchTerm, setTripSearchTerm } = useSearch();
   const { user } = useUser();
   const { toast } = useToast()
+
+  const shouldRunGuide = useJoyride('home-guide');
+
 
   const handleDeleteClick = useCallback((trip: TripItem) => {
     setSelectedTrip(trip);
@@ -197,7 +205,7 @@ const TripPage: React.FC = () => {
           </div>
       </div>
       <Grid>
-        <AddButton onClick={() => setIsSheetOpen(true)} />
+        <AddButton onClick={() => setIsSheetOpen(true)} className="add-trip-button" />
         {paginatedTrips?.length ? (
           paginatedTrips.map((trip) => (
          <Trip key={trip._id} data={trip} onDelete={() => handleDeleteClick(trip)} duplicate={() => handleDuplicate(trip)}  />
@@ -218,6 +226,11 @@ const TripPage: React.FC = () => {
     
       <AddTripSheet isOpen={isSheetOpen} onClose={handleSheetClose} onSubmit={handleAddTripSubmit} isLoading={isAdding} isError={errorCreatingMessage || ''}  />
       <DeleteAlert isOpen={showDeleteAlert} description={`Are you sure you want to delete "${selectedTrip?.name}"? This action cannot be undone.`} onConfirm={confirmDelete} onCancel={cancelDelete} isDeleting={isDeleting} />
+
+      {shouldRunGuide && (
+        <JoyrideWrapper steps={getSteps(homeStepsConfig)} run={true} />
+      )}
+      
     </Fragment>
   );
 };

@@ -21,6 +21,10 @@ import { useSearch } from '@/context/search-context';
 import { useToast } from "@/hooks/use-toast"
 import LoadingPage from '../loader';
 import { fetchBagsByTripId, fetchTripById } from '@/lib/api';
+import { useJoyride } from '../../hooks/useJoyride';
+import JoyrideWrapper from '../guide/JoyrideWrapper';
+import { getSteps } from '../guide/steps';
+import { tripStepsConfig } from '../guide/stepsConfig';
 
 
 const TripDetails: React.FC = () => {
@@ -40,6 +44,8 @@ const TripDetails: React.FC = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
   const { bagSearchTerm, setBagSearchTerm } = useSearch();
+  const isJoyrideRun = useJoyride('step-2');
+
   
   const { data: trip, isLoading: isTripLoading, isError: isTripError } = useQuery({
     queryKey: ['trip', id],
@@ -320,7 +326,7 @@ const TripDetails: React.FC = () => {
 
       </div>
       <Grid>
-        <AddButton onClick={() => setIsSheetOpen(true)} />
+        <AddButton onClick={() => setIsSheetOpen(true)} className='add-bag-button' />
         {paginatedBags?.length ? (
           paginatedBags?.map((bag) => <Bag key={bag._id} data={bag} duplicate={() => handleDuplicate(bag)} onDelete={() => handleDeleteClick(bag)} />)
         ) : (
@@ -333,6 +339,8 @@ const TripDetails: React.FC = () => {
       <AddBagSheet isOpen={isSheetOpen} onClose={handleCloseAddBagSheet} onSubmit={handleAddBagSubmit} errorMessage={addBagError || ''} isAdding={isAdding} />
       <EditTripSheet isOpen={isSheetEditOpen} onClose={handleCloseEditTripSheet} data={trip} onSubmit={handleEditTripSubmit} errorMessage={editTripError || ""} isUpdating={isUpdating} />
       <DeleteAlert isOpen={showDeleteAlert} description={`Are you sure you want to delete "${selectedBag?.name}"? This action cannot be undone.`} onConfirm={confirmDelete} onCancel={cancelDelete} isDeleting={isDeleting} />
+
+      {isJoyrideRun && <JoyrideWrapper steps={getSteps(tripStepsConfig)} run={true} />}
 
     </Fragment>
   );

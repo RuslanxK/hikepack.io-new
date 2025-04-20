@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <Fragment>
-        <div className="flex h-screen w-full flex-col md:flex-row relative">
+        <div className="flex  w-full flex-col md:flex-row relative">
           {/* Mobile Header */}
           
           {!shouldHideSidebar && <MobileHeader />}
