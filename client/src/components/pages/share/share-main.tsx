@@ -26,7 +26,7 @@ const ShareMain = () => {
 
   return (
     <Container>
-    <div className="w-4/5 m-auto">
+    <div className="w-full lg:w-4/5 m-auto">
       <div className="flex flex-col mb-5 bg-transparent dark:bg-transparent">
         <div className="flex items-center bg-white rounded-lg gap-4 p-6">
           <img

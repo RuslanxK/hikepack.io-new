@@ -1,8 +1,15 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { CommunityBag } from "@/types/community";
 import { useNavigate } from "react-router-dom";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useSearch } from "@/context/search-context";
@@ -13,37 +20,38 @@ interface CommunityTableProps {
 
 export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
   const { bagSearchTerm, setBagSearchTerm } = useSearch();
-
   const navigate = useNavigate();
 
-  const filteredData = data.filter((bag) =>
-    bag.bagName.toLowerCase().includes(bagSearchTerm.toLowerCase()) ||
-    bag.ownerName.toLowerCase().includes(bagSearchTerm.toLowerCase())
+  const filteredData = data.filter(
+    (bag) =>
+      bag.bagName.toLowerCase().includes(bagSearchTerm.toLowerCase()) ||
+      bag.ownerName.toLowerCase().includes(bagSearchTerm.toLowerCase())
   );
 
   return (
     <div className="space-y-5">
-      <div className="relative">
+      <div className="relative w-full">
         <Input
           placeholder="Search"
           type="search"
           value={bagSearchTerm}
           onChange={(e) => setBagSearchTerm(e.target.value)}
-          className="pl-10"
+          className="pl-10 w-full"
         />
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
       </div>
 
-      <ScrollArea className="max-h-screen overflow-auto w-full rounded-md border p-4">
-        <Table>
+      {/* Responsive table container */}
+      <div className="overflow-x-auto w-full rounded-md border dark:border-gray-700">
+        <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">Picture & Name</TableHead>
-              <TableHead>Bag Name</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Categories</TableHead>
-              <TableHead>Items</TableHead>
-              <TableHead>Likes</TableHead>
+              <TableHead className="min-w-[200px]">Picture & Name</TableHead>
+              <TableHead className="min-w-[150px]">Bag Name</TableHead>
+              <TableHead className="min-w-[200px]">Description</TableHead>
+              <TableHead className="min-w-[100px]">Categories</TableHead>
+              <TableHead className="min-w-[100px]">Items</TableHead>
+              <TableHead className="min-w-[100px]">Likes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -54,16 +62,24 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
                   onClick={() => navigate(`/share/${bag.bagId}`)}
                   className="cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-box"
                 >
-                  <TableCell className="flex items-center gap-4">
+                  <TableCell className="flex items-center gap-4 whitespace-nowrap">
                     <img
-                      src={bag.ownerImageUrl || "/default-profile-placeholder.png"}
+                      src={
+                        bag.ownerImageUrl || "/default-profile-placeholder.png"
+                      }
                       alt={bag.ownerName}
                       className="w-9 h-9 rounded-full object-cover"
                     />
-                    <span>{bag.ownerName}</span>
+                    <span className="truncate max-w-[100px]">
+                      {bag.ownerName}
+                    </span>
                   </TableCell>
-                  <TableCell>{bag.bagName}</TableCell>
-                  <TableCell>{bag.bagDescription}</TableCell>
+                  <TableCell className="whitespace-nowrap truncate">
+                    {bag.bagName}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap truncate">
+                    {bag.bagDescription}
+                  </TableCell>
                   <TableCell>{bag.categoriesCount}</TableCell>
                   <TableCell>{bag.itemsCount}</TableCell>
                   <TableCell>{bag.likes}</TableCell>
@@ -83,7 +99,7 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
             </TableRow>
           </TableFooter>
         </Table>
-      </ScrollArea>
+      </div>
     </div>
   );
 };

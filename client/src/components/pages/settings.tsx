@@ -148,150 +148,165 @@ const Settings: React.FC = () => {
             </Button>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-5 dark:bg-dark rounded-lg">
-            <div className="flex flex-col rounded-lg p-5 border">
-              <div className="m-auto">
-                <img
-                  src={formData.imageUrl || "./default-profile-placeholder.png"}
-                  alt="Profile Preview"
-                  className="w-28 h-28 object-cover rounded-full border border-gray-300"
-                />
-              </div>
-              <div>
-                <Label htmlFor="profile-pic">Profile Picture</Label>
-                <Input id="profile-pic" type="file" className="mt-2 bg-white" onChange={handleProfilePictureChange} />
-              </div>
-            </div>
+  <div className="flex flex-col lg:flex-row gap-5 dark:bg-dark rounded-lg">
+    {/* Profile Image & Upload */}
+    <div className="flex flex-col items-center lg:items-start rounded-lg p-5 border w-full lg:w-[280px]">
+      <img
+        src={formData.imageUrl || "./default-profile-placeholder.png"}
+        alt="Profile Preview"
+        className="w-28 h-28 object-cover rounded-full border border-gray-300 mb-4"
+      />
+      <div className="w-full">
+        <Label htmlFor="profile-pic">Profile Picture</Label>
+        <Input
+          id="profile-pic"
+          type="file"
+          className="mt-2 bg-white w-full"
+          onChange={handleProfilePictureChange}
+        />
+      </div>
+    </div>
 
-            <div className="grid grid-cols-3 w-full gap-5 rounded-lg p-5 border">
-              <div>
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  placeholder="Enter your username"
-                  className="mt-2 bg-white"
-                  value={formData.username}
-                  disabled
-                  onChange={handleInputChange}
-                />
-              </div>
+    {/* Form Fields Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full p-5 border rounded-lg">
+      <div>
+        <Label htmlFor="username">Username</Label>
+        <Input
+          id="username"
+          placeholder="Enter your username"
+          className="mt-2 bg-white w-full"
+          value={formData.username}
+          disabled
+          onChange={handleInputChange}
+        />
+      </div>
 
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="mt-2 bg-white"
-                  value={formData.email}
-                  disabled
-                />
-              </div>
+      <div>
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          className="mt-2 bg-white w-full"
+          value={formData.email}
+          disabled
+        />
+      </div>
 
-              <div className="space-y-1">
-                <Label>Birthdate</Label>
-                <Popover>
-                  <PopoverTrigger asChild >
-                    <button className="w-full flex items-center justify-between px-3 py-2 border rounded-lg bg-white dark:bg-dark-box text-left text-sm">
-                      {formData.birthdate ? format(new Date(formData.birthdate), "PPP") : "Select Birthdate"}
-                      <CalendarIcon className="ml-2 h-4 w-4" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent align="start" className="w-auto p-0">
-                  <Calendar mode="single" selected={formData.birthdate ? new Date(formData.birthdate) : undefined}
-                  onSelect={(date) => {
-                    if (date && isBefore(date, new Date())) {
-                      const adjustedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-                      setFormData((prev) => ({ ...prev, birthdate: adjustedDate.toISOString().split("T")[0] }));
-                    }}}
-                    disabled={(date) => isBefore(endOfToday(), date)} 
-                    initialFocus/>
-                  </PopoverContent>
-                </Popover>
-              </div>
+      <div className="space-y-1">
+        <Label>Birthdate</Label>
+        <Popover>
+          <PopoverTrigger asChild>
+            <button className="w-full flex items-center justify-between px-3 py-2 border rounded-lg bg-white dark:bg-dark-box text-left text-sm">
+              {formData.birthdate
+                ? format(new Date(formData.birthdate), "PPP")
+                : "Select Birthdate"}
+              <CalendarIcon className="ml-2 h-4 w-4" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="start" className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={
+                formData.birthdate ? new Date(formData.birthdate) : undefined
+              }
+              onSelect={(date) => {
+                if (date && isBefore(date, new Date())) {
+                  const adjustedDate = new Date(
+                    date.getTime() - date.getTimezoneOffset() * 60000
+                  );
+                  setFormData((prev) => ({
+                    ...prev,
+                    birthdate: adjustedDate.toISOString().split("T")[0],
+                  }));
+                }
+              }}
+              disabled={(date) => isBefore(endOfToday(), date)}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
 
-              <div className="space-y-2">
-                <Label>Gender</Label>
-                <Select
-                  value={formData.gender}
-                  onValueChange={(value) => handleSelectChange("gender", value)}
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select Gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+      <div className="space-y-2">
+        <Label>Gender</Label>
+        <Select
+          value={formData.gender}
+          onValueChange={(value) => handleSelectChange("gender", value)}
+        >
+          <SelectTrigger className="rounded-lg w-full">
+            <SelectValue placeholder="Select Gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="male">Male</SelectItem>
+            <SelectItem value="female">Female</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-              <div className="space-y-2">
-                <Label>Distance Unit</Label>
-                <Select
-                  value={formData.distance}
-                  onValueChange={(value) => handleSelectChange("distance", value)}
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select Distance Unit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="km">Kilometers</SelectItem>
-                    <SelectItem value="miles">Miles</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+      <div className="space-y-2">
+        <Label>Distance Unit</Label>
+        <Select
+          value={formData.distance}
+          onValueChange={(value) => handleSelectChange("distance", value)}
+        >
+          <SelectTrigger className="rounded-lg w-full">
+            <SelectValue placeholder="Select Distance Unit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="km">Kilometers</SelectItem>
+            <SelectItem value="miles">Miles</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-              <div className="space-y-2">
-                <Label>Weight Unit</Label>
-                <Select
-                  value={formData.weightOption}
-                  onValueChange={(value) => handleSelectChange("weightOption", value)}
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select Weight Unit" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="kg">Kilograms</SelectItem>
-                    <SelectItem value="lb">Pounds</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+      <div className="space-y-2">
+        <Label>Weight Unit</Label>
+        <Select
+          value={formData.weightOption}
+          onValueChange={(value) => handleSelectChange("weightOption", value)}
+        >
+          <SelectTrigger className="rounded-lg w-full">
+            <SelectValue placeholder="Select Weight Unit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="kg">Kilograms</SelectItem>
+            <SelectItem value="lb">Pounds</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-              <div className="space-y-2">
-                <Label>Activity Level</Label>
-                <Select
-                  value={formData.activityLevel}
-                  onValueChange={(value) => handleSelectChange("activityLevel", value)}
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select Activity Level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="beginner">Beginner</SelectItem>
-                    <SelectItem value="intermediate">Intermediate</SelectItem>
-                    <SelectItem value="advanced">Advanced</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+      <div className="space-y-2">
+        <Label>Activity Level</Label>
+        <Select
+          value={formData.activityLevel}
+          onValueChange={(value) => handleSelectChange("activityLevel", value)}
+        >
+          <SelectTrigger className="rounded-lg w-full">
+            <SelectValue placeholder="Select Activity Level" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="beginner">Beginner</SelectItem>
+            <SelectItem value="intermediate">Intermediate</SelectItem>
+            <SelectItem value="advanced">Advanced</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-              <div className="space-y-2">
-
-              <Label htmlFor="country">Country</Label>
-                <Input
-                  id="country"
-                  placeholder="Country"
-                  className="mt-2 bg-white"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                />
-
-               
-              </div>
-            </div>
-          </div>
-        </CardContent>
+      <div>
+        <Label htmlFor="country">Country</Label>
+        <Input
+          id="country"
+          placeholder="Country"
+          className="mt-2 bg-white w-full"
+          value={formData.country}
+          onChange={handleInputChange}
+        />
+      </div>
+    </div>
+  </div>
+</CardContent>
       </Card>
     </Fragment>
   );

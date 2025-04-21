@@ -249,7 +249,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
     <TableRow key={item._id} className={`group relative hover:bg-gray-50 dark:hover:bg-dark w-full  ${
     isDragging ? "opacity-50 ring-2 ring-primary/50 scale-[0.98]" : ""}`}  ref={!isSharedView ? ref : undefined}>
       <TableCell className="pl-5 flex items-center">
-        {!isSharedView ? <Checkbox className="absolute top-4" onCheckedChange={handleCheckboxChange}  /> : null }
+        {!isSharedView ? <Checkbox onCheckedChange={handleCheckboxChange}  /> : null }
       </TableCell>
 
       <TableCell className="p-1">
@@ -258,7 +258,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
           name="name"
           value={formData.name}
           placeholder="Name"
-          className="h-8 text-xs bg-white rounded-none dark:bg-dark-item"
+          className="w-52 md:w-full h-8 text-xs bg-white rounded-none dark:bg-dark-item"
           onChange={isSharedView ? undefined : handleChange}
           onBlur={isSharedView ? undefined : handleBlur}
           readOnly={isSharedView}
@@ -271,7 +271,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
           name="description"
           value={formData.description}
           placeholder="Description"
-          className="h-8 text-xs bg-white rounded-none dark:bg-dark-item"
+          className="w-80 md:w-full h-8 text-xs bg-white rounded-none dark:bg-dark-item"
           onChange={isSharedView ? undefined : handleChange}
           onBlur={isSharedView ? undefined : handleBlur}
           readOnly={isSharedView}

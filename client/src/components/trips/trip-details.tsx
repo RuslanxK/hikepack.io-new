@@ -268,81 +268,119 @@ const TripDetails: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
-      <div className="flex items-center gap-2 w-8/12">
-  <Button
-    variant="ghost"
-    size="icon"
-    onClick={handleNavigateBack}
-    className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
-  >
-    <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-  </Button>
-    <h1 
-      className="text-lg font-semibold flex items-center gap-2 ml-2 truncate w-full overflow-hidden text-ellipsis"
-      title={trip?.name}>
-      {trip?.name}
-    </h1>
+    {/* Top Header */}
+    <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+      {/* Back button + trip name */}
+      <div className="flex items-center gap-2 w-full md:w-8/12">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleNavigateBack}
+          className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
+        >
+          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+        </Button>
+        <h1
+          className="text-lg font-semibold flex items-center gap-2 ml-2 truncate w-full overflow-hidden text-ellipsis"
+          title={trip?.name}
+        >
+          {trip?.name}
+        </h1>
+      </div>
   
-</div>
-        <div className="flex h-5 items-center space-x-4 text-sm">
-            <Fragment>
-              <div className="text-sm flex items-center">
-                <MapPin size={18} className="mr-2" /> Distance: {trip?.distance}{' '}
-                {user?.distance}
-              </div>
-              <Separator orientation="vertical" className="dark:bg-gray-500" />
-              <div className="text-sm flex items-center">
-                <CalendarFold size={18} className="mr-2" /> {tripStatus}
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleEdit}
-                className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
-              >
-                <Edit className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-              </Button>
-            </Fragment>
-          
+      {/* Trip details */}
+      <div className="flex flex-wrap md:flex-nowrap gap-4 items-center text-sm">
+        <div className="flex items-center">
+          <MapPin size={18} className="mr-2" />
+          Distance: {trip?.distance} {user?.distance}
         </div>
+        <Separator orientation="vertical" className="hidden md:block dark:bg-gray-500" />
+        <div className="flex items-center">
+          <CalendarFold size={18} className="mr-2" />
+          {tripStatus}
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleEdit}
+          className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
+        >
+          <Edit className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+        </Button>
       </div>
-      <div className="p-5 bg-white rounded-lg mt-5 mb-5 dark:bg-dark-box">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-           {trip?.about}
-          </p>
-        
-
-           <div className="relative w-1/3">
-            <Input
-              id="trip-name"
-              placeholder="Search"
-              type="search"
-              value={bagSearchTerm}
-              onChange={(e) => setBagSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2"/>
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-          </div>
-
+    </div>
+  
+    {/* Description + Search */}
+    <div className="p-5 bg-white rounded-lg mt-5 mb-5 dark:bg-dark-box">
+      <p className="text-gray-600 dark:text-gray-400 mb-4">{trip?.about}</p>
+  
+      <div className="relative w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <Input
+          id="trip-name"
+          placeholder="Search"
+          type="search"
+          value={bagSearchTerm}
+          onChange={(e) => setBagSearchTerm(e.target.value)}
+          className="pl-10 pr-4 py-2 w-full"
+        />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
       </div>
-      <Grid>
-        <AddButton onClick={() => setIsSheetOpen(true)} className='add-bag-button' />
-        {paginatedBags?.length ? (
-          paginatedBags?.map((bag) => <Bag key={bag._id} data={bag} duplicate={() => handleDuplicate(bag)} onDelete={() => handleDeleteClick(bag)} />)
-        ) : (
-          <p className="col-span-full text-center">No bags found.</p>
-        )}
-      </Grid>
-
-      {totalItems > itemsPerPage && (
-      <ReusablePagination currentPage={currentPage} totalItems={totalItems} itemsPerPage={itemsPerPage} onPageChange={handlePageChange} />)}
-      <AddBagSheet isOpen={isSheetOpen} onClose={handleCloseAddBagSheet} onSubmit={handleAddBagSubmit} errorMessage={addBagError || ''} isAdding={isAdding} />
-      <EditTripSheet isOpen={isSheetEditOpen} onClose={handleCloseEditTripSheet} data={trip} onSubmit={handleEditTripSubmit} errorMessage={editTripError || ""} isUpdating={isUpdating} />
-      <DeleteAlert isOpen={showDeleteAlert} description={`Are you sure you want to delete "${selectedBag?.name}"? This action cannot be undone.`} onConfirm={confirmDelete} onCancel={cancelDelete} isDeleting={isDeleting} />
-
-      {isJoyrideRun && <JoyrideWrapper steps={getSteps(tripStepsConfig)} run={true} />}
-
-    </Fragment>
+    </div>
+  
+    {/* Bag Grid */}
+    <Grid>
+      <AddButton onClick={() => setIsSheetOpen(true)} className="add-bag-button" />
+      {paginatedBags?.length ? (
+        paginatedBags.map((bag) => (
+          <Bag
+            key={bag._id}
+            data={bag}
+            duplicate={() => handleDuplicate(bag)}
+            onDelete={() => handleDeleteClick(bag)}
+          />
+        ))
+      ) : (
+        <p className="col-span-full text-center">No bags found.</p>
+      )}
+    </Grid>
+  
+    {/* Pagination */}
+    {totalItems > itemsPerPage && (
+      <ReusablePagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+      />
+    )}
+  
+    {/* Sheets and Alerts */}
+    <AddBagSheet
+      isOpen={isSheetOpen}
+      onClose={handleCloseAddBagSheet}
+      onSubmit={handleAddBagSubmit}
+      errorMessage={addBagError || ""}
+      isAdding={isAdding}
+    />
+    <EditTripSheet
+      isOpen={isSheetEditOpen}
+      onClose={handleCloseEditTripSheet}
+      data={trip}
+      onSubmit={handleEditTripSubmit}
+      errorMessage={editTripError || ""}
+      isUpdating={isUpdating}
+    />
+    <DeleteAlert
+      isOpen={showDeleteAlert}
+      description={`Are you sure you want to delete "${selectedBag?.name}"? This action cannot be undone.`}
+      onConfirm={confirmDelete}
+      onCancel={cancelDelete}
+      isDeleting={isDeleting}
+    />
+  
+    {/* Joyride */}
+    {isJoyrideRun && <JoyrideWrapper steps={getSteps(tripStepsConfig)} run={true} />}
+  </Fragment>
   );
 };
 

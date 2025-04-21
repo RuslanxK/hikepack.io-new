@@ -92,7 +92,7 @@ export function RecentItemsBar() {
     <div className={`relative  ${isOpen ? "w-72" : "w-6"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed z-10 w-5 h-8 bg-secondary dark:bg-secondary  dark:border-dark-box rounded-r-md flex items-center justify-center"
+        className="fixed top-20 right-0 sm:top-auto sm:right-auto z-10 w-5 h-8 bg-secondary dark:bg-secondary dark:border-dark-box rounded-r-md flex items-center justify-center"
       >
         {isOpen ? <ChevronRight className="w-4 h-4 text-white" /> : <ChevronLeft className="w-4 h-4 text-white" />}
       </button>
