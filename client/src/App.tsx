@@ -21,8 +21,11 @@ import ShareMain from "./components/pages/share/share-main";
 import VerifyAccount from "./components/pages/verify-account";
 import NewPassword from "./components/account/steps/new-password";
 import Welcome from "./components/pages/welcome";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
@@ -38,7 +41,8 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/error" element={<ErrorPage/>}/>
             <Route path="/trip/:id" element={<TripDetails/>}/>
-            <Route path="/bag/:id" element={<BagDetails/>} />
+            <Route path="/bag/:id" element={ <DndProvider backend={HTML5Backend}><BagDetails/></DndProvider>} />
+            <Route path="/bag/:id" element={ <BagDetails/>} />
             <Route path="/articles" element={<ArticleMain/>}/>
             <Route path="/article/:id" element={<ArticleInner/>}/>
             <Route path="/community" element={<Community/>}/>

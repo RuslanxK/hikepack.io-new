@@ -9,6 +9,7 @@ interface Country {
 
 const fetchCountries = async (): Promise<string[]> => {
   const data = await apiService.get<Country[]>(countriesApi);
+  
 
 return data.filter((country) => country.name.common !== 'Palestine').sort((a, b) => a.name.common.localeCompare(b.name.common)).map((country) => country.name.common)};
 

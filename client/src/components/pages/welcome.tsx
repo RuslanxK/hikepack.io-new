@@ -179,19 +179,43 @@ const Welcome = () => {
         <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-12 px-4'>
           Discover the <span className='text-primary'>Future of Hiking</span>
         </h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-12 place-items-center max-w-full md:w-[800px] m-auto px-4'>
-          {["weight-analysis", "custom-order", "navigation", "community"].map((img) => (
-            <div
-              key={img}
-              className='w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer'
-            >
-              <img
-                src={`/${img}.png`}
-                alt={img}
-                className='w-full h-full object-contain transition-transform duration-700 ease-in-out group-hover:animate-float'
-              />
-            </div>
-          ))}
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-10 place-items-center max-w-full md:w-[800px] m-auto'>
+
+        {[
+  {
+    img: "weight-analysis",
+    title: "Weight Distribution Analytics",
+    text: "Optimize your pack for maximum comfort and efficiency.",
+  },
+  {
+    img: "custom-order",
+    title: "Customizable Packing Lists",
+    text: "Tailor your packing list to your specific hike and preference.",
+  },
+  {
+    img: "navigation",
+    title: "User-Friendly Interface",
+    text: "Navigate with ease and efficiency.",
+  },
+  {
+    img: "community",
+    title: "Community Sharing",
+    text: "Join a community of like-minded hikers.",
+  },
+].map(({ img, title, text }) => (
+  <div
+    key={img}
+    className={`w-72 sm:w-80 md:w-96 bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer p-5 flex flex-col text-left`}
+  >
+    <h3 className='text-lg font-bold mb-1'>{title}</h3>
+    <p className='text-sm text-gray-400 mb-4'>{text}</p>
+    <img
+      src={`/${img}.png`}
+      alt={img}
+      className='w-full h-72 object-contain transition-transform duration-700 ease-in-out group-hover:animate-float'
+    />
+  </div>
+))}
         </div>
       </section>
 

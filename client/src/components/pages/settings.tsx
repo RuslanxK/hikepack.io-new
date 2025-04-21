@@ -13,14 +13,12 @@ import { useMutation} from "@tanstack/react-query";
 import { User } from "@/types/login";
 import { useUser } from "@/context/user-context";
 import { isBefore, endOfToday } from "date-fns";
-import useCountries from "@/hooks/useCountries";
 import { apiService } from "@/lib/apiService";
 
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
-  const { countryNameArr } = useCountries();
   const storedUser = localStorage.getItem("user");
   const initialUser = storedUser ? JSON.parse(storedUser) : {};
 
@@ -279,20 +277,17 @@ const Settings: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label>Country</Label>
-                <Select
+
+              <Label htmlFor="country">Country</Label>
+                <Input
+                  id="country"
+                  placeholder="Country"
+                  className="mt-2 bg-white"
                   value={formData.country}
-                  onValueChange={(value) => handleSelectChange("country", value)}
-                >
-                  <SelectTrigger className="rounded-lg">
-                    <SelectValue placeholder="Select Country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                   {countryNameArr.map((country) => (
-                           <SelectItem key={country} value={country}>{country}</SelectItem>
-                           ))}
-                  </SelectContent>
-                </Select>
+                  onChange={handleInputChange}
+                />
+
+               
               </div>
             </div>
           </div>

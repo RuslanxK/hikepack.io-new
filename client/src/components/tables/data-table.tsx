@@ -1,5 +1,5 @@
 
-import React,{ useState, useCallback} from "react";
+import React,{ useState, useCallback, useEffect} from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {Table,TableBody,TableHead,TableHeader,TableRow} from "@/components/ui/table";
@@ -22,6 +22,9 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [category, setCategory] = useState(data.name); 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [items, setItems] = useState(() =>
+    (data.items ?? []).slice().sort((a, b) => (a.order || 0) - (b.order || 0))
+  );
 
   const { toast } = useToast()
   const isSharedView = useIsSharedView();
@@ -30,6 +33,12 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: data._id, disabled: isSharedView });
   const style = { transform: CSS.Translate.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
 
+  useEffect(() => {
+    if (data.items) {
+      setItems(data.items.slice().sort((a, b) => (a.order || 0) - (b.order || 0)));
+    }
+  }, [data.items]);
+ 
   const handleAddItem = () => {
     saveNewItem();
   };
@@ -124,6 +133,37 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
         }
       };
 
+
+      const { mutate: updateItemOrder } = useMutation({
+        mutationFn: async ({ id, order }: { id: string; order: number }) =>
+          await apiService.put(`/items/order/${id}`, { order }),
+        onError: (error) => {
+          console.error("Failed to update order:", error);
+          toast({
+            title: "Error",
+            variant: "destructive",
+            description: error?.message,
+          });
+        },
+      });
+
+      const moveItem = useCallback((from: number, to: number) => {
+        setItems((prevItems) => {
+          const updated = [...prevItems];
+          const [moved] = updated.splice(from, 1);
+          updated.splice(to, 0, moved);
+          updated.forEach((item, idx) => {
+            if (item._id) {
+              updateItemOrder({ id: item._id, order: idx + 1 }); 
+            }
+          });
+      
+          return updated;
+        });
+      }, [updateItemOrder]);
+     
+
+
   return (
   <div className="bg-white dark:bg-dark-box rounded-lg mb-5 border-l-8" style={{ ...style, borderLeftColor: data.color }} ref={setNodeRef}>
   <div className="flex items-center gap-2 group pr-2 pl-2 pt-2" >
@@ -157,8 +197,9 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-          {data?.items?.map((item) => (
-         <ItemRow key={item._id} item={item} onSelect={handleSelectItem} />
+          
+          {items?.map((item, index) => (
+         <ItemRow key={item._id} item={item} index={index}  moveItem={moveItem} onSelect={handleSelectItem} />
           ))}
           </TableBody>
         </Table>

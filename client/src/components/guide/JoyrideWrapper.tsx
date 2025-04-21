@@ -1,5 +1,4 @@
-// components/guide/JoyrideWrapper.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Joyride, { CallBackProps, Step } from 'react-joyride';
 
 interface CustomStep extends Step {
@@ -16,6 +15,8 @@ const JoyrideWrapper: React.FC<JoyrideWrapperProps> = ({ steps, run = false, onF
   const [walkthroughActive, setWalkthroughActive] = useState(run);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
+  const currentStep = steps[currentStepIndex];
+
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, index, action } = data;
 
@@ -29,7 +30,26 @@ const JoyrideWrapper: React.FC<JoyrideWrapperProps> = ({ steps, run = false, onF
     }
   };
 
-  const currentStep = steps[currentStepIndex] || {};
+  // detect if dark mode is active
+  const isDarkMode = document.documentElement.classList.contains('dark');
+
+  useEffect(() => {
+    if (!currentStep?.target || typeof currentStep.target !== 'string') return;
+  
+    const el = document.querySelector(currentStep.target);
+    if (!el) return;
+  
+    const handleClick = () => {
+      setWalkthroughActive(false);
+      onFinish?.();
+    };
+  
+    el.addEventListener('click', handleClick);
+    return () => {
+      el.removeEventListener('click', handleClick);
+    };
+  }, [currentStep, onFinish]);
+  
 
   return (
     <Joyride
@@ -38,18 +58,31 @@ const JoyrideWrapper: React.FC<JoyrideWrapperProps> = ({ steps, run = false, onF
       continuous
       showSkipButton
       disableCloseOnEsc
-      disableScrolling={false}
+      disableScrolling={true}
       callback={handleJoyrideCallback}
+      spotlightPadding={8}
       styles={{
         options: {
-          arrowColor: '#fff',
-          backgroundColor: '#fff',
-          overlayColor: 'rgba(0, 0, 0, 0.5)',
-          primaryColor: '#2563eb',
-          textColor: '#000',
-          zIndex: 1000,
+          zIndex: 10000,
+          overlayColor: 'rgba(0, 0, 0, 0.4)',
+          primaryColor: '#058373', // your Tailwind primary
+          backgroundColor: isDarkMode ? '#1f2937' : '#ffffff', // darker in dark mode
+          textColor: isDarkMode ? '#ffffff' : '#000000',
+          arrowColor: isDarkMode ? '#1f2937' : '#ffffff',
         },
-        buttonNext: currentStep.disableNext ? { display: 'none' } : {},
+        tooltip: {
+          backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+          color: isDarkMode ? '#ffffff' : '#000000',
+          borderRadius: 8,
+          padding: '16px',
+          boxShadow: '0 2px 15px rgba(0,0,0,0.15)',
+        },
+        buttonNext: currentStep?.disableNext ? { display: 'none' } : undefined,
+        spotlight: {
+          boxShadow: isDarkMode ? '0 0 0 4px rgb(3, 255, 159)'  : '0 0 0 4px #058373',        
+          backgroundColor: 'transparent',
+          borderRadius: 8,
+        },
       }}
     />
   );

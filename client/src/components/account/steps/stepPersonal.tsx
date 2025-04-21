@@ -22,8 +22,7 @@ interface StepProps {
 
 const StepPersonal: React.FC<StepProps> = ({ formData, updateFormData }) => {
 
-const { countryNameArr } = useCountries();
-
+const { countryNameArr} = useCountries();
 
   return (
     <div className="flex flex-wrap gap-y-6 gap-x-4">

@@ -13,15 +13,18 @@ import LinkItem from "../dialogs/link-item";
 import ImageItem from "../dialogs/image-item";
 import { useToast } from "@/hooks/use-toast"
 import { useIsSharedView } from "@/lib/isSharedView";
-
+import { useRef } from "react";
+import { useItemDnD } from "@/hooks/use-item-dnd";
 
 
 interface ItemRowProps {
   item: Item;
+  index: number;
   onSelect: (id: string, isSelected: boolean) => void;
+  moveItem: (fromIndex: number, toIndex: number) => void;
 }
 
-const ItemRow: React.FC<ItemRowProps> = memo(({ item, onSelect }) => {
+const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem }) => {
 
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
@@ -31,7 +34,15 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, onSelect }) => {
   const { toast } = useToast()
   const isSharedView = useIsSharedView();
 
-  
+  let ref = useRef<HTMLTableRowElement>(null);
+  let isDragging = false;
+
+  if (!isSharedView) {
+    const dnd = useItemDnD(index, moveItem);
+    ref = dnd.ref;
+    isDragging = dnd.isDragging;
+  }
+
 
   const [formData, setFormData] = useState({
     _id: item._id || "",
@@ -235,7 +246,8 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, onSelect }) => {
 
   return (
     <Fragment>
-    <TableRow key={item._id} className="group relative hover:bg-gray-50 dark:hover:bg-dark w-full">
+    <TableRow key={item._id} className={`group relative hover:bg-gray-50 dark:hover:bg-dark w-full  ${
+    isDragging ? "opacity-50 ring-2 ring-primary/50 scale-[0.98]" : ""}`}  ref={!isSharedView ? ref : undefined}>
       <TableCell className="pl-5 flex items-center">
         {!isSharedView ? <Checkbox className="absolute top-4" onCheckedChange={handleCheckboxChange}  /> : null }
       </TableCell>
