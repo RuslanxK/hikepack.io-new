@@ -70,6 +70,7 @@ const TryItNowSection: React.FC = () => {
    const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 5 } });
 const sensors = useSensors(mouseSensor, touchSensor);
 
+
 const handleDragEnd = (event: DragEndEvent) => {
   const { active, over } = event;
 
@@ -101,6 +102,9 @@ const handleDragEnd = (event: DragEndEvent) => {
 
   const deleteCategory = (id: string) => {
     const updated = categories.filter(cat => cat._id !== id);
+  
+    localStorage.removeItem(`category-items-${id}`);
+  
     setCategories(updated);
     persistCategories(updated);
   };

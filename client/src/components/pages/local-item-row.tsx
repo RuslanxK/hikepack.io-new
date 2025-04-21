@@ -8,21 +8,27 @@ import { Image, Link, Shirt, Copy } from "lucide-react";
 import TooltipButton from "../ui/tooltip-button";
 import LinkItem from "../dialogs/link-item";
 import ImageItem from "../dialogs/image-item";
+import { useItemDnD } from "@/hooks/use-item-dnd";
+
 
 interface LocalItemRowProps {
   item: Item;
+  index: number;
   onUpdate: (item: Item) => void;
   onDelete: (itemId: string) => void;
   onSelect: (id: string, isSelected: boolean) => void;
-  onDuplicate: (item: Omit<Item, "_id">) => void; 
-
+  onDuplicate: (item: Omit<Item, "_id">) => void;
+  moveItem: (fromIndex: number, toIndex: number) => void;
 }
 
 
-const LocalItemRow: React.FC<LocalItemRowProps> = memo(({ item, onUpdate, onDuplicate, onSelect }) => {
+const LocalItemRow: React.FC<LocalItemRowProps> = memo(({ item, index, moveItem, onUpdate, onDuplicate, onSelect }) => {
   const [formData, setFormData] = useState<Item>(item);
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+
+
+const { ref, isDragging } = useItemDnD(index, moveItem);
 
 
 const fileToBase64 = (file: File): Promise<string> =>
@@ -113,7 +119,8 @@ const fileToBase64 = (file: File): Promise<string> =>
 
   return (
     <Fragment>
-      <TableRow key={item._id} className="group relative hover:bg-gray-50 dark:hover:bg-dark w-full">
+      <TableRow key={item._id}  className={`group relative hover:bg-gray-50 dark:hover:bg-dark w-full ${
+      isDragging ? "opacity-50 ring-2 ring-primary/50 scale-[0.98]" : "" }`} ref={ref} >
         <TableCell className="pl-5 flex items-center">
           <Checkbox className="md:absolute top-4" onCheckedChange={handleCheckboxChange} />
         </TableCell>

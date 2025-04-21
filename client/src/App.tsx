@@ -36,7 +36,7 @@ function App() {
            <Route path="/new-password/:token" element={<NewPassword/>}/>
            <Route path="/register" element={<Register/>}/>
            <Route path="/reset-password" element={<ResetPassword/>}/>
-           <Route path="/welcome" element={<Welcome/>}/>
+           <Route path="/welcome" element={ <DndProvider backend={HTML5Backend}><Welcome/> </DndProvider> }/>
            <Route element={<PrivateRoutes/>}>
             <Route path="/" element={<Home/>}/>
             <Route path="/error" element={<ErrorPage/>}/>

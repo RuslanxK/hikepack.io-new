@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import LocalItemRow from "./local-item-row";
 import { Category } from "@/types/category";
 import { Item } from "@/types/item";
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import LimitReachedPopup from "../dialogs/limit-reached-popup";
 import { useNavigate } from "react-router-dom";
 
@@ -22,17 +22,36 @@ const LocalDataTable: React.FC<LocalDataTableProps> = ({ data, onUpdateCategory,
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [showLimitPopup, setShowLimitPopup] = useState(false);
 
-  const navigate = useNavigate()
+  const localStorageKey = `category-items-${data._id}`;
+  const [items, setItems] = useState<Item[]>(() => {
+    const saved = localStorage.getItem(localStorageKey);
+    if (saved) return JSON.parse(saved);
+    const sorted = [...(data.items || [])].map((item, index) => ({
+      ...item,
+      order: item.order ?? index,
+    }));
+    return sorted.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  });
 
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: data._id });
+  const navigate = useNavigate();
 
-  
-const style = {
-  transform: CSS.Translate.toString(transform),
-  transition,
-  opacity: isDragging ? 0.5 : 1,
-  willChange: 'transform',
-};
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: data._id,
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    willChange: "transform",
+  };
+
+  const saveItems = (updated: Item[]) => {
+    const reordered = updated.map((item, index) => ({ ...item, order: index }));
+    setItems(reordered);
+    localStorage.setItem(localStorageKey, JSON.stringify(reordered));
+    onUpdateCategory({ ...data, items: reordered });
+  };
 
   const handleBlur = () => {
     if (categoryName?.trim() !== data.name) {
@@ -41,11 +60,11 @@ const style = {
   };
 
   const handleAddItem = () => {
-    if ((data.items?.length || 0) >= 3) {
+    if (items.length >= 3) {
       setShowLimitPopup(true);
       return;
     }
-  
+
     const newItem: Item = {
       _id: Date.now().toString(),
       name: "Item example",
@@ -55,63 +74,76 @@ const style = {
       weightOption: "lb",
       priority: "Low",
       worn: false,
-      bagId: data.bagId,
       categoryId: data._id,
+      order: items.length,
     };
-  
-    const updated = { ...data, items: [...(data.items || []), newItem] };
-    onUpdateCategory(updated);
-  };
 
-  const handleUpdateItem = (updatedItem: Item) => {
-    const updatedItems = data.items?.map(i => (i._id === updatedItem._id ? updatedItem : i)) || [];
-    onUpdateCategory({ ...data, items: updatedItems });
+    saveItems([...items, newItem]);
   };
 
   const handleDeleteItem = (itemId: string) => {
-    const updatedItems = data.items?.filter(i => i._id !== itemId) || [];
-    onUpdateCategory({ ...data, items: updatedItems });
-    setSelectedItems(prev => prev.filter(id => id !== itemId));
+    const updated = items.filter((item) => item._id !== itemId);
+    setSelectedItems((prev) => prev.filter((id) => id !== itemId));
+    saveItems(updated);
   };
 
-  const handleSelectItem = (id: string, isSelected: boolean) => {
-    setSelectedItems(prev => isSelected ? [...prev, id] : prev.filter(i => i !== id));
-  };
-
-  const deleteSelectedItems = () => {
-    const updatedItems = (data.items || []).filter(
-      (i) => i._id && !selectedItems.includes(i._id)
+  const handleUpdateItem = (updatedItem: Item) => {
+    const updated = items.map((item) =>
+      item._id === updatedItem._id ? { ...item, ...updatedItem } : item
     );
-    onUpdateCategory({ ...data, items: updatedItems });
-    setSelectedItems([]);
+    saveItems(updated);
   };
 
   const handleDuplicateItem = (item: Omit<Item, "_id">) => {
+    if (items.length >= 3) {
+      setShowLimitPopup(true);
+      return;
+    }
+
     const duplicated: Item = {
-      ...JSON.parse(JSON.stringify(item)), 
-      _id: Date.now().toString(),         
+      ...item,
+      _id: Date.now().toString(),
+      order: items.length,
     };
+
+    saveItems([...items, duplicated]);
+  };
+
+  const handleSelectItem = (id: string, isSelected: boolean) => {
+    setSelectedItems((prev) =>
+      isSelected ? [...prev, id] : prev.filter((i) => i !== id)
+    );
+  };
+
+  const deleteSelectedItems = () => {
+    const updated = items.filter((item) => item._id && !selectedItems.includes(item._id));
+    setSelectedItems([]);
+    saveItems(updated);
+  };
   
-    const updated = {
-      ...data,
-      items: [...(data.items || []), duplicated],
-    };
-  
-    onUpdateCategory(updated);
+
+  const moveItem = (fromIndex: number, toIndex: number) => {
+    const updated = [...items];
+    const [moved] = updated.splice(fromIndex, 1);
+    updated.splice(toIndex, 0, moved);
+    saveItems(updated);
   };
 
   const redirect = (destination: string) => {
-    setShowLimitPopup(false)
-    navigate(destination)
-  }
+    setShowLimitPopup(false);
+    navigate(destination);
+  };
 
-  
   return (
-    <div className="dark:bg-dark-box rounded-lg  border-l-8 bg-white"  style={{ ...style, borderLeftColor: data.color }}  ref={setNodeRef}>
+    <div
+      className="dark:bg-dark-box rounded-lg border-l-8 bg-white"
+      style={{ ...style, borderLeftColor: data.color }}
+      ref={setNodeRef}
+    >
       <div className="flex items-center gap-2 group pr-2 pl-2 pt-2">
-      <Button variant="ghost" size="icon" {...attributes} {...listeners}>
-  <Grip size={18} className="cursor-move" />
-</Button>
+        <Button variant="ghost" size="icon" {...attributes} {...listeners}>
+          <Grip size={18} className="cursor-move" />
+        </Button>
         <Input
           type="text"
           value={categoryName}
@@ -120,7 +152,11 @@ const style = {
           placeholder="Enter category"
           className="w-full h-8 text-sm bg-white border-0 border-b border-gray-300 rounded-none focus:outline-none"
         />
-        <Button variant="ghost" size="icon" onClick={() => onDeleteCategory(data._id)}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onDeleteCategory(data._id)}
+        >
           <Trash2 className="cursor-pointer" />
         </Button>
       </div>
@@ -139,15 +175,16 @@ const style = {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.items?.map((item) => (
+          {items.map((item, index) => (
             <LocalItemRow
               key={item._id}
               item={item}
+              index={index}
               onUpdate={handleUpdateItem}
               onSelect={handleSelectItem}
               onDelete={handleDeleteItem}
               onDuplicate={handleDuplicateItem}
-            
+              moveItem={moveItem}
             />
           ))}
         </TableBody>
@@ -163,7 +200,13 @@ const style = {
           </Button>
         )}
       </div>
-      <LimitReachedPopup isOpen={showLimitPopup} onClose={() => setShowLimitPopup(false)} onLogin={() => redirect('/login')} onRegister={() => redirect('/register')}/>
+
+      <LimitReachedPopup
+        isOpen={showLimitPopup}
+        onClose={() => setShowLimitPopup(false)}
+        onLogin={() => redirect("/login")}
+        onRegister={() => redirect("/register")}
+      />
     </div>
   );
 };
