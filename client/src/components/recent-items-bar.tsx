@@ -106,7 +106,7 @@ export function RecentItemsBar() {
 
       {isOpen && (
         <SidebarContent className="h-full flex flex-col fixed">
-          <SidebarGroup className="pl-6">
+          <SidebarGroup className="pl-6 pt-16 md:pt-0">
             <SidebarGroupLabel className="text-white text-md mb-3 mt-3">Recent Items</SidebarGroupLabel>
             <SidebarGroupContent className="overflow-y-hidden flex-1 hide-scrollbar">
               <SidebarMenu>
