@@ -189,7 +189,7 @@ const TripPage: React.FC = () => {
       <h1 className="text-xl font-bold mb-1">Welcome{' '}{user?.username && user?.username.charAt(0).toUpperCase() + user?.username.slice(1)}</h1>
       <p className="mb-4">The journey of a thousand miles begins with a single step.</p>
       <div className="bg-white p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4 dark:bg-dark-box mb-5">
-  <div className="w-full md:w-auto h-full">
+  <div className="w-full md:w-auto ">
     <h2 className="text-lg font-semibold mb-1">My Last Planned Trips</h2>
     <p className="text-sm text-gray-600 dark:text-gray-400">
       Seamless Trip Planning and Bag Organization Made Simple.

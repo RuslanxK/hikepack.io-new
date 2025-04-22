@@ -11,7 +11,7 @@ const MobileHeader = () => {
   const { openMobile, toggleSidebar } = useSidebar();
 
   return (
-    <div className="p-4 md:hidden flex items-center justify-between bg-white dark:bg-dark border-b z-50">
+    <div className="sticky top-0 p-4 md:hidden flex items-center justify-between bg-white dark:bg-dark border-b z-50">
       <img src="/logo-black.png" width={85} alt="Logo" />
       <button onClick={toggleSidebar}>
         {openMobile ? <X /> : <AlignJustify />}
@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <Fragment>
-        <div className="flex w-full flex-col md:flex-row relative">
+        <div className="flex w-full flex-col md:flex-row">
           {/* Mobile Header */}
           
           {!shouldHideSidebar && <MobileHeader />}
@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {!shouldHideSidebar && <AppSidebar />}
 
           {/* Main Content */}
-          <div className="overflow-auto bg-light dark:bg-dark w-full">
+          <div className=" bg-light dark:bg-dark w-full">
             {shouldHideSidebar ? children : <Container>{children}</Container>}
           </div>
 

@@ -174,7 +174,7 @@ const Settings: React.FC = () => {
         <Input
           id="username"
           placeholder="Enter your username"
-          className="mt-2 bg-white w-full"
+          className="mt-2 bg-white w-full text-sm"
           value={formData.username}
           disabled
           onChange={handleInputChange}
@@ -187,7 +187,7 @@ const Settings: React.FC = () => {
           id="email"
           type="email"
           placeholder="Enter your email"
-          className="mt-2 bg-white w-full"
+          className="mt-2 bg-white w-full text-sm"
           value={formData.email}
           disabled
         />
@@ -299,7 +299,7 @@ const Settings: React.FC = () => {
         <Input
           id="country"
           placeholder="Country"
-          className="mt-2 bg-white w-full"
+          className="mt-2 bg-white w-full text-sm"
           value={formData.country}
           onChange={handleInputChange}
         />
