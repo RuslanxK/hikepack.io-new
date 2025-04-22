@@ -40,7 +40,7 @@ const LastBagStatus: React.FC<LastBagStatusProps> = ({ user, bag }) => {
   ];
 
   return (
-    <div className="my-10">
+    <div className="h-screen md:h-fit my-10">
       <h2 className="text-lg font-semibold text-center">
         My Last Bag Status <Button variant="link" className="p-0 text-lg" onClick={latestBagNavigate}>{bag?.name}</Button>
       </h2>

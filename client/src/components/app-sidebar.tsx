@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 import {Home, Backpack,Book, Users,Settings, FileText,Shield,ChevronDown, ChevronUp,LogOut,ShieldAlert, Sun, Moon } from "lucide-react";
 import {SidebarItemProps, SidebarItemComponentProps } from '../types/sidebar'
 import { useUser } from "@/context/user-context";
-import { Link } from "react-router-dom";
 import { apiService } from "@/lib/apiService";
 import { BagItem } from "@/types/bag";
 import { useQuery } from "@tanstack/react-query";
 import { Coffee } from "lucide-react";
 import SupportUsDialog from "./dialogs/support-us";
 import Cookies from "js-cookie";
+import { useSidebar } from "@/components/ui/sidebar";
 
 
 
@@ -23,6 +23,18 @@ const fetchRecentBags = async (limit: number = 5): Promise<BagItem[]> => {
 };
 
 const SidebarItem = ({ item, isCollapsed, toggleCollapse }: SidebarItemComponentProps) => {
+
+  const { toggleSidebar } = useSidebar(); 
+  const navigate = useNavigate()
+
+  const handleClick = (url: string) => {
+    if (window.innerWidth < 768) {
+      toggleSidebar(); 
+    }
+    navigate(url); 
+  };
+
+
   if (item.collapsible) {
     return (
       <SidebarMenuItem>
@@ -40,12 +52,12 @@ const SidebarItem = ({ item, isCollapsed, toggleCollapse }: SidebarItemComponent
           <SidebarMenuSub>
             {item.subItems?.map((subItem) => (
               <SidebarMenuSubItem key={subItem.url}>
-                <Link
-                  to={subItem.url}
+                <button
+                  onClick={() => handleClick(subItem.url)}
                   className="rounded-lg block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-box"
                 >
                   {subItem.name}
-                </Link>
+                </button>
               </SidebarMenuSubItem>
             ))}
           </SidebarMenuSub>
@@ -57,13 +69,13 @@ const SidebarItem = ({ item, isCollapsed, toggleCollapse }: SidebarItemComponent
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
-        <Link
-          to={item.url}
+        <button
+          onClick={() => handleClick(item.url)}
           className="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 dark:hover:bg-dark-box rounded-md"
         >
           <item.icon className="w-5 h-5" />
           <span>{item.title}</span>
-        </Link>
+        </button>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -87,7 +99,6 @@ const ThemeToggle = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
   </div>
 );
 const UserProfile = () => {
-  const navigate = useNavigate();
   const { user } = useUser();
   const { setTheme } = useTheme();
 
@@ -97,10 +108,19 @@ const UserProfile = () => {
     setTheme("light"); 
   };
 
+  const { toggleSidebar } = useSidebar(); 
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    if (window.innerWidth < 768) {
+      toggleSidebar(); 
+    }
+    navigate('/settings'); 
+  };
 
   return (
     <div className="p-4 border-t border-gray-200 dark:border-dark-box cursor-pointer">
-    <div className="flex items-center gap-3 mb-4" onClick={() => navigate('/settings')}>
+    <div className="flex items-center gap-3 mb-4" onClick={handleClick}>
       <img
         src={user?.imageUrl || "/default-profile-placeholder.png"}
         alt="User Avatar"

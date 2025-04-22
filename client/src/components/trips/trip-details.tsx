@@ -268,9 +268,7 @@ const TripDetails: React.FC = () => {
 
   return (
     <Fragment>
-    {/* Top Header */}
     <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-      {/* Back button + trip name */}
       <div className="flex items-center gap-2 w-full md:w-8/12">
         <Button
           variant="ghost"
@@ -288,8 +286,7 @@ const TripDetails: React.FC = () => {
         </h1>
       </div>
   
-      {/* Trip details */}
-      <div className="flex flex-wrap md:flex-nowrap gap-4 items-center text-sm">
+      <div className="flex flex-wrap md:flex-nowrap justify-between gap-4 items-center text-sm">
         <div className="flex items-center">
           <MapPin size={18} className="mr-2" />
           Distance: {trip?.distance} {user?.distance}
