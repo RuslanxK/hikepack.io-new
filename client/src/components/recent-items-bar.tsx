@@ -89,7 +89,7 @@ export function RecentItemsBar() {
   
 
   return (
-    <div className={`relative  ${isOpen ? "w-72" : "w-6"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
+    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-72" : "w-6"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-20 right-0 sm:top-auto sm:right-auto z-10 w-5 h-8 bg-secondary dark:bg-secondary dark:border-dark-box rounded-r-md flex items-center justify-center"
@@ -101,7 +101,7 @@ export function RecentItemsBar() {
         <SidebarContent className="h-full flex flex-col fixed">
           <SidebarGroup className="pl-6">
             <SidebarGroupLabel className="text-white">Recent Items</SidebarGroupLabel>
-            <SidebarGroupContent className="overflow-y-auto flex-1">
+            <SidebarGroupContent className="overflow-y-hidden flex-1 hide-scrollbar">
               <SidebarMenu>
                 {isLoading ? (
                   <p className="text-white text-sm px-3">Loading...</p>
