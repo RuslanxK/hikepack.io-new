@@ -279,11 +279,12 @@ const TripDetails: React.FC = () => {
           <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
         </Button>
         <h1
-          className="text-lg font-semibold flex items-center gap-2 ml-2 truncate w-full overflow-hidden text-ellipsis"
+          className="text-lg font-semibold flex items-center gap-2 ml-2 truncate overflow-hidden text-ellipsis"
           title={trip?.name}
         >
           {trip?.name}
         </h1>
+        
       </div>
   
       <div className="flex flex-wrap md:flex-nowrap justify-between gap-4 items-center text-sm">

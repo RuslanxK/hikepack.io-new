@@ -37,7 +37,7 @@ const Community = () => {
             className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark">
             <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </Button>
-          <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate w-full overflow-hidden text-ellipsis">
+          <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate  overflow-hidden text-ellipsis">
             Community
           </h1>
         </div>

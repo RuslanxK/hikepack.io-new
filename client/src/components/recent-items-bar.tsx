@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect, Fragment} from "react";
 import {
   SidebarContent,
   SidebarGroup,
@@ -37,6 +37,13 @@ export function RecentItemsBar() {
       return response;
     },
   });
+
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsOpen(false);
+    }
+  }, []);
 
 
   const handleOpenModal = async (item: Item) => {
@@ -89,7 +96,7 @@ export function RecentItemsBar() {
   
 
   return (
-    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
+    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-48 md:w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-20 sm:top-auto sm:right-auto z-10 w-5 h-8 bg-secondary dark:bg-secondary dark:border-dark-box rounded-r-md flex items-center justify-center"
@@ -100,7 +107,7 @@ export function RecentItemsBar() {
       {isOpen && (
         <SidebarContent className="h-full flex flex-col fixed">
           <SidebarGroup className="pl-6">
-            <SidebarGroupLabel className="text-white">Recent Items</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-white text-md mb-3 mt-3">Recent Items</SidebarGroupLabel>
             <SidebarGroupContent className="overflow-y-hidden flex-1 hide-scrollbar">
               <SidebarMenu>
                 {isLoading ? (
@@ -111,16 +118,16 @@ export function RecentItemsBar() {
                   items.map((item) => (
                     <SidebarMenuItem
                       key={item._id}
-                      className="flex items-center justify-between pr-2"
+                      className="flex gap-3 mb-3 cursor-pointer"
                       onClick={() => handleOpenModal(item)}
                     >
                       <SidebarMenuButton className="hover:bg-transparent active:bg-transparent hover:text-white active:text-white focus:outline-none" asChild>
-                        <a href="#" className="flex items-center gap-2 text-white">
-                          <ListRestart className="w-6 h-6" />
-                          <span className="max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap">
+                          <Fragment>
+                          <ListRestart className="w-6 h-6 text-white" />
+                          <span className="text-sm text-white">
                             {item.name.length > 9 ? item.name.slice(0, 9) + "..." : item.name}
                           </span>
-                        </a>
+                          </Fragment>
                       </SidebarMenuButton>
 
                     </SidebarMenuItem>

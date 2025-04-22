@@ -38,7 +38,7 @@ const ReportBug: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </Button>
-          <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate w-full overflow-hidden text-ellipsis">
+          <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate overflow-hidden text-ellipsis">
            Report a bug
           </h1>
         </div>
