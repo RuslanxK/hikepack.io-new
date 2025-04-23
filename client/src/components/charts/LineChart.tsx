@@ -4,6 +4,8 @@ import * as React from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { Users } from "lucide-react"; // Users icon for live users
 
+
+
 import {
   Card,
   CardContent,
@@ -62,16 +64,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function LineChartAdmin() {
-  const [timeRange, setTimeRange] = React.useState("all");
-  const [liveUsers, setLiveUsers] = React.useState(Math.floor(Math.random() * 500) + 1);
+interface LineChartAdminProps {
+  liveUsers: number;
+}
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveUsers(Math.floor(Math.random() * 500) + 1);
-    }, 5000); // Update live users every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
+
+export function LineChartAdmin({ liveUsers }: LineChartAdminProps) {
+  const [timeRange, setTimeRange] = React.useState("all");
+
+  
 
   const filteredData = React.useMemo(() => {
     const referenceDate = new Date();

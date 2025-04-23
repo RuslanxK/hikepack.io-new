@@ -7,12 +7,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TableUsers } from "./table-users";
 import ChangeLogForm from "./changelog-form";
 
-const AdminPanel: React.FC = () => {
+
+interface AdminPanelProps {
+  liveUsers: number;
+}
+
+const AdminPanel: React.FC<AdminPanelProps> = ({ liveUsers }) => {
+
   const navigate = useNavigate();
 
   const handleNavigateBack = (): void => {
     navigate(-1);
   };
+
 
   return (
     <Fragment>
@@ -62,7 +69,7 @@ const AdminPanel: React.FC = () => {
 
         <TabsContent value="chart" className="mt-4 sm:mt-5">
           <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box">
-            <LineChartAdmin />
+            <LineChartAdmin liveUsers={liveUsers} />
           </div>
         </TabsContent>
         <TabsContent value="users" className="mt-4 sm:mt-5">

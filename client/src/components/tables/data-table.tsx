@@ -84,7 +84,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
   
       // Step 2: Filter remaining items
       const remainingItems = items.filter(
-        (item) => !selectedItems.includes(item._id)
+        (item) => item._id && !selectedItems.includes(item._id)
       );
   
       // Step 3: Recalculate order

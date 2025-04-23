@@ -23,8 +23,25 @@ import NewPassword from "./components/account/steps/new-password";
 import Welcome from "./components/pages/welcome";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useEffect, useState } from "react";
+import { getSocket, disconnectSocket } from "@/lib/websocketService";
 
 function App() {
+
+  const [liveUsers, setLiveUsers] = useState(0);
+
+  useEffect(() => {
+    const socket = getSocket();
+
+    socket.on("liveUsers", (count: number) => {
+      setLiveUsers(count);
+    });
+
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
+
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -49,7 +66,7 @@ function App() {
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/changelog" element={<ChangeLog/>}/>
             <Route path="/bug-report" element={<ReportBug/>}/>
-            <Route path="/admin" element={<AdminPanel/>}/>
+            <Route path="/admin" element={<AdminPanel liveUsers={liveUsers} />}/>
             </Route>
          
             <Route element={<PublicRoutes />}>

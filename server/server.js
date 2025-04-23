@@ -9,13 +9,30 @@ const categoryRouter = require("./routers/categoryRouter")
 const itemRouter = require("./routers/itemRouter")
 const articleRouter = require('./routers/articleRouter')
 const changeLogRouter = require("./routers/changelogRouter")
+const { Server } = require('socket.io');
+const http = require('http');
+const User = require("./models/user")
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const cookie = require("cookie");
+
+
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    return callback(null, true);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+app.use(cookieParser());
 app.use(express.json());
 
 mongoose
@@ -36,6 +53,65 @@ app.get('/', (req, res) => {
   res.send('Server is running!');
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env.EMAIL_URL,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
+
+const connectedUsers = new Set();
+
+io.use(async (socket, next) => {
+
+  const rawCookie = socket.handshake.headers.cookie;
+
+  if (!rawCookie) {
+    console.log("No cookies received");
+    return next(new Error("No token in cookies"));
+  }
+
+  const cookies = cookie.parse(rawCookie);
+  const token = cookies.token; // or whatever your cookie name is
+
+  if (!token) {
+    console.log("Token not found in cookies");
+    return next(new Error("Token missing in cookie"));
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded._id);
+    if (!user) return next(new Error("User not found"));
+
+    socket.user = user;
+    next();
+  } catch (err) {
+    console.log("Socket auth failed:", err.message);
+    return next(new Error("Invalid token"));
+  }
+});
+
+
+io.on("connection", (socket) => {
+  const userId = socket.user?._id.toString();
+  if (!connectedUsers.has(userId)) {
+    connectedUsers.add(userId);
+    io.emit("liveUsers", connectedUsers.size);
+    console.log(`User connected: ${userId}`);
+  }
+
+  socket.on("disconnect", () => {
+    connectedUsers.delete(userId);
+    io.emit("liveUsers", connectedUsers.size);
+    console.log(`User disconnected: ${userId}`);
+  });
+});
+
+
+httpServer.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
