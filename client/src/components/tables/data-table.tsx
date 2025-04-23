@@ -79,12 +79,35 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
 
   const { mutate: deleteSelectedItems, isPending: deleteItemsPending } = useMutation({
     mutationFn: async () => {
+      // Step 1: Delete selected items from the server
       await apiService.delete("/items", { data: { ids: selectedItems } });
+  
+      // Step 2: Filter remaining items
+      const remainingItems = items.filter(
+        (item) => !selectedItems.includes(item._id)
+      );
+  
+      // Step 3: Recalculate order
+      const reorderedItems = remainingItems.map((item, index) => ({
+        ...item,
+        order: index + 1,
+      }));
+  
+      // Step 4: Update order in backend
+      await Promise.all(
+        reorderedItems.map((item) =>
+          apiService.put(`/items/order/${item._id}`, { order: item.order })
+        )
+      );
+  
+      // Step 5: Update local state
+      setItems(reorderedItems);
+      setSelectedItems([]);
     },
     onSuccess: () => {
+      // Invalidate cache so everything stays in sync
       queryClient.invalidateQueries({ queryKey: ["items", data.tripId, data.bagId, data._id] });
       queryClient.invalidateQueries({ queryKey: ["categories", data.bagId] });
-      setSelectedItems([]);
     },
     onError: (error) => {
       console.error("Failed to delete items:", error);
@@ -95,6 +118,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
       });
     },
   });
+  
 
   const handleDeleteCategory = () => {
     setShowDeleteAlert(true);

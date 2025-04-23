@@ -96,7 +96,7 @@ export function RecentItemsBar() {
   
 
   return (
-    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-48 md:w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark`}>
+    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-48 md:w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark hide-scroll-bar`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-20 sm:top-auto sm:right-auto z-10 w-5 h-8 bg-secondary dark:bg-secondary dark:border-dark-box rounded-r-md flex items-center justify-center"

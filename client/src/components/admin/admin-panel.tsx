@@ -16,9 +16,8 @@ const AdminPanel: React.FC = () => {
 
   return (
     <Fragment>
-      
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
-        <div className="flex items-center gap-2 w-8/12">
+      <div className="bg-white dark:bg-dark-box p-4 sm:p-5 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+        <div className="flex items-center gap-2 w-full sm:w-8/12">
           <Button
             variant="ghost"
             size="icon"
@@ -27,54 +26,52 @@ const AdminPanel: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </Button>
-          <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate overflow-hidden text-ellipsis">
+          <h1 className="text-lg sm:text-xl font-semibold truncate ml-2">
             Admin Panel
           </h1>
         </div>
       </div>
 
-      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box">
-        <p className="text-gray-700 dark:text-gray-300">
+      <div className="p-4 sm:p-5 bg-white rounded-lg mt-4 dark:bg-dark-box">
+        <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
           Manage users, update changelogs, and control application settings from one central dashboard.
         </p>
       </div>
 
-    
-      <Tabs defaultValue="chart" className="mt-5">
-        <TabsList className="gap-4 dark:bg-dark p-2 rounded-lg">
+      <Tabs defaultValue="chart" className="mt-5 w-full">
+        <TabsList className="flex flex-wrap gap-2 sm:gap-4 dark:bg-dark p-2 rounded-lg">
           <TabsTrigger
             value="chart"
-            className="px-6 py-2 rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md focus:shadow-md border dark:border-dark-nav transition"
+            className="flex-1 sm:flex-initial px-4 py-2 text-sm sm:text-base rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md border dark:border-dark-nav"
           >
             Chart
           </TabsTrigger>
           <TabsTrigger
             value="users"
-            className="px-6 py-2 rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md focus:shadow-md border dark:border-dark-nav transition"
+            className="flex-1 sm:flex-initial px-4 py-2 text-sm sm:text-base rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md border dark:border-dark-nav"
           >
             Users
           </TabsTrigger>
           <TabsTrigger
             value="changelog"
-            className="px-6 py-2 rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md focus:shadow-md border dark:border-dark-nav transition"
+            className="flex-1 sm:flex-initial px-4 py-2 text-sm sm:text-base rounded-lg font-medium bg-white dark:bg-dark-box hover:shadow-md border dark:border-dark-nav"
           >
             ChangeLog
           </TabsTrigger>
         </TabsList>
 
-    
-        <TabsContent value="chart" className="mt-5">
-          <div className="p-5 bg-white rounded-lg dark:bg-dark-box">
+        <TabsContent value="chart" className="mt-4 sm:mt-5">
+          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box">
             <LineChartAdmin />
           </div>
         </TabsContent>
-        <TabsContent value="users" className="mt-5">
-          <div className="p-5 bg-white rounded-lg dark:bg-dark-box">
-           <TableUsers />
+        <TabsContent value="users" className="mt-4 sm:mt-5">
+          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box">
+            <TableUsers />
           </div>
         </TabsContent>
-        <TabsContent value="changelog" className="mt-5">
-        <ChangeLogForm />
+        <TabsContent value="changelog" className="mt-4 sm:mt-5">
+          <ChangeLogForm />
         </TabsContent>
       </Tabs>
     </Fragment>
