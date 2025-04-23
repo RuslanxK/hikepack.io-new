@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.EMAIL_URL,
+    origin: "https://www.hikepack.io",
     methods: ['GET', 'POST'],
     credentials: true,
   },
