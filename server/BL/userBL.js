@@ -54,6 +54,14 @@ exports.loginUser = async (email, password) => {
   await user.save();
 
   const token = jwt.sign(user._doc, process.env.JWT_SECRET, { expiresIn: "7d" });
+  
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
+    domain: ".hikepack.io",
+    maxAge: 86400000,
+  });
 
   const userResponse = user.toObject();
   delete userResponse.password;
