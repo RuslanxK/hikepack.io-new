@@ -79,6 +79,15 @@ exports.googleLogin = async (googleAccessToken, res) => {
 
   const user = await findOrCreateUser(profile);
   const jwtToken = generateJwtToken(user);
+
+  res.cookie("token", jwtToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
+    domain: ".hikepack.io",
+    maxAge: 86400000,
+  });
+
   setTokenCookie(res, jwtToken);
 
   return { token: jwtToken, user };
