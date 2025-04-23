@@ -55,13 +55,6 @@ exports.loginUser = async (email, password) => {
 
   const token = jwt.sign(user._doc, process.env.JWT_SECRET, { expiresIn: "7d" });
   
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "None",
-    domain: ".hikepack.io",
-    maxAge: 86400000,
-  });
 
   const userResponse = user.toObject();
   delete userResponse.password;
@@ -79,15 +72,6 @@ exports.googleLogin = async (googleAccessToken, res) => {
 
   const user = await findOrCreateUser(profile);
   const jwtToken = generateJwtToken(user);
-
-  res.cookie("token", jwtToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "None",
-    domain: ".hikepack.io",
-    maxAge: 86400000,
-  });
-
   setTokenCookie(res, jwtToken);
 
   return { token: jwtToken, user };
