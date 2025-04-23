@@ -65,25 +65,15 @@ const io = new Server(httpServer, {
 const connectedUsers = new Set();
 
 io.use(async (socket, next) => {
-
-  const rawCookie = socket.handshake.headers.cookie;
-
-  if (!rawCookie) {
-    console.log("No cookies received");
-    return next(new Error("No token in cookies"));
-  }
-
-  const cookies = cookie.parse(rawCookie);
-  const token = cookies.token; // or whatever your cookie name is
+  const token = socket.handshake.auth.token;
 
   if (!token) {
-    console.log("Token not found in cookies");
-    return next(new Error("Token missing in cookie"));
+    console.log("Token not provided in handshake auth");
+    return next(new Error("No token provided"));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(decoded._id);
     if (!user) return next(new Error("User not found"));
 
