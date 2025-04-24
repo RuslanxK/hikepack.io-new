@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useCallback, useState, useEffect} from "react";
+import React, { Fragment, memo, useCallback, useState, useEffect, useMemo} from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useIsSharedView } from "@/lib/isSharedView";
 import { useRef } from "react";
 import { useItemDnD } from "@/hooks/use-item-dnd";
+import debounce from "lodash.debounce";
 
 
 interface ItemRowProps {
@@ -72,6 +73,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
     });
   }, [item, user?.weightOption]); 
 
+  
 
 
   const updateItemMutation = useMutation({
@@ -176,11 +178,28 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
     },
   });
 
+
+
+  const debouncedUpdate = useMemo(
+    () =>
+      debounce((name: string, value: string | number) => {
+        const parsedValue = name === "qty" || name === "weight" ? parseFloat(value as string) : value;
+        updateItemMutation.mutate({ [name]: parsedValue });
+      }, 600), // wait 600ms after user stops typing
+    [updateItemMutation]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedUpdate.cancel(); // cleanup debounce on unmount
+    };
+  }, [debouncedUpdate]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const { name, value } = e.target;
+  setFormData((prev) => ({ ...prev, [name]: value }));
+  debouncedUpdate(name, value); // trigger delayed mutation
+};
 
 
   const handleChangeAndImmediateUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -247,7 +266,8 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
   return (
     <Fragment>
     <TableRow key={item._id} className={`group relative hover:bg-gray-50 dark:hover:bg-dark w-full  ${
-    isDragging ? "opacity-50 ring-2 ring-primary/50 scale-[0.98]" : ""}`}  ref={!isSharedView ? ref : undefined}>
+    isDragging ? "opacity-50 ring-2 ring-primary/50 scale-[0.98]" : ""}` } ref={!isSharedView ? ref : undefined}>
+      
       <TableCell className="pl-5 flex items-center">
         {!isSharedView ? <Checkbox onCheckedChange={handleCheckboxChange}  /> : null }
       </TableCell>
