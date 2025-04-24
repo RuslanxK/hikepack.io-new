@@ -176,7 +176,6 @@ const Settings: React.FC = () => {
           placeholder="Enter your username"
           className="mt-2 bg-white w-full text-sm"
           value={formData.username}
-          disabled
           onChange={handleInputChange}
         />
       </div>
