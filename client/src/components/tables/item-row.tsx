@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useCallback, useState, useEffect, useMemo} from "react";
+import React, { Fragment, memo, useCallback, useState, useEffect } from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,6 @@ import { useToast } from "@/hooks/use-toast"
 import { useIsSharedView } from "@/lib/isSharedView";
 import { useRef } from "react";
 import { useItemDnD } from "@/hooks/use-item-dnd";
-import debounce from "lodash.debounce";
 
 
 interface ItemRowProps {
@@ -178,32 +177,14 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
     },
   });
 
-
-
-  const debouncedUpdate = useMemo(
-    () =>
-      debounce((name: string, value: string | number) => {
-        const parsedValue = name === "qty" || name === "weight" ? parseFloat(value as string) : value;
-        updateItemMutation.mutate({ [name]: parsedValue });
-      }, 600), // wait 600ms after user stops typing
-    [updateItemMutation]
-  );
-
-  useEffect(() => {
-    return () => {
-      debouncedUpdate.cancel(); // cleanup debounce on unmount
-    };
-  }, [debouncedUpdate]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target;
   setFormData((prev) => ({ ...prev, [name]: value }));
-  debouncedUpdate(name, value); // trigger delayed mutation
+ 
 };
 
-
   const handleChangeAndImmediateUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }))  
     updateItemMutation.mutate({ [name]: value });
@@ -320,7 +301,8 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
           placeholder="Weight"
           min={0.1}
           className="w-20 h-8 text-xs bg-white rounded-none dark:bg-dark-item"
-          onChange={isSharedView ? undefined : handleChangeAndImmediateUpdate}
+          onChange={isSharedView ? undefined : handleChange}
+          onBlur={isSharedView ? undefined : handleBlur}
           readOnly={isSharedView}
         />
       </TableCell>
