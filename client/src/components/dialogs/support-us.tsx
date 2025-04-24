@@ -9,11 +9,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Coffee } from "lucide-react";
 import { Input } from "../ui/input";
-// import {
-//   PayPalScriptProvider,
-//   PayPalButtons,
-//   usePayPalScriptReducer,
-// } from "@paypal/react-paypal-js";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
 
 interface SupportUsDialogProps {
   isOpen: boolean;
@@ -34,55 +34,55 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
     setCustomCoffee(isNaN(value) || value < 1 ? "" : value);
   };
 
-  // const paypalOptions = {
-  //   "client-id": import.meta.env.VITE_PAYPAL_CLIENT || "",
-  //   currency: "USD",
-  // };
+  const paypalOptions = {
+    "client-id": import.meta.env.VITE_PAYPAL_CLIENT || "",
+    currency: "USD",
+  };
 
-  // const PayPalButtonsWrapper: React.FC = () => {
-  //   const [{ isPending }] = usePayPalScriptReducer();
+  const PayPalButtonsWrapper: React.FC = () => {
+    const [{ isPending }] = usePayPalScriptReducer();
 
-  //   return isPending ? (
-  //     <div className="flex justify-center items-center h-16">
-  //       <p>Loading...</p>
-  //     </div>
-  //   ) : (
-  //     <PayPalButtons
-  //       style={{
-  //         shape: "rect",
-  //         layout: "vertical",
-  //         color: "gold",
-  //         label: "donate",
-  //       }}
-  //       createOrder={(data, actions) => {
-  //         return actions.order.create({
-  //           intent: "CAPTURE",
-  //           purchase_units: [
-  //             {
-  //               amount: {
-  //                 currency_code: "USD",
-  //                 value: donationAmount.toFixed(2),
-  //               },
-  //             },
-  //           ],
-  //         });
-  //       }}
-  //       onApprove={(data, actions) => {
-  //         if (actions.order) {
-  //           return actions.order.capture().then((details) => {
-  //             alert(
-  //               `Thank you for your donation, ${details.payer.name.given_name}!`
-  //             );
-  //           });
-  //         }
-  //         return Promise.reject("Order capture is not available.");
-  //       }}
-  //       onError={(err) => {
-  //         alert(`An error occurred: ${err}`);
-  //       }}
-  //     />
-  //   );
-  // };
+    return isPending ? (
+      <div className="flex justify-center items-center h-16">
+        <p>Loading...</p>
+      </div>
+    ) : (
+      <PayPalButtons
+        style={{
+          shape: "rect",
+          layout: "vertical",
+          color: "gold",
+          label: "donate",
+        }}
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            intent: "CAPTURE",
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: "USD",
+                  value: donationAmount.toFixed(2),
+                },
+              },
+            ],
+          });
+        }}
+        onApprove={(data, actions) => {
+          if (actions.order) {
+            return actions.order.capture().then((details) => {
+              alert(
+                `Thank you for your donation, ${details.payer.name.given_name}!`
+              );
+            });
+          }
+          return Promise.reject("Order capture is not available.");
+        }}
+        onError={(err) => {
+          alert(`An error occurred: ${err}`);
+        }}
+      />
+    );
+  };
 
   if (!isOpen) return null;
 
@@ -139,10 +139,10 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
             </p>
           </div>
        
-{/* 
+
         <PayPalScriptProvider options={paypalOptions}>
               <PayPalButtonsWrapper />
-            </PayPalScriptProvider> */}
+            </PayPalScriptProvider> 
 
         <div className="flex justify-end">
           <Button type="button" variant="outline" onClick={onClose} className="w-32">

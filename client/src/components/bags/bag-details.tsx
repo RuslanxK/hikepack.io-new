@@ -221,7 +221,13 @@ const BagDetails: React.FC = () => {
     <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
    </Button>
         )}
-    <h1 className="text-lg font-semibold flex items-center gap-2 ml-2 truncate  overflow-hidden text-ellipsis" title={bag?.name}>{bag?.name}</h1>
+   <h1
+  className="text-lg font-semibold flex items-center gap-2 ml-2"
+  title={bag?.name}
+>
+  {(bag?.name ?? "").length > 25 ? (bag?.name ?? "").slice(0, 25) + "..." : bag?.name}
+</h1>
+
 </div>
 <div className="flex h-5 items-center space-x-4 text-sm">
 

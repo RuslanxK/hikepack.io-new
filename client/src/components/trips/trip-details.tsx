@@ -269,43 +269,58 @@ const TripDetails: React.FC = () => {
   return (
     <Fragment>
     <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-      <div className="flex items-center gap-2 w-full md:w-8/12">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleNavigateBack}
-          className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-        </Button>
-        <h1
-          className="text-lg font-semibold flex items-center gap-2 ml-2 truncate overflow-hidden text-ellipsis"
-          title={trip?.name}
-        >
-          {trip?.name}
-        </h1>
-        
-      </div>
-  
-      <div className="flex flex-wrap md:flex-nowrap justify-between gap-4 items-center text-sm">
-        <div className="flex items-center">
-          <MapPin size={18} className="mr-2" />
-          Distance: {trip?.distance} {user?.distance}
-        </div>
-        <Separator orientation="vertical" className="hidden md:block dark:bg-gray-500" />
-        <div className="flex items-center">
-          <CalendarFold size={18} className="mr-2" />
-          {tripStatus}
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleEdit}
-          className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
-        >
-          <Edit className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-        </Button>
-      </div>
+    <div className="flex justify-between gap-2 w-full md:w-8/12">
+    <div className='flex'>
+  <Button
+    variant="ghost"
+    size="icon"
+    onClick={handleNavigateBack}
+    className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark mr-3"
+  >
+    <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+  </Button>
+
+  <h1
+  className="text-lg font-semibold flex items-center gap-2 ml-2 break-words leading-snug"
+  title={trip?.name}
+>
+  {(trip?.name ?? "").length > 25 ? trip?.name.slice(0, 25) + "..." : trip?.name}
+</h1>
+  </div>
+
+  <Button
+    variant="ghost"
+    size="icon"
+    onClick={handleEdit}
+    className=" md:hidden bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
+  >
+    <Edit className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+  </Button>
+</div>
+
+<div className="flex flex-wrap md:flex-nowrap gap-4 items-center text-sm">
+  <div className="flex items-center">
+    <MapPin size={18} className="mr-2" />
+    Distance: {trip?.distance} {user?.distance}
+  </div>
+
+  <Separator orientation="vertical" className="hidden md:block dark:bg-gray-500" />
+
+  <div className="flex items-center">
+    <CalendarFold size={18} className="mr-2" />
+    {tripStatus}
+  </div>
+
+  {/* Edit button - visible only on tablet/desktop */}
+  <Button
+    variant="ghost"
+    size="icon"
+    onClick={handleEdit}
+    className="hidden md:flex bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark"
+  >
+    <Edit className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+  </Button>
+</div>
     </div>
   
     {/* Description + Search */}

@@ -167,11 +167,16 @@ export function AppSidebar() {
       icon: Backpack,
       collapsible: true,
       subItems: isCategoriesLoading
-        ? [{ name: "Loading...", url: "#" }]
-        : fetchedRecentBags.map((bag) => ({
-            name: bag.name || "Unnamed Bag",
-            url: `/bag/${bag._id}`, 
-          })),
+  ? [{ name: "Loading...", url: "#" }]
+  : fetchedRecentBags.map((bag) => {
+      const name = bag.name ?? "Unnamed Bag";
+      const truncatedName = name.length > 20 ? name.slice(0, 20) + "..." : name;
+
+      return {
+        name: truncatedName,
+        url: `/bag/${bag._id}`,
+      };
+    }),
     },
     { title: "Articles", url: "/articles", icon: Book },
     { title: "Community", url: "/community", icon: Users },
