@@ -25,13 +25,19 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useEffect, useState } from "react";
 import { getSocket, disconnectSocket } from "@/lib/websocketService";
+import Cookies from "js-cookie";
 
 function App() {
 
   const [liveUsers, setLiveUsers] = useState(0);
 
+  
   useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) return;
+
     const socket = getSocket();
+    if (!socket) return;
 
     socket.on("liveUsers", (count: number) => {
       setLiveUsers(count);
@@ -41,7 +47,6 @@ function App() {
       disconnectSocket();
     };
   }, []);
-
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -59,7 +64,6 @@ function App() {
             <Route path="/error" element={<ErrorPage/>}/>
             <Route path="/trip/:id" element={<TripDetails/>}/>
             <Route path="/bag/:id" element={ <DndProvider backend={HTML5Backend}><BagDetails/></DndProvider>} />
-            <Route path="/bag/:id" element={ <BagDetails/>} />
             <Route path="/articles" element={<ArticleMain/>}/>
             <Route path="/article/:id" element={<ArticleInner/>}/>
             <Route path="/community" element={<Community/>}/>

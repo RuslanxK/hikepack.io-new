@@ -3,23 +3,26 @@ import Cookies from "js-cookie";
 
 let socket: Socket | null = null;
 
-export const getSocket = (): Socket => {
-  if (!socket) {
-    const token = Cookies.get("token");
-    if (!token) {
-      throw new Error("❌ No auth token found in cookies. WebSocket cannot connect.");
-    }
+export const getSocket = (): Socket | null => {
+  if (socket) return socket;
 
-    socket = io(import.meta.env.VITE_REACT_APP_API!, {
-      auth: { token }, // 👈 Send token explicitly
-      transports: ["websocket"],
-      upgrade: false,
-    });
-
-    socket.on("connect", () => console.log("✅ WebSocket connected"));
-    socket.on("connect_error", (error) => console.error("❌ WebSocket error:", error.message));
-    socket.on("disconnect", () => console.log("⚠️ WebSocket disconnected"));
+  const token = Cookies.get("token");
+  if (!token) {
+    console.warn("⚠️ No auth token found in cookies. Skipping socket connection.");
+    return null; // Do NOT throw!
   }
+
+  socket = io(import.meta.env.VITE_REACT_APP_API!, {
+    auth: { token },
+    transports: ["websocket"],
+    upgrade: false,
+  });
+
+  socket.on("connect", () => console.log("✅ WebSocket connected"));
+  socket.on("connect_error", (error) =>
+    console.error("❌ WebSocket error:", error.message)
+  );
+  socket.on("disconnect", () => console.log("⚠️ WebSocket disconnected"));
 
   return socket;
 };
