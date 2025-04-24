@@ -118,8 +118,8 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
               value={[Number(formData.goal)]}
               onValueChange={handleSliderChange}
               max={100}
-              min={0}
-              step={1}
+              min={0.5}
+              step={0.5}
               className="w-full"
             />
             <span className="text-sm text-gray-500 dark:text-white">
