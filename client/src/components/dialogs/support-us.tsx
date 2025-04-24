@@ -88,20 +88,16 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold">Get Us a Coffee!</DialogTitle>
         </DialogHeader>
 
-          <DialogDescription className="text-center text-gray-600 dark:text-gray-400">
-            We are a team of developers and designers who love hiking and actively enjoy the
-            outdoors. Our mission is to help hikers organize their trips & bags with ease and share
-            their journeys with others.
-            <br />
-            <br />
-            If our work has made a positive impact on your hiking experience and you’d like to show
-            your support, feel free to buy us a coffee!
-          </DialogDescription>
+        <DialogDescription className="text-center text-gray-600 dark:text-gray-400">
+  We’re a team of developers and designers who love hiking, here to help you pack smarter and share your adventures.  
+  <br /><br />
+  If you’ve enjoyed using our app, we’d be thrilled if you treated us to a coffee!
+</DialogDescription>
 
           <div className="flex flex-col items-center">
             <Coffee className="w-14 h-14 text-yellow-500 mb-4" />
@@ -144,11 +140,7 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
               <PayPalButtonsWrapper />
             </PayPalScriptProvider> 
 
-        <div className="flex justify-end">
-          <Button type="button" variant="outline" onClick={onClose} className="w-32">
-            Close
-          </Button>
-        </div>
+       
       </DialogContent>
     </Dialog>
   );
