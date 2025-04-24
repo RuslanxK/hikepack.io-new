@@ -28,6 +28,11 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
       bag.ownerName.toLowerCase().includes(bagSearchTerm.toLowerCase())
   );
 
+
+  const truncate = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
+  };
+
   return (
     <div className="space-y-5">
       <div className="relative w-full">
@@ -62,24 +67,24 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
                   onClick={() => navigate(`/share/${bag.bagId}`)}
                   className="cursor-pointer hover:bg-gray-100 dark:hover:bg-dark-box"
                 >
-                  <TableCell className="flex items-center gap-4 whitespace-nowrap">
-                    <img
-                      src={
-                        bag.ownerImageUrl || "/default-profile-placeholder.png"
-                      }
-                      alt={bag.ownerName}
-                      className="w-9 h-9 rounded-full object-cover"
-                    />
-                    <span className="truncate max-w-[100px]">
-                      {bag.ownerName}
-                    </span>
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap truncate">
-                    {bag.bagName}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap truncate">
-                    {bag.bagDescription}
-                  </TableCell>
+            <TableCell className="flex items-center gap-4 whitespace-nowrap">
+  <img
+    src={bag.ownerImageUrl || "/default-profile-placeholder.png"}
+    alt={bag.ownerName}
+    className="w-9 h-9 rounded-full object-cover"
+  />
+  <span className="truncate max-w-[100px]">
+    {truncate(bag.ownerName, 20)}
+  </span>
+</TableCell>
+
+<TableCell className="whitespace-nowrap truncate">
+  {truncate(bag.bagName, 30)}
+</TableCell>
+
+<TableCell className="whitespace-nowrap truncate max-w-[200px]">
+  {truncate(bag.bagDescription, 50)}
+</TableCell>
                   <TableCell>{bag.categoriesCount}</TableCell>
                   <TableCell>{bag.itemsCount}</TableCell>
                   <TableCell>{bag.likes}</TableCell>
