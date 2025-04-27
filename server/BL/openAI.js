@@ -118,7 +118,7 @@ Return ONLY pure JSON:
 `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4.1-nano",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: input }
