@@ -93,6 +93,7 @@ const Settings: React.FC = () => {
     },
     onError: (error) => {
       console.error('Failed to update profile:', error);
+      
     },
   });
 
