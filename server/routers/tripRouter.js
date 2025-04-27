@@ -18,7 +18,9 @@ router.post("/", authMiddleware, upload.single("imageUrl"), async (req, res) => 
 
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const { page, limit, searchTerm, weightUnit } = req.query;
+    const { page, limit, searchTerm } = req.query;
+    const weightUnit = req.query.weightUnit || req.user.weightOption || "lb"; // fallback
+
     const response = await getTrips(req.user._id, page, limit, searchTerm, weightUnit);
     res.status(200).json(response);
   } catch (error) {
@@ -26,6 +28,7 @@ router.get("/", authMiddleware, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 router.get("/:id", authMiddleware, async (req, res) => {
   try {

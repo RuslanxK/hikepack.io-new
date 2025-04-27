@@ -94,11 +94,20 @@ exports.getTrips = async (userId, page, limit, searchTerm, weightUnit) => {
     const totalBaseWeight = items.reduce((acc, item) => {
       const weight = parseFloat(item.weight?.toString() || "0");
       const qty = parseFloat(item.qty?.toString() || "1");
-      const fromUnit = item.weightOption || weightUnit || "lb";
+      const fromUnit = item.weightOption || "lb"; // if no weightOption, default to lb
+      const toUnit = weightUnit || "lb"; // default user unit
 
-      const convertedWeight = weight * qty * (WEIGHT_CONVERSION[fromUnit][weightUnit] || 1);
+      // Get the correct conversion factor
+      const conversionRate = WEIGHT_CONVERSION[fromUnit]?.[toUnit];
 
-      return item.worn ? acc : acc + convertedWeight;
+      if (!conversionRate) {
+        console.warn(`No conversion rate from ${fromUnit} to ${toUnit}, skipping item.`);
+        return acc; // skip this item if conversion is impossible
+      }
+
+      const convertedWeight = weight * qty * conversionRate;
+
+      return item.worn ? acc : acc + convertedWeight; // Only add if item is NOT worn
     }, 0);
 
     latestBagData = {
@@ -111,6 +120,7 @@ exports.getTrips = async (userId, page, limit, searchTerm, weightUnit) => {
 
   return { data: trips, total, page: pageNumber, limit: pageSize, latestBag: latestBagData };
 };
+
 
 exports.getTripById = async (id, userId) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
