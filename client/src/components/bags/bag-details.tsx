@@ -21,6 +21,8 @@ import { useJoyride } from '../../hooks/useJoyride';
 import JoyrideWrapper from '../guide/JoyrideWrapper';
 import { getSteps } from '../guide/steps';
 import { bagStepsConfig } from '../guide/stepsConfig';
+import { Sparkles } from 'lucide-react';
+import { AISuggestionsModal } from "../dialogs/ai-suggestions";
 
 
 
@@ -36,6 +38,8 @@ const BagDetails: React.FC = () => {
   const [isSheetEditOpen, setIsSheetEditOpen] = useState(false);
   const [editBagError, setEditBagError] = useState<string | null>(null)
   const [isSettingCategories, setIsSettingCategories] = useState(true);
+  const [isAISuggestionsOpen, setIsAISuggestionsOpen] = useState(false);
+  
 
   const { toast } = useToast()
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
@@ -54,6 +58,7 @@ const BagDetails: React.FC = () => {
     queryFn: () => fetchCategoriesByBagId(id!, !isSharedView),
     enabled: !!id,
   });
+
   
   useEffect(() => {
     const setData = async () => {
@@ -269,6 +274,20 @@ const BagDetails: React.FC = () => {
         <Plus className="text-xl dark:text-white"/>
       </Button>
     )}
+
+{!isSharedView && (
+  <Button
+    onClick={() => setIsAISuggestionsOpen(true)}
+    className="relative text-white font-extrabold w-full py-6 mb-5 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 rounded-2xl border-4 border-purple-300 shadow-2xl overflow-hidden  hover:-translate-y-1 transition-all duration-500 before:absolute before:inset-0 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400 before:blur-lg before:opacity-50 before:transition-all before:duration-500 hover:before:opacity-80"
+    variant="default"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      GET AI SUGGESTIONS <Sparkles className="w-10 h-10 " />
+    </span>
+  </Button>
+)}
+
+
   <Fragment>
      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors} id="builder-dnd">
       <SortableContext items={categories.map((category) => category._id)} strategy={verticalListSortingStrategy}>
@@ -281,6 +300,14 @@ const BagDetails: React.FC = () => {
   <EditBagSheet isOpen={isSheetEditOpen} onClose={handleCloseEditTripSheet} data={bag} onSubmit={handleEditBagSubmit} errorMessage={editBagError || ""} isUpdating={isUpdating} />
 
   {isJoyrideRun && <JoyrideWrapper steps={getSteps(bagStepsConfig)} run={true} />}
+
+  <AISuggestionsModal 
+  isOpen={isAISuggestionsOpen} 
+  onClose={() => setIsAISuggestionsOpen(false)}
+  bagId={bag?._id}
+  tripId={bag?.tripId}
+  categories={categories}
+/>
 
 </Fragment>
 

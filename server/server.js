@@ -14,8 +14,7 @@ const http = require('http');
 const User = require("./models/user")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const cookie = require("cookie");
-
+const aiRoutes = require("./BL/openAI")
 
 
 dotenv.config();
@@ -40,7 +39,7 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.error('MongoDB Connection Error:', err));
   
-
+app.use("/api", aiRoutes);
 app.use('/api/user', userRouter);
 app.use('/api/trips', tripRouter);
 app.use('/api/bags', bagRouter)
