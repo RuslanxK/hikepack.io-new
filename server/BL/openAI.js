@@ -16,47 +16,34 @@ router.post("/ai", async (req, res) => {
   }
 
   try {
-    const hasExistingData = categories && categories.length > 0 && categories.some(cat => cat.categoryName.trim() !== "" || (cat.items && cat.items.length > 0));
+    const hasExistingData = categories && categories.length > 0 && categories.some(cat => cat.categoryName?.trim() !== "" || (cat.items && cat.items.length > 0));
 
-    const systemPrompt = hasExistingData ? `
+    const systemPrompt = hasExistingData
+      ? `
 You are a professional mountain hiking gear expert assistant.
 
-The user already has these categories and items packed:
+Analyze this packed gear JSON array:
 
-${categories.map(cat => `
-Category: ${cat.categoryName || "Unnamed Category"}
-Items: ${(cat.items && cat.items.length > 0) ? cat.items.join(", ") : "No items"}
-`).join("\n")}
+${JSON.stringify(categories)}
 
 Your task:
-- Analyze the existing gear carefully.
-- DO NOT repeat any categories or items the user already has.
-- Suggest ONLY missing or alternative important categories and items crucial for professional mountain hiking.
-- Focus on suggesting **different categories** if the current ones already exist.
-- If the user has a lot, suggest fewer but **newer** essential categories and items.
-- If the user has few categories/items, suggest more to complete a professional bag.
+- Do NOT repeat existing categories or items.
+- Suggest ONLY missing important categories and items.
+- Suggest 4–6 new essential categories.
+- Each category: 10–15 unique missing items (cover safety, shelter, hydration, food, navigation, emergency, cold protection).
 
-**For suggestions:**
-- Create 4–6 new or missing important categories.
-- Each category should include 10–15 new items.
-- Cover only missing areas (safety, shelter, emergency, navigation, food, hydration, cold protection, etc.).
+For each item:
+- "qty": number (usually 1-4)
+- "description": short, clear sentence
+- "priority": "High", "Medium", or "Low"
+- "weightOption": "g", "kg", "oz", or "lb"
+- "weight": realistic number (like 300g)
 
-**For each item:**
-- Include "qty" (Quantity) as a number (according to typical hiking needs).
-- Add a short "description" (1 sentence).
-- Add "priority" ("High", "Medium", "Low") depending on how critical it is.
-- Add "weightOption" ("g", "kg", "oz", or "lb") matching realistic item units.
-- Add "weight" (realistic average weight).
-
-**IMPORTANT:**  
-Do not suggest duplicates or near-identical items already listed.
-Make sure to improve the user's bag completeness!
-
-Return ONLY pure JSON:
+Return ONLY valid pure JSON, like:
 
 [
   {
-    "categoryName": "New Suggested Category",
+    "categoryName": "Category Name",
     "items": [
       {
         "name": "Item Name",
@@ -65,40 +52,35 @@ Return ONLY pure JSON:
         "priority": "High",
         "weightOption": "g",
         "weight": 300
-      },
-      ...
+      }
     ]
-  },
-  ...
+  }
 ]
 
-❗ Do not explain anything. ONLY valid JSON output.
+❗ Strictly return ONLY JSON without any explanations.
 `
-: `
+      : `
 You are a professional mountain hiking gear expert assistant.
 
-The user has NO categories or items yet.
+The user has no gear yet.
 
 Your task:
-- Build a FULL, complete, professional mountain hiking bag.
-- Start from **basic**, move to **important**, then **unique** hiking items.
-- Create at least 8–10 categories (not 5–7).
-- Each category should include 12–20 items.
-- Focus on real-world hiking: safety, shelter, survival, hydration, cold protection, navigation, emergency rescue, cooking, lighting, first-aid, etc.
-- Cover everything needed for 3–10 day mountain hikes.
+- Build a full hiking gear list from basic to professional.
+- Suggest 8–10 important categories.
+- Each category: 12–20 critical hiking items.
 
-**For each item:**
-- Include "qty" (Quantity) as a number (1–4 usually).
-- Add a short "description" (1 simple sentence).
-- Add "priority" ("High", "Medium", "Low") depending on how critical it is.
-- Add "weightOption" ("g", "kg", "oz", "lb").
-- Add "weight" (realistic average weight).
+For each item:
+- "qty": number (usually 1–4)
+- "description": short, simple sentence
+- "priority": "High", "Medium", or "Low"
+- "weightOption": "g", "kg", "oz", or "lb"
+- "weight": realistic average number
 
-Return ONLY pure JSON:
+Return ONLY pure JSON formatted like:
 
 [
   {
-    "categoryName": "Essential Category",
+    "categoryName": "Category Name",
     "items": [
       {
         "name": "Item Name",
@@ -107,23 +89,21 @@ Return ONLY pure JSON:
         "priority": "High",
         "weightOption": "g",
         "weight": 300
-      },
-      ...
+      }
     ]
-  },
-  ...
+  }
 ]
 
-❗ Return ONLY valid JSON. No explanations.
+❗ ONLY return valid JSON. No extra text.
 `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-nano",
+      model: "gpt-4.1",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: input }
       ],
-      temperature: 0.5,
+      temperature: 0.3, // Lower for faster + more deterministic output
     });
 
     const message = completion.choices[0]?.message?.content;
@@ -141,9 +121,8 @@ Return ONLY pure JSON:
     }
   } catch (error) {
     console.error("OpenAI API error:", error.response?.data || error.message);
-
-    res.status(500).json({ 
-      error: error.response?.data?.error?.message || "Failed to get AI response" 
+    res.status(500).json({
+      error: error.response?.data?.error?.message || "Failed to get AI response",
     });
   }
 });
