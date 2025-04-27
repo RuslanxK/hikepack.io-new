@@ -29,6 +29,7 @@ ${JSON.stringify(categories)}
 Your task:
 - Do NOT repeat existing categories or items.
 - Suggest ONLY missing important categories and items.
+- DO NOT suggest backpacks or bags (the user already has one).
 - Suggest 4–6 new essential categories.
 - Each category: 10–15 unique missing items (cover safety, shelter, hydration, food, navigation, emergency, cold protection).
 
@@ -62,10 +63,11 @@ Return ONLY valid pure JSON, like:
       : `
 You are a professional mountain hiking gear expert assistant.
 
-The user has no gear yet.
+The user has no gear yet, except they already have a backpack.
 
 Your task:
 - Build a full hiking gear list from basic to professional.
+- DO NOT suggest backpacks or bags (the user already has one).
 - Suggest 8–10 important categories.
 - Each category: 12–20 critical hiking items.
 
@@ -103,7 +105,7 @@ Return ONLY pure JSON formatted like:
         { role: "system", content: systemPrompt },
         { role: "user", content: input }
       ],
-      temperature: 0.3, // Lower for faster + more deterministic output
+      temperature: 0.3,
     });
 
     const message = completion.choices[0]?.message?.content;
