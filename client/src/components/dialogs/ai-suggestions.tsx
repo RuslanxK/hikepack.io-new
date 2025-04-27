@@ -239,7 +239,7 @@ export const AISuggestionsModal = ({
               </div>
             ))
           ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-center">
+            <p className="text-gray-500 dark:text-gray-400 text-center m-auto">
               Your AI suggestions will be displayed here.
             </p>
           )}
