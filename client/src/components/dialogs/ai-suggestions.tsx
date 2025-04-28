@@ -4,6 +4,8 @@ import { Category } from "@/types/category";
 import { apiService } from "@/lib/apiService";
 import { queryClient } from "@/lib/react-query-client";
 import { getRandomMidLightColor } from "@/lib/colorUtils";
+import Cookies from "js-cookie";
+import { useUser } from "@/context/user-context";
 
 export const AISuggestionsModal = ({
   isOpen,
@@ -18,13 +20,42 @@ export const AISuggestionsModal = ({
   tripId?: string;
   categories: Category[];
 }) => {
+  
   const API_URL = import.meta.env.VITE_REACT_APP_API;
+
 
   const [response, setResponse] = useState<{ categoryName: string; items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[] }[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
+  const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing the best options for your backpack...");
 
+  const { setUser } = useUser();
+
+  const loadingMessages = [
+    "Preparing the best options for your backpack...",
+    "Calculating based on your trip country and dates...",
+    "Optimizing gear by your bag's weight goal...",
+    "Analyzing the perfect hiking setup for you...",
+    "Finding the missing essentials you might need...",
+  ];
+  
+
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setCurrentLoadingMessage(prev => {
+          const currentIndex = loadingMessages.indexOf(prev);
+          const nextIndex = (currentIndex + 1) % loadingMessages.length;
+          return loadingMessages[nextIndex];
+        });
+      }, 3500);
+  
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
+
+  
   const handleAddCategoryToBag = async (categoryName: string, items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[]) => {
     try {
       const createdCategory = await apiService.post(`/categories`, {
@@ -103,7 +134,7 @@ export const AISuggestionsModal = ({
     try {
       const res = await fetch(`${API_URL}/api/ai`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": Cookies.get("token") || ""},
         body: JSON.stringify({
           input: "Suggest missing or needed hiking gear items and categories based on current bag.",
           bagId,
@@ -118,6 +149,19 @@ export const AISuggestionsModal = ({
 
       if (Array.isArray(data.suggestion)) {
         setResponse(data.suggestion);
+        const storedUser = localStorage.getItem("user");
+        if (storedUser && typeof data.newCoins === "number") {
+          const parsedUser = JSON.parse(storedUser);
+        
+          const updatedUser = {
+            ...parsedUser,
+            coins: data.newCoins, 
+          };
+        
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+          setUser(updatedUser); 
+        }
+
       } else {
         setErrorMessage("Suggestion data format is invalid.");
       }
@@ -133,6 +177,8 @@ export const AISuggestionsModal = ({
       setLoading(false);
     }
   }, [API_URL, bagId]);
+
+
 
   useEffect(() => {
     if (isOpen) {
@@ -165,7 +211,7 @@ export const AISuggestionsModal = ({
           {loading ? (
             <div className="flex flex-col items-center justify-center col-span-2">
               <div className="w-12 h-12 border-4 border-purple-400 border-dashed rounded-full animate-spin mb-4"></div>
-              <p className="text-purple-500">Fetching AI suggestions...</p>
+              <p className="text-purple-500 text-center font-semibold text-lg px-4">{currentLoadingMessage}</p>
             </div>
           ) : errorMessage ? (
             <div className="col-span-2 text-center text-red-500 font-semibold">

@@ -129,7 +129,7 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex items-center">
         <DonutChart chartData={chartData} />
       </div>
 

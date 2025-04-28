@@ -133,12 +133,16 @@ const UserProfile = () => {
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
           {user?.isAdmin ? "Admin" : "Hiker"}
         </p>
+        <div className="flex items-center justify-end">
+        <img src={"/currency-icon.svg"} alt="credits" className="w-5 h-5 rounded-full"/>
+        <span className="ml-2 text-sm">
+        <b className={(user?.coins ?? 0) > 0 ? "text-primary" : "text-red-600"}>{user?.coins ?? 0} </b> coins</span>
+        </div>
       </div>
     </div>
       <button
         onClick={handleLogout}
-        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-dark-box rounded-md"
-      >
+        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-dark-box rounded-md">
         <LogOut className="w-4 h-4" />
         <span>Logout</span>
       </button>
@@ -225,12 +229,17 @@ export function AppSidebar() {
           </SidebarGroup>
         </ScrollArea>
 
-          <div className=" ml-2 mr-2 flex items-center pt-2 pb-2 justify-center bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 rounded-md shadow-lg cursor-pointer mt-1 hover:scale-105 transition-transform duration-300" onClick={() => setIsSupportDialogOpen(true)}>
-               <Coffee className="text-white" size={20} />
-               <span className="text-sm font-bold text-white ml-2">
-                Support Us
-              </span>
-            </div>
+    
+            <Button
+                className="relative font-extrabold w-full py-4 mt-3 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500 text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-red-300 before:via-orange-300 before:to-yellow-300"
+                variant="default"
+                onClick={() => setIsSupportDialogOpen(true)}
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                Support Us <Coffee className="text-white" size={20} />
+                </span>
+            
+              </Button>
 
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         <UserProfile />

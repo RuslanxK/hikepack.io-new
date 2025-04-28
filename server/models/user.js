@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
   activityLevel: { type: String, default: "beginner" },
   country: { type: String, default: "United States" },
   isAdmin: { type: Boolean, default: false },
+  coins: {type: Number, default: 2 },
   lastLoggedIn: { type: Date, default: null },
 }, { timestamps: true });
 

@@ -10,6 +10,7 @@ export interface User {
   username?: string;
   birthdate?: string; // ISO date string
   password?: string;
+  coins?: number;
   weightOption?: 'lb' | 'kg'; // Assuming weight units
   imageUrl?: string;
   verified?: boolean;

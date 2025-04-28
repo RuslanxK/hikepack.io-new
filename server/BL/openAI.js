@@ -1,5 +1,7 @@
 const express = require('express');
 const OpenAI = require('openai');
+const User = require("../models/user")
+const authMiddleware = require("../middleware/auth")
 require('dotenv').config();
 
 const router = express.Router();
@@ -8,7 +10,7 @@ const openai = new OpenAI({
   apiKey: process.env.API_AI_KEY,
 });
 
-router.post("/ai", async (req, res) => {
+router.post("/ai", authMiddleware, async (req, res) => {
   const { input, bagId, categories } = req.body;
 
   if (!input) {
@@ -16,6 +18,16 @@ router.post("/ai", async (req, res) => {
   }
 
   try {
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.coins < 2) {
+      return res.status(403).json({ error: "Not enough coins to use this feature" });
+    }
+
     const hasExistingData = categories && categories.length > 0 && categories.some(cat => cat.categoryName?.trim() !== "" || (cat.items && cat.items.length > 0));
 
     const systemPrompt = hasExistingData
@@ -116,7 +128,9 @@ Return ONLY pure JSON formatted like:
 
     try {
       const parsed = JSON.parse(message);
-      return res.status(200).json({ suggestion: parsed });
+      user.coins -= 2;
+      await user.save();
+      return res.status(200).json({ suggestion: parsed, newCoins: user.coins });
     } catch (jsonError) {
       console.error("Failed to parse AI response as JSON:", message);
       return res.status(500).json({ error: "AI response was not valid JSON." });
