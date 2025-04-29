@@ -18,7 +18,6 @@ const WEIGHT_CONVERSION = {
 
 exports.createTrip = async (tripData, file, userId) => {
   let imageUrl = null;
-
   if (file) {
     try {
       imageUrl = await uploadToS3(file, "trips");
@@ -27,19 +26,8 @@ exports.createTrip = async (tripData, file, userId) => {
       throw new Error("Failed to upload trip image");
     }
   } else {
-    // Fetch a random hiking image from Unsplash
     try {
-      const response = await axios.get(
-        "https://api.unsplash.com/search/photos",
-        {
-          params: {
-            query: "hiking",
-            per_page: 20,
-            client_id: process.env.UNSPLASH_ACCESS_KEY, // Store your key in .env
-          },
-        }
-      );
-
+      const response = await axios.get("https://api.unsplash.com/search/photos",{ params: { query: "hiking", per_page: 20, client_id: process.env.UNSPLASH_ACCESS_KEY }});
       const results = response.data.results;
       if (results && results.length > 0) {
         const randomIndex = Math.floor(Math.random() * results.length);
@@ -53,14 +41,7 @@ exports.createTrip = async (tripData, file, userId) => {
     }
   }
 
-  const trip = new Trip({
-    ...tripData,
-    startDate: new Date(tripData.startDate),
-    endDate: new Date(tripData.endDate),
-    imageUrl,
-    owner: userId,
-  });
-
+  const trip = new Trip({...tripData, startDate: new Date(tripData.startDate), endDate: new Date(tripData.endDate), imageUrl, owner: userId });
   return await trip.save();
 };
 

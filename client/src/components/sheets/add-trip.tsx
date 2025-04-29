@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,8 @@ import { DateRange } from "react-day-picker";
 import { useFileValidator } from '@/hooks/useFileValidator';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
+import { countries } from '@/lib/apiService';
 
 
 const defaultDateRange = {
@@ -26,13 +28,12 @@ const defaultDateRange = {
 const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, isLoading, isError }) => {
   const { user } = useUser();
   const { validateFile, error: fileError, resetError } = useFileValidator(2); 
-
-
   const [date, setDate] = React.useState<DateRange | undefined>(defaultDateRange);
 
 
    const [formData, setFormData] = React.useState<TripFormData>({
     name: '',
+    country: '',
     about: '',
     startDate: defaultDateRange.from,
     endDate: defaultDateRange.to,
@@ -44,13 +45,14 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
     if (!isOpen) {
       setFormData({
         name: '',
+        country: '',
         about: '',
         startDate: defaultDateRange.from,
         endDate: defaultDateRange.to,
         distance: '',
         imageUrl: null,
       });
-      setDate(defaultDateRange); // Reset the date state
+      setDate(defaultDateRange);
       resetError();
     }
   }, [isOpen, resetError]);
@@ -63,10 +65,25 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
     }));
   }, [date]);
 
+
+  const countryOptions = useMemo(() => (
+    countries.map((country) => (
+      <SelectItem key={country.flag} value={country.name}>
+        {country.name}
+      </SelectItem>
+    ))
+  ), []);
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+  
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -104,6 +121,17 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
               placeholder="Name"
               required
             />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name">Country</Label>
+            <Select value={formData.country} onValueChange={(value) => handleSelectChange("country", value)}>
+            <SelectTrigger className="rounded-lg w-full bg-light">
+            <SelectValue placeholder="Select Country" />
+            </SelectTrigger>
+            <SelectContent>{countryOptions}</SelectContent>
+            </Select>
+
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="description">Description</Label>

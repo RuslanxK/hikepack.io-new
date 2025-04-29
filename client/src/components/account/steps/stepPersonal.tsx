@@ -13,7 +13,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { FormData } from "../../../types/form";
 import { format } from "date-fns";
 import { isBefore, endOfToday } from "date-fns";
-import useCountries from "@/hooks/useCountries";
+import { countries } from "@/lib/apiService";
 
 interface StepProps {
   formData: FormData;
@@ -21,8 +21,6 @@ interface StepProps {
 }
 
 const StepPersonal: React.FC<StepProps> = ({ formData, updateFormData }) => {
-
-const { countryNameArr} = useCountries();
 
   return (
     <div className="flex flex-wrap gap-y-6 gap-x-4">
@@ -36,8 +34,8 @@ const { countryNameArr} = useCountries();
             <SelectValue placeholder="Select Country" />
           </SelectTrigger>
           <SelectContent>
-          {countryNameArr.map((country) => (
-         <SelectItem key={country} value={country}>{country}</SelectItem>
+          {countries.map((country) => (
+         <SelectItem key={country.flag} value={country.name}>{country.name}</SelectItem>
          ))}
        </SelectContent>
         </Select>

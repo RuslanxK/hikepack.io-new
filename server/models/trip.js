@@ -7,6 +7,7 @@ const Item = require('./item')
 const tripSchema = new mongoose.Schema({
     
     name: { type: String, trim: true },
+    country: {type: String, trim: true},
     about: { type: String, trim: true },
     distance: { type: String, trim: true },
     startDate: { type: String, trim: true },

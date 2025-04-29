@@ -177,6 +177,7 @@ const TripDetails: React.FC = () => {
       }
       const updatedFormData = new FormData();
       updatedFormData.append('name', data.name);
+      updatedFormData.append('country', data.country);
       updatedFormData.append('about', data.about);
       updatedFormData.append('distance', data.distance);
   

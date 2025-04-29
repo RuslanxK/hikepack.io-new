@@ -11,11 +11,11 @@ const openai = new OpenAI({
 });
 
 router.post("/ai", authMiddleware, async (req, res) => {
-  const { input, bagId, categories } = req.body;
+  const { input = "", bagId, tripId, categories } = req.body;
 
-  if (!input) {
-    return res.status(400).json({ error: "Input is required" });
-  }
+  // if (!input) {
+  //   return res.status(400).json({ error: "Input is required" });
+  // }
 
   try {
 
@@ -118,6 +118,7 @@ Return ONLY pure JSON formatted like:
         { role: "user", content: input }
       ],
       temperature: 0.3,
+      max_tokens: 1000
     });
 
     const message = completion.choices[0]?.message?.content;

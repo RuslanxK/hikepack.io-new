@@ -15,6 +15,7 @@ import { useUser } from "@/context/user-context";
 import { isBefore, endOfToday } from "date-fns";
 import { apiService } from "@/lib/apiService";
 import BuyCoinsDialog from "../dialogs/buy-coins";
+import { countries } from "@/lib/apiService";
 
 
 const Settings: React.FC = () => {
@@ -307,16 +308,24 @@ const Settings: React.FC = () => {
         </Select>
       </div>
 
-      <div>
-        <Label htmlFor="country">Country</Label>
-        <Input
-          id="country"
-          placeholder="Country"
-          className="mt-2 bg-white w-full text-sm"
-          value={formData.country}
-          onChange={handleInputChange}
-        />
-      </div>
+      <div className="space-y-2">
+  <Label>Country</Label>
+  <Select
+    value={formData.country}
+    onValueChange={(value) => handleSelectChange("country", value)}
+  >
+    <SelectTrigger className="rounded-lg w-full">
+      <SelectValue placeholder="Select Country" />
+    </SelectTrigger>
+    <SelectContent>
+      {countries.map((country) => (
+        <SelectItem key={country.flag} value={country.name}>
+          {country.name}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+</div>
     </div>
   </div>
 </CardContent>

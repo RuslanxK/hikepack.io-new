@@ -21,6 +21,7 @@ export interface AddTripSheetProps {
 
   export interface TripFormData {
     name: string;
+    country: string;
     about: string;
     startDate:Date;
     endDate: Date;
@@ -32,6 +33,7 @@ export interface AddTripSheetProps {
   export interface TripItem {
     _id?: string;
     name: string;
+    country: string;
     about: string;
     startDate: Date;
     endDate: Date;

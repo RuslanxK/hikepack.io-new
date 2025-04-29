@@ -23,7 +23,6 @@ import { getSteps } from '../guide/steps';
 import { bagStepsConfig } from '../guide/stepsConfig';
 import { Sparkles } from 'lucide-react';
 import { AISuggestionsModal } from "../dialogs/ai-suggestions";
-import BuyCoinsDialog from "../dialogs/buy-coins";
 
 
 
@@ -40,11 +39,6 @@ const BagDetails: React.FC = () => {
   const [editBagError, setEditBagError] = useState<string | null>(null)
   const [isSettingCategories, setIsSettingCategories] = useState(true);
   const [isAISuggestionsOpen, setIsAISuggestionsOpen] = useState(false);
- const [showBuyCoinsDialog, setShowBuyCoinsDialog] = useState(false);
-
-const storedUser = localStorage.getItem("user");
-const user = storedUser ? JSON.parse(storedUser) : null;
-const userCoins = user?.coins ?? 0;
 
   const { toast } = useToast()
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
@@ -282,31 +276,13 @@ const userCoins = user?.coins ?? 0;
 
 {!isSharedView && (
   <Button
-    onClick={() => {
-      if (userCoins > 0) {
-        setIsAISuggestionsOpen(true);
-      } else {
-        setShowBuyCoinsDialog(true);
-      }
-    }}
-    className={`relative font-extrabold w-full py-6 mb-5  border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500
-      ${userCoins > 0
-        ? "text-white bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 border-purple-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400"
-        : "text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-red-300 before:via-orange-300 before:to-yellow-300"}
-    `}
+    onClick={() => setIsAISuggestionsOpen(true)}
+    className="relative font-extrabold w-full py-6 mb-5 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500
+      text-white bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 border-purple-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400"
     variant="default"
   >
     <span className="relative z-10 flex items-center gap-2">
-      {userCoins > 0 ? (
-        <>
-          GET AI SUGGESTIONS <Sparkles className="w-10 h-10" />
-        </>
-      ) : (
-        <>
-          OUT OF COINS! PURCHASE TO CONTINUE
-          <img src="/currency-icon.svg" alt="buy coins" className="w-8 h-8" />
-        </>
-      )}
+      GET AI SUGGESTIONS <Sparkles className="w-10 h-10" />
     </span>
   </Button>
 )}
@@ -332,15 +308,6 @@ const userCoins = user?.coins ?? 0;
   categories={categories}
 />
 
-<BuyCoinsDialog
-  isOpen={showBuyCoinsDialog}
-  onClose={() => setShowBuyCoinsDialog(false)}
-  onPurchase={(coinsAmount) => {
-    console.log(`User bought ${coinsAmount} coins`);
-    setShowBuyCoinsDialog(false);
-    // Reload user coins from localStorage if needed
-  }}
-/>
 
 </Fragment>
 

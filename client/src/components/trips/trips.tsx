@@ -148,6 +148,7 @@ const TripPage: React.FC = () => {
   const handleAddTripSubmit = useCallback((data: TripFormData) => {
     const newFormData = new FormData();
     newFormData.append('name', data.name);
+    newFormData.append('country', data.country);
     newFormData.append('about', data.about);
     newFormData.append('distance', data.distance);
     if (data.startDate) {

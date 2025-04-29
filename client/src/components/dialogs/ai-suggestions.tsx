@@ -29,8 +29,9 @@ export const AISuggestionsModal = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing the best options for your backpack...");
+  const [userInput, setUserInput] = useState("");
 
-  const { setUser } = useUser();
+  const { setUser, user } = useUser();
 
   const loadingMessages = [
     "Preparing the best options for your backpack...",
@@ -136,8 +137,9 @@ export const AISuggestionsModal = ({
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": Cookies.get("token") || ""},
         body: JSON.stringify({
-          input: "Suggest missing or needed hiking gear items and categories based on current bag.",
+          input: userInput,
           bagId,
+          tripId
         }),
       });
 
@@ -182,7 +184,8 @@ export const AISuggestionsModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      handleSubmit();
+      // handleSubmit()
+      alert("submit as a note")
     }
   }, [isOpen, handleSubmit]);
 
@@ -195,7 +198,7 @@ export const AISuggestionsModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-dark-box w-[90%] h-[90%] p-8 rounded-lg relative overflow-y-auto">
+      <div className="bg-white dark:bg-dark-box w-[90%] h-[90%] p-8 rounded-lg relative overflow-y-auto flex flex-col justify-between">
         <button
           onClick={handleModalClose}
           className="absolute top-4 right-4 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
@@ -203,16 +206,77 @@ export const AISuggestionsModal = ({
           <X size={24} />
         </button>
 
-        <h2 className="text-3xl font-extrabold mb-8 text-center text-purple-700 dark:text-purple-400">
-          Add AI Suggestions
-        </h2>
+  <div className="">
+  <h2 className="text-3xl font-extrabold text-left text-purple-700 dark:text-purple-400 mb-5">
+    Supercharge Your Trip with Smart AI Gear Suggestions
+  </h2>
+  <p className="text-gray-600 dark:text-gray-300 text-left mb-6 leading-relaxed">
+    Our intelligent system analyzes your trip details, goals, and country to generate optimized gear lists tailored to your needs.
+    Get smarter, lighter, and better prepared — instantly.
+  </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {loading ? (
-            <div className="flex flex-col items-center justify-center col-span-2">
-              <div className="w-12 h-12 border-4 border-purple-400 border-dashed rounded-full animate-spin mb-4"></div>
-              <p className="text-purple-500 text-center font-semibold text-lg px-4">{currentLoadingMessage}</p>
-            </div>
+  {!loading && (user?.coins ?? 0) > 0 && (
+  <div className="flex flex-col sm:flex-row items-center gap-2 relative p-6 rounded-2xl bg-gradient-to-br from-purple-100 via-white to-purple-200 dark:from-dark dark:via-dark-box dark:to-dark-box shadow-2xl hover:shadow-purple-300 dark:hover:shadow-purple-800 transition-shadow duration-300 mb-5">
+    <input
+      type="text"
+      value={userInput}
+      onChange={(e) => setUserInput(e.target.value)}
+      placeholder="Customize AI suggestions"
+      className="flex-grow w-full sm:w-fit p-3 border rounded-lg bg-gray-100 dark:bg-dark-input dark:text-white"
+    />
+    <button
+      onClick={handleSubmit}
+      disabled={!userInput.trim()}
+      className={`px-6 py-3 w-full sm:w-fit flex items-center rounded-lg font-bold transition flex justify-center ${
+        userInput.trim()
+          ? "bg-purple-500 hover:bg-purple-600 text-white"
+          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+      }`}
+    >
+      Generate 2 <img src="/currency-icon.svg" alt="coin" className="w-5 h-5 mx-1 inline-block" />
+    </button>
+  </div>
+)}
+
+
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {loading ? (
+  <div className="col-span-2 flex flex-col items-start justify-center p-6via-white dark:from-dark dark:via-dark-box dark:to-dark-box">
+  <h3 className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-6">Processing AI Suggestions...</h3>
+  <div className="relative w-full pl-6">
+    <div className="absolute top-0 left-2 w-1 h-full bg-purple-300 dark:bg-purple-700 rounded"></div>
+    <ul className="space-y-6">
+  {loadingMessages.map((msg, index) => (
+    <li key={index} className="relative flex items-center gap-3">
+      <div className="relative flex items-center justify-center w-5 h-5">
+        <div
+          className={`w-4 h-4 rounded-full shrink-0 z-10 ${
+            currentLoadingMessage === msg
+              ? 'bg-purple-600'
+              : 'bg-gray-300 dark:bg-gray-600'
+          }`}
+        />
+        {currentLoadingMessage === msg && (
+          <div className="absolute w-6 h-6 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+        )}
+      </div>
+      <span
+        className={`text-sm transition-opacity duration-300 ${
+          currentLoadingMessage === msg
+            ? 'text-gray-800 dark:text-gray-100'
+            : 'text-gray-400 dark:text-gray-500'
+        }`}
+      >
+        {msg}
+      </span>
+    </li>
+  ))}
+</ul>
+
+  </div>
+</div>
+
           ) : errorMessage ? (
             <div className="col-span-2 text-center text-red-500 font-semibold">
               {errorMessage}
@@ -224,72 +288,77 @@ export const AISuggestionsModal = ({
                 className="relative p-6 rounded-2xl bg-gradient-to-br from-purple-100 via-white to-purple-200 dark:from-dark dark:via-dark-box dark:to-dark-box shadow-2xl hover:shadow-purple-300 dark:hover:shadow-purple-800 transition-shadow duration-300"
               >
                 <div className="absolute top-4 right-4 flex items-center space-x-2">
-                  <button
-                    onClick={() => handleAddCategoryToBag(category.categoryName, category.items)}
-                    className="text-purple-500 hover:text-purple-700 transition"
-                  >
-                    <Plus />
-                  </button>
-                </div>
+  <button
+    onClick={() => handleAddCategoryToBag(category.categoryName, category.items)}
+    className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-200"
+  >
+    <Plus size={20} />
+  </button>
+</div>
 
                 <h3 className="text-xl font-bold mb-4 text-purple-700 dark:text-purple-400">
                   {category.categoryName}
                 </h3>
 
                 <ul className="list-none space-y-4 text-gray-800 dark:text-gray-300">
-                  {category.items.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start justify-between bg-white/80 dark:bg-dark-input px-6 py-4 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
-                    >
-                      <div className="flex flex-col gap-1">
-                        <span className="text-lg font-bold">{item.name}</span>
-                        <span className="text-base text-gray-600 dark:text-gray-400">{item.description}</span>
-                        <span className="text-sm mt-1 text-gray-500 dark:text-gray-500">
-                          Qty: {item.qty} · {item.weight}{item.weightOption} · Priority: {item.priority}
-                        </span>
-                      </div>
+  {category.items.map((item, idx) => (
+    <li
+      key={idx}
+      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/80 dark:bg-dark-input px-4 sm:px-6 py-4 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+    >
+      <div className="flex flex-col gap-1">
+        <span className="text-base font-bold">{item.name}</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">{item.description}</span>
+        <span className="text-xs mt-1 text-gray-500 dark:text-gray-500">
+          Qty: {item.qty} · {item.weight}{item.weightOption} · Priority: {item.priority}
+        </span>
+      </div>
 
-                      <div className="relative">
-                        <button
-                          onClick={() => setShowDropdownForItem(prev => (prev === item.name ? null : item.name))}
-                          className="text-purple-400 hover:text-purple-700 transition"
-                        >
-                          <Plus size={20} />
-                        </button>
+      <div className="relative flex-shrink-0">
+        <button
+          onClick={() => setShowDropdownForItem(prev => (prev === item.name ? null : item.name))}
+          className="bg-purple-100 hover:bg-purple-300 text-purple-800 dark:bg-purple-700 dark:hover:bg-purple-600 dark:text-white p-2 rounded-full shadow-md transition"
+        >
+          <Plus size={20} />
+        </button>
 
-                        {showDropdownForItem === item.name && (
-                          <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-dark-box border rounded shadow-lg z-50 p-2" onClick={(e) => e.stopPropagation()}>
-                            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 px-2 mb-2">
-                              Choose a Category
-                            </h3>
-                            <div className="flex flex-col space-y-1 max-h-60 overflow-y-auto">
-                              {categories.map(cat => (
-                                <div
-                                  key={cat._id}
-                                  className="px-4 py-2 whitespace-nowrap hover:bg-purple-100 dark:hover:bg-purple-900 cursor-pointer rounded"
-                                  onClick={() => handleAddItemToCategory(item, cat._id)}
-                                >
-                                  {cat.name?.trim()
-                                    ? (cat.name.length > 20 ? cat.name.slice(0, 20) + "..." : cat.name)
-                                    : "Unnamed Category"}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+        {showDropdownForItem === item.name && (
+          <div
+            className="absolute right-0 mt-2 w-64 bg-white dark:bg-dark-box border rounded shadow-lg z-50 p-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 px-2 mb-2">
+              Choose a Category
+            </h3>
+            <div className="flex flex-col space-y-1 max-h-60 overflow-y-auto">
+              {categories.map(cat => (
+                <div
+                  key={cat._id}
+                  className="px-4 py-2 whitespace-nowrap hover:bg-purple-100 dark:hover:bg-purple-900 cursor-pointer rounded"
+                  onClick={() => handleAddItemToCategory(item, cat._id)}
+                >
+                  {cat.name?.trim()
+                    ? (cat.name.length > 20 ? cat.name.slice(0, 20) + "..." : cat.name)
+                    : "Unnamed Category"}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </li>
+  ))}
+</ul>
               </div>
             ))
           ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-center m-auto">
+            <p className="text-gray-500 dark:text-gray-400">
               Your AI suggestions will be displayed here.
             </p>
           )}
         </div>
+         </div>
+
       </div>
     </div>
   );
