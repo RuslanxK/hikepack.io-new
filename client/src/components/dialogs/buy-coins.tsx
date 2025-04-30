@@ -26,7 +26,7 @@ const BuyCoinsDialog: React.FC<BuyCoinsDialogProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="p-4 md:p-6 max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold text-purple-700">
+          <DialogTitle className="text-center text-2xl font-bold">
             Get More Coins
           </DialogTitle>
           <DialogDescription className="text-center text-gray-500 mt-1">

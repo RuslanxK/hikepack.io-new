@@ -6,6 +6,9 @@ import { queryClient } from "@/lib/react-query-client";
 import { getRandomMidLightColor } from "@/lib/colorUtils";
 import Cookies from "js-cookie";
 import { useUser } from "@/context/user-context";
+import { Sparkles } from 'lucide-react';
+import { Button } from "../ui/button";
+
 
 export const AISuggestionsModal = ({
   isOpen,
@@ -31,7 +34,7 @@ export const AISuggestionsModal = ({
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing the best options for your backpack...");
   const [userInput, setUserInput] = useState("");
 
-  const { setUser, user } = useUser();
+  const { setUser } = useUser();
 
   const loadingMessages = [
     "Preparing the best options for your backpack...",
@@ -132,6 +135,7 @@ export const AISuggestionsModal = ({
     setResponse([]);
     setErrorMessage(null);
 
+
     try {
       const res = await fetch(`${API_URL}/api/ai`, {
         method: "POST",
@@ -178,16 +182,8 @@ export const AISuggestionsModal = ({
     } finally {
       setLoading(false);
     }
-  }, [API_URL, bagId]);
+  }, [API_URL, bagId, tripId, userInput, setUser]);
 
-
-
-  useEffect(() => {
-    if (isOpen) {
-      // handleSubmit()
-      alert("submit as a note")
-    }
-  }, [isOpen, handleSubmit]);
 
   if (!isOpen) return null;
 
@@ -207,45 +203,70 @@ export const AISuggestionsModal = ({
         </button>
 
   <div className="">
-  <h2 className="text-3xl font-extrabold text-left text-purple-700 dark:text-purple-400 mb-5">
-    Supercharge Your Trip with Smart AI Gear Suggestions
-  </h2>
-  <p className="text-gray-600 dark:text-gray-300 text-left mb-6 leading-relaxed">
-    Our intelligent system analyzes your trip details, goals, and country to generate optimized gear lists tailored to your needs.
-    Get smarter, lighter, and better prepared — instantly.
-  </p>
-
-  {!loading && (user?.coins ?? 0) > 0 && (
-  <div className="flex flex-col sm:flex-row items-center gap-2 relative p-6 rounded-2xl bg-gradient-to-br from-purple-100 via-white to-purple-200 dark:from-dark dark:via-dark-box dark:to-dark-box shadow-2xl hover:shadow-purple-300 dark:hover:shadow-purple-800 transition-shadow duration-300 mb-5">
-    <input
-      type="text"
-      value={userInput}
-      onChange={(e) => setUserInput(e.target.value)}
-      placeholder="Customize AI suggestions"
-      className="flex-grow w-full sm:w-fit p-3 border rounded-lg bg-gray-100 dark:bg-dark-input dark:text-white"
-    />
-    <button
-      onClick={handleSubmit}
-      disabled={!userInput.trim()}
-      className={`px-6 py-3 w-full sm:w-fit flex items-center rounded-lg font-bold transition flex justify-center ${
-        userInput.trim()
-          ? "bg-purple-500 hover:bg-purple-600 text-white"
-          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-      }`}
-    >
-      Generate 2 <img src="/currency-icon.svg" alt="coin" className="w-5 h-5 mx-1 inline-block" />
-    </button>
+  {!loading && (
+  response.length === 0 ? (
+    <div className="w-full mb-10">
+    <div className="flex flex-col-reverse md:flex-row items-center gap-10 p-10 dark:from-dark dark:via-dark-box dark:to-dark-box">
+      
+      {/* Text Section */}
+     { <div className="w-full md:w-1/2 flex flex-col items-start text-left space-y-5 p-10">
+        <h3 className="text-3xl font-extrabold  leading-snug">
+          Gear Up Smartly for Your Next Adventure
+        </h3>
+        <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+        Powered by advanced AI, our system evaluates your trip details, bag specifications, and personal preferences to generate a highly curated checklist — as if crafted by a professional hiker with decades of experience. It ensures you're fully equipped, from core necessities to specialized gear, leaving no critical item behind.
+        </p>
+        <Button
+          onClick={handleSubmit}
+          className="mt-4 px-8 py-3 bg-primary hover:bg-primary text-white  font-bold rounded-md hover:bg-primary/90"
+        >
+          GENERATE AI SUGGESTIONS NOW
+          <Sparkles />
+        </Button>
+      </div>}
+  
+      {/* Image Section */}
+      <div className="w-full md:w-1/2">
+        <img
+          src="/hiker.webp"
+          alt="Hiker in the mountains"
+          className="w-full object-cover shadow-lg rounded"
+        />
+      </div>
+    </div>
   </div>
+  ) : (
+    <div className="flex flex-col sm:flex-row items-center gap-2 relative p-6 rounded-2xl bg-gradient-to-br from-purple-100 via-white to-purple-200 dark:from-dark dark:via-dark-box dark:to-dark-box shadow-2xl hover:shadow-purple-300 dark:hover:shadow-purple-800 transition-shadow duration-300 mb-5">
+      <input
+        type="text"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
+        placeholder="Refine AI suggestions..."
+        className="flex-grow w-full sm:w-fit p-3 border rounded-lg bg-gray-100 dark:bg-dark-input dark:text-white"
+      />
+      <button
+        onClick={handleSubmit}
+        disabled={!userInput.trim()}
+        className={`px-6 py-3 w-full sm:w-fit flex items-center rounded-lg font-bold transition flex justify-center ${
+          userInput.trim()
+            ? "bg-purple-500 hover:bg-primary text-white"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        }`}
+      >
+        Regenerate 2 <img src="/currency-icon.svg" alt="coin" className="w-5 h-5 mx-1 inline-block" />
+      </button>
+    </div>
+  )
 )}
 
 
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   {loading ? (
-  <div className="col-span-2 flex flex-col items-start justify-center p-6via-white dark:from-dark dark:via-dark-box dark:to-dark-box">
-  <h3 className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-6">Processing AI Suggestions...</h3>
-  <div className="relative w-full pl-6">
-    <div className="absolute top-0 left-2 w-1 h-full bg-purple-300 dark:bg-purple-700 rounded"></div>
+  <div className="col-span-2 flex flex-col items-center justify-center p-6via-white dark:from-dark dark:via-dark-box dark:to-dark-box">
+  <h3 className="text-3xl font-bold mb-8">Processing AI Suggestions...</h3>
+  <div className="relative w-full pl-6 flex justify-center">
+
     <ul className="space-y-6">
   {loadingMessages.map((msg, index) => (
     <li key={index} className="relative flex items-center gap-3">
@@ -253,16 +274,16 @@ export const AISuggestionsModal = ({
         <div
           className={`w-4 h-4 rounded-full shrink-0 z-10 ${
             currentLoadingMessage === msg
-              ? 'bg-purple-600'
+              ? 'bg-primary'
               : 'bg-gray-300 dark:bg-gray-600'
           }`}
         />
         {currentLoadingMessage === msg && (
-          <div className="absolute w-6 h-6 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+          <div className="absolute w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         )}
       </div>
       <span
-        className={`text-sm transition-opacity duration-300 ${
+        className={`text-md transition-opacity duration-300 ${
           currentLoadingMessage === msg
             ? 'text-gray-800 dark:text-gray-100'
             : 'text-gray-400 dark:text-gray-500'
@@ -351,11 +372,7 @@ export const AISuggestionsModal = ({
 </ul>
               </div>
             ))
-          ) : (
-            <p className="text-gray-500 dark:text-gray-400">
-              Your AI suggestions will be displayed here.
-            </p>
-          )}
+          ) : null}
         </div>
          </div>
 
