@@ -37,12 +37,14 @@ const BuyCoinsDialog: React.FC<BuyCoinsDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="p-6 md:p-8 max-w-3xl rounded-xl shadow-xl border-2 border-yellow-200 bg-white dark:bg-dark-box">
+      <DialogContent
+        className="p-4 sm:p-6 w-[90vw] sm:w-auto sm:max-w-2xl lg:max-w-4xl max-h-[calc(100vh-2rem)] overflow-y-auto rounded-xl shadow-xl border-2 border-yellow-200 bg-white dark:bg-dark-box"
+      >
         <DialogHeader>
-          <DialogTitle className="text-center text-3xl font-extrabold text-primary">
+          <DialogTitle className="text-center text-2xl sm:text-3xl font-extrabold text-primary">
             Buy More Coins ✨
           </DialogTitle>
-          <DialogDescription className="text-center text-gray-600 dark:text-gray-300 mt-2">
+          <DialogDescription className="text-center text-sm sm:text-base text-gray-600 dark:text-gray-300 mt-1 sm:mt-2">
             Choose the best deal for your journey.
           </DialogDescription>
         </DialogHeader>

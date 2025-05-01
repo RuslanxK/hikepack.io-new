@@ -9,6 +9,7 @@ const categoryRouter = require("./routers/categoryRouter")
 const itemRouter = require("./routers/itemRouter")
 const articleRouter = require('./routers/articleRouter')
 const changeLogRouter = require("./routers/changelogRouter")
+const reportRouter = require("./routers/reportRouter")
 const { Server } = require('socket.io');
 const http = require('http');
 const User = require("./models/user")
@@ -47,6 +48,7 @@ app.use('/api/categories', categoryRouter)
 app.use('/api/items', itemRouter)
 app.use('/api/articles', articleRouter)
 app.use('/api/changelogs', changeLogRouter)
+app.use('/api/report', reportRouter);
 
 app.get('/', (req, res) => {
   res.send('Server is running!');

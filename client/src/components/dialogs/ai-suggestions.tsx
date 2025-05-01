@@ -213,7 +213,7 @@ export const AISuggestionsModal = ({
   {!loading && (
   response.length === 0 ? (
     <div className="flex flex-1 items-center justify-center h-full">
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center bg-primary/10 gap-10 p-10 rounded-lg max-w-5xl w-full">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center bg-primary/10 gap-10 p-4 sm:p-10 rounded-lg max-w-5xl w-full">
    { <div className="w-full md:w-1/2 flex flex-col items-start text-left space-y-5 max-w-[500px]">
      <h3 className="text-3xl font-extrabold text-black dark:text-white relative z-10 flex items-center gap-2">
           Gear Up Smartly for Your Next Adventure

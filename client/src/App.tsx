@@ -69,7 +69,7 @@ function App() {
             <Route path="/community" element={<Community/>}/>
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/changelog" element={<ChangeLog/>}/>
-            <Route path="/bug-report" element={<ReportBug/>}/>
+            <Route path="/contact-us" element={<ReportBug/>}/>
             <Route path="/admin" element={<AdminPanel liveUsers={liveUsers} />}/>
             </Route>
          

@@ -216,7 +216,7 @@ export function AppSidebar() {
     { title: "Community", url: "/community", icon: Users },
     { title: "Settings", url: "/settings", icon: Settings },
     { title: "Changelog", url: "/changelog", icon: FileText },
-    { title: "Report a Bug", url: "/bug-report", icon: ShieldAlert,  },
+    { title: "Contact us", url: "/contact-us", icon: ShieldAlert,  },
     ...(user?.isAdmin ? [{ title: "Admin Panel", url: "/admin", icon: Shield }] : []),
    
   ];

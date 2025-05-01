@@ -4,7 +4,7 @@ import { StepConfig } from './steps';
 export const homeStepsConfig: StepConfig[] = [
   {
     target: '.add-trip-button',
-    content: 'Click here to add your trip!',
+    content: `Click here to add your trip!`,
     disableInteraction: false, // allow interaction to prevent overlay issues
     disableScrolling: true,
     spotlightClicks: true,    
