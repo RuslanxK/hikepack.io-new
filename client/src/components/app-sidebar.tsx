@@ -14,7 +14,15 @@ import { Coffee } from "lucide-react";
 import SupportUsDialog from "./dialogs/support-us";
 import Cookies from "js-cookie";
 import { useSidebar } from "@/components/ui/sidebar";
+import BuyCoinsDialog from "./dialogs/buy-coins";
 
+
+
+const colorfulButtonClass =
+  "relative font-extrabold w-full py-4 mt-3 border-4 shadow-2xl overflow-hidden transition-all duration-500 " +
+  "before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500 " +
+  "text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 " +
+  "before:bg-gradient-to-r before:from-red-300 before:via-orange-300 before:to-yellow-300";
 
 
 const fetchRecentBags = async (limit: number = 5): Promise<BagItem[]> => {
@@ -101,6 +109,7 @@ const ThemeToggle = ({ theme, toggleTheme }: { theme: string; toggleTheme: () =>
 const UserProfile = () => {
   const { user } = useUser();
   const { setTheme } = useTheme();
+  const [showBuyCoins, setShowBuyCoins] = useState(false);
 
   const handleLogout = () => {
     Cookies.remove("token");
@@ -120,6 +129,7 @@ const UserProfile = () => {
 
   return (
     <div className="p-4 border-t border-gray-200 dark:border-dark-box cursor-pointer">
+      
     <div className="flex items-center gap-3 mb-4" onClick={handleClick}>
       <img
         src={user?.imageUrl || "/default-profile-placeholder.png"}
@@ -133,19 +143,38 @@ const UserProfile = () => {
         <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
           {user?.isAdmin ? "Admin" : "Hiker"}
         </p>
-        <div className="flex items-center justify-end">
+       
+      </div>
+      
+    </div>
+
+    <div className="flex items-center justify-end" onClick={() => setShowBuyCoins(true)}>
         <img src={"/currency-icon.svg"} alt="credits" className="w-5 h-5 rounded-full"/>
         <span className="ml-2 text-sm">
         <b className={(user?.coins ?? 0) > 0 ? "text-primary" : "text-red-600"}>{user?.coins ?? 0} </b> coins</span>
         </div>
-      </div>
-    </div>
+
       <button
         onClick={handleLogout}
         className="w-full flex items-center gap-2 px-4 py-2 text-sm text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-dark-box rounded-md">
         <LogOut className="w-4 h-4" />
         <span>Logout</span>
       </button>
+
+
+      <BuyCoinsDialog
+      isOpen={showBuyCoins}
+      onClose={() => setShowBuyCoins(false)}
+      onPurchase={(coinsAmount) => {
+        console.log(`User selected to buy ${coinsAmount} coins`);
+        setShowBuyCoins(false);
+    
+        // TODO: here you trigger your payment flow (Stripe, etc.)
+        alert(`You purchased ${coinsAmount} coins!`);
+      }}
+    />
+
+    
     </div>
   );
 };
@@ -153,6 +182,7 @@ const UserProfile = () => {
 export function AppSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isSupportDialogOpen, setIsSupportDialogOpen] = useState(false)
+  
   const { user } = useUser();
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
@@ -230,16 +260,17 @@ export function AppSidebar() {
         </ScrollArea>
 
         <div className="px-4">
-            <Button
-                className="relative font-extrabold w-full py-4 mt-3 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500 text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-red-300 before:via-orange-300 before:to-yellow-300"
-                variant="default"
-                onClick={() => setIsSupportDialogOpen(true)}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                Support Us <Coffee className="text-white" size={20} />
-                </span>
-            
-              </Button>
+        <Button
+  className={colorfulButtonClass}
+  variant="default"
+  onClick={() => setIsSupportDialogOpen(true)}
+>
+  <span className="relative z-10 flex items-center gap-2">
+    Support Us <Coffee className="text-white" size={20} />
+  </span>
+</Button>
+
+
               </div>
 
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
@@ -247,6 +278,7 @@ export function AppSidebar() {
       </SidebarContent>
     </Sidebar>
     <SupportUsDialog isOpen={isSupportDialogOpen} onClose={closeDialog} />
+
 
   </Fragment>
   );

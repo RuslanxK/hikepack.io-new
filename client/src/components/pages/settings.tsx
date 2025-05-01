@@ -14,7 +14,6 @@ import { User } from "@/types/login";
 import { useUser } from "@/context/user-context";
 import { isBefore, endOfToday } from "date-fns";
 import { apiService } from "@/lib/apiService";
-import BuyCoinsDialog from "../dialogs/buy-coins";
 import { countries } from "@/lib/apiService";
 
 
@@ -26,7 +25,6 @@ const Settings: React.FC = () => {
 
   const [showCheck, setShowCheck] = useState(false); 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [showBuyCoins, setShowBuyCoins] = useState(false);
 
   const [formData, setFormData] = useState<User>({
     _id: initialUser._id || "",
@@ -170,16 +168,7 @@ const Settings: React.FC = () => {
         />
       </div>
 
-    <Button
-    className="relative font-extrabold w-full py-4 mt-3 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500 text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-red-300 before:via-orange-300 before:to-yellow-300"
-    variant="default"
-    onClick={() => setShowBuyCoins(true)}
-  >
-    <span className="relative z-10 flex items-center gap-2">
-    Purchase Coins  <img src={"/currency-icon.svg"} alt="credits" className="w-5 h-5 rounded-full"/>
-    </span>
-
-  </Button>
+  
     </div>
 
     {/* Form Fields Grid */}
@@ -330,19 +319,6 @@ const Settings: React.FC = () => {
   </div>
 </CardContent>
       </Card>
-
-
-      <BuyCoinsDialog
-  isOpen={showBuyCoins}
-  onClose={() => setShowBuyCoins(false)}
-  onPurchase={(coinsAmount) => {
-    console.log(`User selected to buy ${coinsAmount} coins`);
-    setShowBuyCoins(false);
-
-    // TODO: here you trigger your payment flow (Stripe, etc.)
-    alert(`You purchased ${coinsAmount} coins!`);
-  }}
-/>
 
     </Fragment>
   );
