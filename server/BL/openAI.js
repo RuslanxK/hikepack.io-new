@@ -46,6 +46,7 @@ The user provided the following instruction:
 Your task:
 - ONLY suggest gear related to hiking and outdoor trip preparation.
 - DO NOT suggest non-hiking categories (e.g., games, indoor activities, general gadgets).
+- DO NOT include bags/backpacks
 - Return categories with gear items strictly for hiking.
 
 ✅ FORMAT:

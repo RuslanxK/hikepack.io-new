@@ -104,7 +104,7 @@ const ReportBug: React.FC = () => {
         <Label htmlFor="bug-title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         Choose an option
 </Label>
-<Select onValueChange={setTitle} value={title}>
+<Select onValueChange={setTitle} required value={title}>
   <SelectTrigger className="mt-2 w-full rounded-lg dark:bg-dark-item bg-gray-100">
     <SelectValue placeholder="Select a topic" />
   </SelectTrigger>
@@ -122,6 +122,7 @@ const ReportBug: React.FC = () => {
     </label>
     <Textarea
       id="bug-description"
+      required
       placeholder="Provide a detailed description"
       value={description}
       onChange={(e) => setDescription(e.target.value)}
