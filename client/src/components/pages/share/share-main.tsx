@@ -28,7 +28,7 @@ const ShareMain = () => {
     <Container>
     <div className="w-full lg:w-4/5 m-auto">
       <div className="flex flex-col mb-5 bg-transparent dark:bg-transparent">
-        <div className="flex items-center bg-white rounded-lg gap-4 p-6">
+        <div className="flex items-center bg-white dark:bg-dark-box rounded-lg gap-4 p-6 ">
           <img
             src={data?.user.imageUrl || "/default-profile-placeholder.png"}
             alt={data?.user.username}
@@ -41,7 +41,7 @@ const ShareMain = () => {
             <p className="text-gray-600 dark:text-gray-400">{data?.user.country}</p>
           </div>
         </div>
-        <div className="flex items-start mt-5 rounded-lg p-6 bg-white">
+        <div className="flex items-start mt-5 rounded-lg p-6 bg-white dark:bg-dark-box">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{data?.trip.name}</h2>
             {data?.trip.about && (
