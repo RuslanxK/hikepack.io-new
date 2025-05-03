@@ -26,7 +26,7 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
     (bag) =>
       bag.bagName.toLowerCase().includes(bagSearchTerm.toLowerCase()) ||
       bag.ownerName.toLowerCase().includes(bagSearchTerm.toLowerCase())
-  );
+  ).sort((a, b) => b.likes - a.likes)
 
 
   const truncate = (text: string, maxLength: number) => {

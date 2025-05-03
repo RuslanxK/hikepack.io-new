@@ -11,7 +11,7 @@ const router = express.Router();
 const openai = new OpenAI({ apiKey: process.env.API_AI_KEY });
 
 router.post("/ai", authMiddleware, async (req, res) => {
-  const { input, bagId, tripId } = req.body;
+  const { input, bagId, tripId, itemNamesOnly } = req.body;
 
   try {
     const user = await User.findById(req.user._id);
@@ -133,7 +133,14 @@ Your task is to suggest a **complete and personalized list** of gear, tools, foo
 ❗ ABSOLUTELY NO other text. Just a JSON array starting with [ and ending with ].
 `;
 
-    const systemPrompt = input?.trim() ? userNotePrompt : fullSystemPrompt;
+const existingItemNames = Array.isArray(itemNamesOnly) && itemNamesOnly.length
+? `\nThe user already has the following items: ${itemNamesOnly.join(", ")}.\nDo NOT suggest any item that is the same or very similar.\n`
+: "";
+
+const systemPrompt = input?.trim()
+? userNotePrompt + existingItemNames
+: fullSystemPrompt + existingItemNames;
+
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4.1",

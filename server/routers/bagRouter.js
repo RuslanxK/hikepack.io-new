@@ -13,7 +13,8 @@ const {
   getLatestBags,
   getBagById,
   getCommunityBags,
-  getTripAndUserByBagId
+  getTripAndUserByBagId,
+  updateBagLikes
 } = require("../BL/bagBL");
 
 router.post("/", authMiddleware, upload.single("imageUrl"), async (req, res) => {
@@ -68,6 +69,25 @@ router.put("/:id", authMiddleware, upload.single("imageUrl"), async (req, res) =
     res.status(500).json({ message: "Failed to update bag", error: error.message });
   }
 });
+
+
+router.patch("/:id/like", async (req, res) => {
+  try {
+    const bagId = req.params.id;
+    const { action } = req.body;
+
+    if (!['like', 'unlike'].includes(action)) {
+      return res.status(400).json({ message: "Action must be 'like' or 'unlike'" });
+    }
+
+    const updatedBag = await updateBagLikes(bagId, action);
+    res.status(200).json(updatedBag);
+  } catch (error) {
+    console.error("Error updating bag likes:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 router.get("/latest", authMiddleware, async (req, res) => {
   try {

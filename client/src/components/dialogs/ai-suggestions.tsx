@@ -46,6 +46,11 @@ export const AISuggestionsModal = ({
   ];
   
 
+  const itemNamesOnly = categories.flatMap(category =>
+    category.items?.map(item => item.name) || []
+  );
+
+
   useEffect(() => {
     if (loading) {
       const interval = setInterval(() => {
@@ -155,7 +160,8 @@ export const AISuggestionsModal = ({
         body: JSON.stringify({
           input: userInput,
           bagId,
-          tripId
+          tripId,
+          itemNamesOnly
         }),
       });
   

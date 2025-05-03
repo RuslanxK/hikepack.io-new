@@ -32,7 +32,7 @@ const Welcome = () => {
   <div className='flex items-center justify-between w-full'>
     {/* Left side on desktop: logo + navLinks */}
     <div className="flex items-center space-x-12">
-      <img src='/logo-black.png' width={75} alt='logo' className='cursor-pointer' />
+      <img src='/logo-black.png' width={85} alt='logo' className='cursor-pointer' />
       <div className='hidden md:flex space-x-6'>
         {navLinks.map(({ name, path }) => (
           <Link key={name} to={path} className='text-sm text-black hover:text-green-600'>

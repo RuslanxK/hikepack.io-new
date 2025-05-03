@@ -284,3 +284,33 @@ exports.getTripAndUserByBagId = async (bagId) => {
 
   return { trip, user };
 };
+
+
+exports.updateBagLikes = async (bagId, action) => {
+  if (!mongoose.Types.ObjectId.isValid(bagId)) {
+    throw new Error("Invalid Bag ID format");
+  }
+
+  const update = action === "like" ? { $inc: { likes: 1 } } : { $inc: { likes: -1 } };
+  const updatedBag = await Bag.findByIdAndUpdate(bagId, update, { new: true });
+
+  if (!updatedBag) {
+    throw new Error("Bag not found or update failed");
+  }
+
+  return updatedBag;
+};
+
+exports.createBag = async (bagData, file, userId) => {
+  let imageUrl = bagData.imageUrl || null; 
+  if (file) {
+    try {
+      imageUrl = await uploadToS3(file, "bags"); 
+    } catch (err) {
+      console.error("Error uploading bag image to S3:", err);
+      throw new Error("Failed to upload bag image");
+    }
+  }
+  const bag = new Bag({...bagData, imageUrl: imageUrl, owner: userId });
+  return await bag.save();
+};

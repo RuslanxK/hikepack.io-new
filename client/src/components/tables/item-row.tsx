@@ -346,7 +346,11 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
   <TooltipButton
     icon={<Image size={14} className={`${formData.imageUrl ? "text-primary" : ""}`}/>}
     tooltipText={isSharedView ? "Item Image" : "Add an image"}
-    onClick={() => setIsImageDialogOpen(true)}
+    onClick={() => {
+      if (!isSharedView || formData.imageUrl) {
+        setIsImageDialogOpen(true);
+      }
+    }}
   />
   <TooltipButton
     icon={<Shirt size={14} className={`${formData.worn ? "text-secondary" : ""}`} />}
@@ -363,7 +367,11 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
   <TooltipButton
     icon={<Link size={14} className={`${formData.link?.length > 0 ? "text-blue-500" : ""}`} />}
     tooltipText={isSharedView ? "Item Link" : "Add a link"}
-    onClick={() => setIsLinkDialogOpen(true)}
+    onClick={() => {
+      if (!isSharedView || formData.link) {
+        setIsLinkDialogOpen(true);
+      }
+    }}
   />
 </TableCell>
     </TableRow>

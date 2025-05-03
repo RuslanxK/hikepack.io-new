@@ -13,7 +13,7 @@ const bagSchema = new mongoose.Schema({
     description: { type: String, trim: true },
     goal: { type: String, min: '0' },
     passed: { type: Boolean, default: false },
-    likes: { type: Number, default: 0 },
+    likes: { type: Number, default: 0, min: 0 },
     exploreBags: {type: Boolean, default: false},
     imageUrl: String,
     owner: {
