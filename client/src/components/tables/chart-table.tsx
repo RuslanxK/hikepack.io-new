@@ -110,26 +110,33 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
       <span className="text-sm text-gray-500">{goal} {user?.weightOption}</span>
     </div>
 
-    {goal && !isNaN(Number(goal)) && (() => {
-      const percentage = (totalBaseWeight / parseFloat(goal)) * 100;
-      const isOver = percentage > 100;
-      const safePercent = Math.min(percentage, 100).toFixed(0);
-      return (
-        <>
-          <div className="flex justify-between items-center mb-1">
-            <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
-              {percentage.toFixed(0)}%
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-            <div
-              className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
-              style={{ width: `${safePercent}%` }}
-            />
-          </div>
-        </>
-      );
-    })()}
+   {goal && !isNaN(Number(goal)) && (() => {
+  // Use consistent unit for percentage logic
+  const userUnit = (user?.weightOption || "lb") as keyof typeof WEIGHT_CONVERSION;
+
+  const baseWeightInUserUnit = convertWeight(totalBaseWeight, weightUnit, userUnit);
+  const goalWeightInUserUnit = parseFloat(goal);
+
+  const percentage = (baseWeightInUserUnit / goalWeightInUserUnit) * 100;
+  const isOver = percentage > 100;
+  const safePercent = Math.min(percentage, 100).toFixed(0);
+
+  return (
+    <>
+      <div className="flex justify-between items-center mb-1">
+        <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
+          {percentage.toFixed(0)}%
+        </span>
+      </div>
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+        <div
+          className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
+          style={{ width: `${safePercent}%` }}
+        />
+      </div>
+    </>
+  );
+})()}
   </div>
 </div>
 
