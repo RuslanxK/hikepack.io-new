@@ -22,6 +22,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [category, setCategory] = useState(data.name); 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [addingItem, setAddingItem] = useState(false)
   const [items, setItems] = useState(() =>
     (data.items ?? []).slice().sort((a, b) => (a.order || 0) - (b.order || 0))
   );
@@ -43,12 +44,16 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
     saveNewItem();
   };
 
+
   const { mutate: saveNewItem } = useMutation({
+
     mutationFn: async () => {
+    setAddingItem(true)
     return await createItem({tripId: data.tripId, bagId: data.bagId, categoryId: data._id, name: "", description: "", qty: 1, weight: 0.1, weightUnit: "lb", priority: "Low", worn: false})},
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["items", data.tripId, data.bagId, data._id] });
       queryClient.invalidateQueries({ queryKey: ["categories", data.bagId] });
+      setAddingItem(false)
     },
     onError: (error) => {
       console.error("Failed to create item:", error);
@@ -57,8 +62,12 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
         variant: "destructive",
         description: error?.message,
       });
+
+      setAddingItem(false)
     },
   });
+
+
 
   const { mutate: deleteCategory, isPending } = useMutation({
     mutationFn: async () => {
@@ -231,7 +240,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
 
        {!isSharedView && (
       <div className="flex gap-2 p-2">
-        <Button variant="ghost" size="sm" onClick={handleAddItem}>
+        <Button variant="ghost" size="sm" onClick={handleAddItem} disabled={addingItem} >
           <ListPlus /> Add Item 
         </Button>
         {selectedItems.length > 0 && (

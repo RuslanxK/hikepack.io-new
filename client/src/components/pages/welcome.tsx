@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaWandMagicSparkles, FaUser } from "react-icons/fa6";
-import { HiCheckCircle } from 'react-icons/hi';
 import TryItNowSection from './try-it-now';
 import { AlignJustify } from 'lucide-react';
 import { X } from 'lucide-react';
@@ -60,7 +59,7 @@ const Welcome = () => {
           Login <FaUser size={18} className="ml-2 text-gray-400" />
         </Link>
         <button
-          className="bg-primary text-white text-sm px-4 py-2 rounded-lg hover:bg-orange"
+          className="bg-primary text-white text-sm px-4 py-2 rounded-lg hover:bg-secondary"
           onClick={() => navigate('/register')}
         >
           Get Started
@@ -120,17 +119,16 @@ const Welcome = () => {
       {/* Hero Section */}
       <main className="pt-16 bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/homepage-background.webp')" }}>
         <h1 className='text-white text-4xl sm:text-5xl md:text-6xl font-bold text-center mt-16 px-4'>
-          Elevate Your Hiking <br /> <span className='text-orange'>Experience</span>
+          Pack Smarter. Hike <br /> <span className='text-secondary'>Farther.</span>
         </h1>
 
-        <div className='mt-8 flex flex-col md:flex-row justify-center items-center text-center space-y-4 md:space-x-8 md:space-y-0 px-4'>
-          {["Discover the future of hiking", "Track your journey effortlessly", "Share your adventures globally"].map(text => (
-            <div key={text} className='flex items-center space-x-2'>
-              <HiCheckCircle className='text-secondary' size={22} />
-              <p className='text-md text-white opacity-80'>{text}</p>
-            </div>
-          ))}
-        </div>
+       <div className="mt-8 px-4 w-full max-w-5xl mx-auto text-center">
+  <p className="text-white text-lg sm:text-xl md:text-xl leading-relaxed">
+    Set out on your next adventure with total confidence. <br className="hidden sm:block" />
+    HikePack is your ultimate tool for organizing and managing your hiking gear,
+    ensuring every ounce counts and every item has its place.
+  </p>
+</div>
 
         <div className='mt-12 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-x-4 md:space-y-0 px-4 text-center'>
           <div className='flex'>
@@ -175,32 +173,89 @@ const Welcome = () => {
         `}
       </style>
 
+
+
+
+
+
+
+<section className="bg-theme-bgGray py-20 px-4">
+  <div className="text-center mb-12">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+      <span className="text-black">Why Choose </span>
+      <span className="text-primary">HikePack</span>
+    </h2>
+    <p className="text-gray-600 text-sm sm:text-base mt-3 max-w-xl mx-auto">
+      From AI-powered packing to community sharing — here's why HikePack stands out.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+    {[
+      {
+        title: "Pack Like a Pro",
+        text: "Create custom gear lists, categorize your equipment, and track weight with precision. Whether you're a weekend warrior or thru-hiker, you’ll stay organized and light on your feet.",
+        icon: "🎒",
+      },
+      {
+        title: "Smarter Packing with Built-in AI",
+        text: "HikePack’s intelligent assistant gives you helpful suggestions based on your trip type, pack weight, weather, and past gear. It’s like having an experienced guide — minus the judgment.",
+        icon: "🤖",
+      },
+      {
+        title: "Discover & Share",
+        text: "Explore curated gear lists from fellow hikers around the world. Share your own setups and get inspired by how others tackle the trail.",
+        icon: "🌍",
+      },
+      {
+        title: "Tailored Trip Planning",
+        text: "From a single-day hike to a month-long trek, HikePack adapts to your adventure. Add, organize, and tweak your gear list with ease.",
+        icon: "🗺️",
+      },
+    ].map(({ title, text, icon }) => (
+      <div
+        key={title}
+        className="border-2 border-secondary/20 bg-white rounded-2xl p-6 sm:p-8 flex flex-col "
+      >
+        <div className="text-4xl mb-4">{icon}</div>
+        <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2">{title}</h3>
+        <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{text}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
+
+
+
       <section className='bg-white py-12 text-center'>
         <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-12 px-4'>
-          Discover the <span className='text-primary'>Future of Hiking</span>
+          Features  <span className='text-primary'>You’ll Love</span>
         </h2>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-10 place-items-center max-w-full md:w-[800px] m-auto'>
 
         {[
   {
     img: "weight-analysis",
-    title: "Weight Distribution Analytics",
-    text: "Optimize your pack for maximum comfort and efficiency.",
+    title: "Weight Tracking",
+    text: "Know your total pack weight, item by item.",
   },
   {
     img: "custom-order",
-    title: "Customizable Packing Lists",
-    text: "Tailor your packing list to your specific hike and preference.",
+    title: "Custom Gear Lists",
+    text: "Build and manage detailed lists by category.",
   },
   {
     img: "navigation",
-    title: "User-Friendly Interface",
-    text: "Navigate with ease and efficiency.",
+    title: "Smart AI Suggestions",
+    text: "Get intelligent tips to optimize your load.",
   },
   {
     img: "community",
     title: "Community Sharing",
-    text: "Join a community of like-minded hikers.",
+    text: "Tap into a global network of hikers.",
   },
 ].map(({ img, title, text }) => (
   <div
@@ -218,6 +273,23 @@ const Welcome = () => {
 ))}
         </div>
       </section>
+
+    <section className="bg-primary text-white text-center py-20 px-4">
+  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 drop-shadow-sm">
+    🌄 Ready to Hike <span className="text-yellow-200">Smarter</span>?
+  </h2>
+  <p className="text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-10">
+    Join thousands of hikers using HikePack to plan better, pack lighter, and hit the trail with confidence.
+  </p>
+  <button
+    onClick={() => navigate('/register')}
+    className="bg-white text-primary font-semibold text-sm sm:text-base px-8 py-3 rounded-md shadow-md transition-all duration-300 hover:scale-105"
+  >
+    Get Started Now
+  </button>
+</section>
+
+
 
       {/* TryItNowSection */}
       <section ref={tryDemoRef} className='bg-theme-bgGray py-12 text-center'>
@@ -249,7 +321,7 @@ const Welcome = () => {
         },
         {
           title: "Follow Us",
-          items: ["https://facebook.com", "https://twitter.com", "https://instagram.com"],
+          items: ["https://www.facebook.com/hikepack.io", "https://twitter.com", "https://instagram.com"],
           names: ["Facebook", "Twitter", "Instagram"],
         },
       ].map((section) => (
@@ -263,12 +335,12 @@ const Welcome = () => {
                     href={path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-orange"
+                    className="hover:text-primary"
                   >
                     {section.names[i]}
                   </a>
                 ) : (
-                  <Link to={path} className="hover:text-orange">
+                  <Link to={path} className="hover:text-primary">
                     {section.names[i]}
                   </Link>
                 )}

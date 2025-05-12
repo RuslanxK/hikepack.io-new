@@ -39,6 +39,7 @@ const BagDetails: React.FC = () => {
   const [editBagError, setEditBagError] = useState<string | null>(null)
   const [isSettingCategories, setIsSettingCategories] = useState(true);
   const [isAISuggestionsOpen, setIsAISuggestionsOpen] = useState(false);
+  const [addingCategory, setAddingCategory] = useState(false)
 
   const { toast } = useToast()
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
@@ -105,9 +106,11 @@ const BagDetails: React.FC = () => {
 
 
   const { mutate: addCategory } = useMutation({
+
     mutationFn: createCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories", bag?._id] });
+      setAddingCategory(false)
     },
     onError: (error) => {
       console.error("Failed to add category:", error);
@@ -116,10 +119,13 @@ const BagDetails: React.FC = () => {
         variant: "destructive",
         description: error?.message,
       });
+
+      setAddingCategory(false)
     },
   });
 
   const handleAddCategory = () => {
+    setAddingCategory(true)
     addCategory({
       tripId: bag?.tripId,
       bagId: bag?._id,
@@ -268,6 +274,7 @@ const BagDetails: React.FC = () => {
     {!isSharedView && (
       <Button
         onClick={handleAddCategory}
+        disabled={addingCategory}
         className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box add-category-button"
         variant="outline">
         <Plus className="text-xl dark:text-white"/>

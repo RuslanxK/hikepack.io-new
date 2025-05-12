@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import { Package, Shirt, Layers } from "lucide-react";
 import { Category } from "@/types/category";
-import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useUser } from "@/context/user-context";
 
@@ -95,40 +94,66 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
     <div className="flex flex-row justify-center items-center w-full gap-6 bg-white dark:bg-dark-box md:p-6 pt-6 pb-6 rounded-lg">
       <div className="grid items-between md:flex md:flex-row">
         <div className="flex justify-center gap-4 md:flex md:flex-col text-left pb-5 md:pb-0">
-        <div className="flex items-center gap-2">
-          <Package size={24} className="text-blue-500" />
-          <div>
-            <h4 className="text-sm font-semibold">Base</h4>
-            <p className="text-sm">
-              {totalBaseWeight.toFixed(2)} {weightUnit} / {goal} {user?.weightOption}
-            </p>
+     <div className="flex items-start gap-3 w-full max-w-xs">
+  {/* Icon box */}
+  <div className="flex-none w-8 h-8 flex items-center justify-center bg-blue-100 rounded-md">
+    <Package size={20} className="text-blue-500" />
+  </div>
+
+  {/* Text + Progress */}
+  <div className="flex flex-col w-full">
+    <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Base</h4>
+
+    <div className="flex items-center justify-start mb-2">
+      <span className="text-sm text-gray-500">{totalBaseWeight.toFixed(2)} {weightUnit}</span>
+      <span className="text-sm text-gray-400 mx-2">/</span>
+      <span className="text-sm text-gray-500">{goal} {user?.weightOption}</span>
+    </div>
+
+    {goal && !isNaN(Number(goal)) && (() => {
+      const percentage = (totalBaseWeight / parseFloat(goal)) * 100;
+      const isOver = percentage > 100;
+      const safePercent = Math.min(percentage, 100).toFixed(0);
+      return (
+        <>
+          <div className="flex justify-between items-center mb-1">
+            <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
+              {percentage.toFixed(0)}%
+            </span>
           </div>
-        </div>
-
-        <div>
-          <Separator orientation="vertical" className="dark:bg-gray-500" />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Shirt size={24} className="text-green-500" />
-          <div>
-            <h4 className="text-sm font-semibold">Worn</h4>
-            <p className="text-sm">{totalWornWeight.toFixed(2)} {weightUnit}</p>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div
+              className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
+              style={{ width: `${safePercent}%` }}
+            />
           </div>
-        </div>
+        </>
+      );
+    })()}
+  </div>
+</div>
 
-        <div>
-          <Separator orientation="vertical" className="dark:bg-gray-500" />
-        </div>
 
-        <div className="flex items-center gap-2">
-          <Layers size={24} className="text-orange-500" />
-          <div>
-            <h4 className="text-sm font-semibold">Total</h4>
-            <p className="text-sm">{totalWeight.toFixed(2)} {weightUnit}</p>
-          </div>
-        </div>
-      </div>
+      <div className="flex items-start gap-3 w-full max-w-xs">
+    <div className="flex-none w-8 h-8 flex items-center justify-center bg-green-100 rounded-md">
+      <Shirt size={20} className="text-green-500" />
+    </div>
+    <div className="flex flex-col w-full">
+      <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Worn</h4>
+      <span className="text-sm text-gray-500">{totalWornWeight.toFixed(2)} {weightUnit}</span>
+    </div>
+  </div>
+
+       <div className="flex items-start gap-3 w-full max-w-xs">
+    <div className="flex-none w-8 h-8 flex items-center justify-center bg-orange-100 rounded-md">
+      <Layers size={20} className="text-orange-500" />
+    </div>
+    <div className="flex flex-col w-full">
+      <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Total</h4>
+      <span className="text-sm text-gray-500">{totalWeight.toFixed(2)} {weightUnit}</span>
+    </div>
+  </div>
+</div>
       <div className="flex items-center">
         <DonutChart chartData={chartData} />
       </div>
