@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 
 function PrivateRoutes() {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/welcome" />;
 }
 
 export default PrivateRoutes;
