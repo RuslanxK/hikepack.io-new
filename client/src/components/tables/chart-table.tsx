@@ -93,50 +93,45 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
   return (
     <div className="flex flex-row justify-center items-center w-full gap-6 bg-white dark:bg-dark-box md:p-6 pt-6 pb-6 rounded-lg">
       <div className="grid items-between md:flex md:flex-row">
-        <div className="flex justify-center gap-4 md:flex md:flex-col text-left pb-5 md:pb-0">
-     <div className="flex items-start gap-3 w-full max-w-xs">
-  {/* Icon box */}
-  <div className="flex-none w-8 h-8 flex items-center justify-center bg-blue-100 rounded-md">
+<div className="grid sm:flex sm:flex-col justify-center grid-cols-2 gap-4 text-left pt-5">
+  <div className="flex items-start gap-3 w-full sm:max-w-xs">
+  <div className="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-md">
     <Package size={20} className="text-blue-500" />
   </div>
 
-  {/* Text + Progress */}
-  <div className="flex flex-col w-full">
+  <div className="flex flex-col sm:text-left">
     <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Base</h4>
 
-    <div className="flex items-center justify-start mb-2">
+    <div className="flex items-center sm:justify-start mb-2">
       <span className="text-sm text-gray-500">{totalBaseWeight.toFixed(2)} {weightUnit}</span>
       <span className="text-sm text-gray-400 mx-2">/</span>
       <span className="text-sm text-gray-500">{goal} {user?.weightOption}</span>
     </div>
 
-   {goal && !isNaN(Number(goal)) && (() => {
-  // Use consistent unit for percentage logic
-  const userUnit = (user?.weightOption || "lb") as keyof typeof WEIGHT_CONVERSION;
+    {goal && !isNaN(Number(goal)) && (() => {
+      const userUnit = (user?.weightOption || "lb") as keyof typeof WEIGHT_CONVERSION;
+      const baseWeightInUserUnit = convertWeight(totalBaseWeight, weightUnit, userUnit);
+      const goalWeightInUserUnit = parseFloat(goal);
+      const percentage = (baseWeightInUserUnit / goalWeightInUserUnit) * 100;
+      const isOver = percentage > 100;
+      const safePercent = Math.min(percentage, 100).toFixed(0);
 
-  const baseWeightInUserUnit = convertWeight(totalBaseWeight, weightUnit, userUnit);
-  const goalWeightInUserUnit = parseFloat(goal);
-
-  const percentage = (baseWeightInUserUnit / goalWeightInUserUnit) * 100;
-  const isOver = percentage > 100;
-  const safePercent = Math.min(percentage, 100).toFixed(0);
-
-  return (
-    <>
-      <div className="flex justify-between items-center mb-1">
-        <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
-          {percentage.toFixed(0)}%
-        </span>
-      </div>
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-        <div
-          className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
-          style={{ width: `${safePercent}%` }}
-        />
-      </div>
-    </>
-  );
-})()}
+      return (
+        <>
+          <div className="flex justify-between items-center mb-1">
+            <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
+              {percentage.toFixed(0)}%
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div
+              className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
+              style={{ width: `${safePercent}%` }}
+            />
+          </div>
+        </>
+      );
+    })()}
   </div>
 </div>
 
@@ -161,7 +156,7 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
     </div>
   </div>
 </div>
-      <div className="flex items-center">
+      <div className="flex items-center m-auto">
         <DonutChart chartData={chartData} />
       </div>
 

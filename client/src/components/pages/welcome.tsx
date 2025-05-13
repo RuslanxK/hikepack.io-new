@@ -230,11 +230,11 @@ const Welcome = () => {
 
 
 
-      <section className='bg-white py-12 text-center'>
+      <section className='bg-white py-12 text-center p-5'>
         <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold mb-12 px-4'>
           Features  <span className='text-primary'>You’ll Love</span>
         </h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-10 place-items-center max-w-full md:w-[800px] m-auto'>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-10 place-items-center w-full md:max-w-[800px] mx-auto">
 
         {[
   {
@@ -260,7 +260,7 @@ const Welcome = () => {
 ].map(({ img, title, text }) => (
   <div
     key={img}
-    className={`w-72 sm:w-80 md:w-96 bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer p-5 flex flex-col text-left`}
+    className={`w-full bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer p-5 flex flex-col text-left`}
   >
     <h3 className='text-lg font-bold mb-1'>{title}</h3>
     <p className='text-sm text-gray-400 mb-4'>{text}</p>
