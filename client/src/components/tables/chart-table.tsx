@@ -93,7 +93,7 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
   return (
     <div className="flex flex-row justify-center items-center w-full gap-6 bg-white dark:bg-dark-box md:p-6 pt-6 pb-6 rounded-lg">
       <div className="grid items-between md:flex md:flex-row">
-<div className="grid sm:flex sm:flex-col justify-center grid-cols-2 gap-4 text-left p-5">
+<div className="grid sm:flex sm:flex-col justify-center grid-cols-2 gap-5 text-left p-4">
   <div className="flex items-start gap-3 w-full sm:max-w-xs">
   <div className="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-md">
     <Package size={20} className="text-blue-500" />
