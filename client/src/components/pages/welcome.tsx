@@ -146,7 +146,7 @@ const Welcome = () => {
         <div className='mt-12 w-full max-w-5xl mx-auto px-4'>
           <div onClick={() => setLightboxOpen(true)} className='relative h-[200px] sm:h-[300px] md:h-[500px] cursor-pointer rounded-t-lg overflow-hidden'>
             <img src='/placeholder-video.png' alt='Video' className='w-full h-full object-cover' />
-            <div className='absolute inset-0 flex justify-center items-center bg-opacity-50'>
+            <div className='absolute inset-0 flex justify-center items-center bg-opacity-50 border'>
               <div className='bg-white p-4 rounded-full shadow-lg'>
                 <svg className='w-12 h-12 text-orange' fill='currentColor' viewBox='0 0 24 24'><path d='M8 5v14l11-7z' /></svg>
               </div>
@@ -215,7 +215,7 @@ const Welcome = () => {
     ].map(({ title, text, icon }) => (
       <div
         key={title}
-        className="border-2 border-secondary/20 bg-white rounded-2xl p-6 sm:p-8 flex flex-col "
+        className="border bg-white rounded-lg p-6 sm:p-8 flex flex-col "
       >
         <div className="text-4xl mb-4">{icon}</div>
         <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2">{title}</h3>
@@ -260,7 +260,7 @@ const Welcome = () => {
 ].map(({ img, title, text }) => (
   <div
     key={img}
-    className={`w-full bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer p-5 flex flex-col text-left`}
+    className={`w-full bg-gray-100 rounded-lg overflow-hidden group relative cursor-pointer p-5 flex flex-col text-left border`}
   >
     <h3 className='text-lg font-bold mb-1'>{title}</h3>
     <p className='text-sm text-gray-400 mb-4'>{text}</p>

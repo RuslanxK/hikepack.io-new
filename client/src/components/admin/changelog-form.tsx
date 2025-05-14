@@ -42,7 +42,7 @@ const ChangeLogForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-dark-box p-8 rounded-lg mt-5">
+    <div className="bg-white dark:bg-dark-box p-8 rounded-lg mt-5 border">
       <h1 className="text-lg font-semibold mb-4">Submit a Changelog</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>

@@ -87,7 +87,7 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
         </SheetHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Bag Name</Label>
             <Input
               id="name"
               name="name"
@@ -98,7 +98,7 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Bag Description</Label>
             <Textarea
               id="description"
               name="description"
@@ -106,12 +106,12 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
               className="resize-none"
               onChange={handleChange}
               placeholder="Describe the bag"
-              required
+             
             />
           </div>
         
    <div className="flex flex-col gap-2">
-            <Label htmlFor="goal">Weight Goal</Label>
+            <Label htmlFor="goal">Bag Weight Goal</Label>
             <Slider
               id="goal"
               name="goal"
@@ -136,7 +136,7 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
               </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="imageUrl">Change Image</Label>
+            <Label htmlFor="imageUrl">Change Bag Image</Label>
             <Input
               id="imageUrl"
               name="imageUrl"

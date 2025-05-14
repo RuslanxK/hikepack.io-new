@@ -198,7 +198,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
 
 
   return (
-  <div className="bg-white dark:bg-dark-box rounded-lg mb-5 border-l-8" style={{ ...style, borderLeftColor: data.color }} ref={setNodeRef}>
+  <div className="bg-white dark:bg-dark-box rounded-lg mb-5 border-l-8 border-r border-t border-b" style={{ ...style, borderLeftColor: data.color }} ref={setNodeRef}>
   <div className="flex items-center gap-2 group pr-2 pl-2 pt-2" >
   {!isSharedView && (
    <Button variant="ghost" size="icon" className="mr-1" {...attributes} {...listeners}>

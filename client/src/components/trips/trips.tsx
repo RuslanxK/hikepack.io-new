@@ -189,10 +189,10 @@ const TripPage: React.FC = () => {
     <Fragment>
       <h1 className="text-xl font-bold mb-1">Welcome{' '}{user?.username && user?.username.charAt(0).toUpperCase() + user?.username.slice(1)}</h1>
       <p className="mb-4">The journey of a thousand miles begins with a single step.</p>
-      <div className="bg-white p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4 dark:bg-dark-box mb-5">
+      <div className="bg-white p-5 rounded-lg flex flex-col md:flex-row md:justify-between md:items-center gap-4 dark:bg-dark-box mb-5 border">
   <div className="w-full md:w-auto ">
     <h2 className="text-lg font-semibold mb-1">My Last Planned Trips</h2>
-    <p className="text-sm text-gray-600 dark:text-gray-400">
+    <p className="text-gray-600 dark:text-gray-400">
       Seamless Trip Planning and Bag Organization Made Simple.
     </p>
   </div>
@@ -200,7 +200,7 @@ const TripPage: React.FC = () => {
   <div className="relative w-full md:w-1/3">
     <Input
       id="trip-name"
-      placeholder="Search"
+      placeholder="Search an existing trip"
       type="search"
       value={tripSearchTerm}
       onChange={(e) => setTripSearchTerm(e.target.value)}
@@ -210,7 +210,7 @@ const TripPage: React.FC = () => {
   </div>
 </div>
       <Grid>
-        <AddButton onClick={() => setIsSheetOpen(true)} className="add-trip-button" />
+        <AddButton onClick={() => setIsSheetOpen(true)} className="add-trip-button" text="Create new trip" />
         {paginatedTrips?.length ? (
           paginatedTrips.map((trip) => (
          <Trip key={trip._id} data={trip} onDelete={() => handleDeleteClick(trip)} duplicate={() => handleDuplicate(trip)}  />

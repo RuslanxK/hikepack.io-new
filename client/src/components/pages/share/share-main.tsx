@@ -23,6 +23,7 @@ const ShareMain = () => {
     enabled: !!id,
   });
 
+
   useEffect(() => {
     if (id) {
       const likedBags = JSON.parse(localStorage.getItem("likedBags") || "[]");
@@ -134,39 +135,87 @@ const ShareMain = () => {
         <div className="pt-24 w-full lg:w-4/5 m-auto">
           {/* User Info */}
           <div className="flex flex-col mb-5 bg-transparent dark:bg-transparent">
-            <div className="flex items-center bg-white dark:bg-dark-box rounded-lg gap-4 p-6">
-              <img
-                src={data?.user.imageUrl || "/default-profile-placeholder.png"}
-                alt={data?.user.username}
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {data?.user.username}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {data?.user.country}
-                </p>
-              </div>
-            </div>
+          <div className="flex items-center gap-6 sm:gap-8 p-6 rounded-lg bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+  {/* Avatar */}
+  <div className="relative">
+    <img
+      src={data?.user.imageUrl || "/default-profile-placeholder.png"}
+      alt={data?.user.username}
+      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-gray-300 dark:border-gray-600"
+    />
+    <div className="absolute bottom-0 right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-white dark:border-dark-box" title="Online"></div>
+  </div>
 
-            {/* Trip Info */}
-            <div className="flex items-start mt-5 rounded-lg p-6 bg-white dark:bg-dark-box">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {data?.trip.name}
-                </h2>
-                {data?.trip.about && (
-                  <p className="text-gray-600 dark:text-gray-400 mb-3">
-                    {data?.trip.about}
-                  </p>
-                )}
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  {formatDate(data?.trip?.startDate)} →{" "}
-                  {formatDate(data?.trip?.endDate)}
-                </p>
-              </div>
-            </div>
+  {/* User Details */}
+  <div className="space-y-3">
+    {/* Username */}
+    <div>
+      <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-0.5">
+       Packed By
+      </p>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-snug">
+        {data?.user.username}
+      </h2>
+    </div>
+
+    {/* Country */}
+    <div>
+      <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-0.5">
+        Country
+      </p>
+      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        {data?.user.country}
+      </p>
+    </div>
+  </div>
+</div>
+
+
+ <div className="flex items-start mt-5 rounded-lg p-6 bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+  <div className="w-full space-y-6">
+    {/* Trip Title */}
+    <div>
+      <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
+        Trip Title
+      </p>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white leading-snug">
+        {data?.trip.name}
+      </h2>
+    </div>
+
+    {/* Trip Description */}
+    {data?.trip.about && (
+      <div>
+        <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
+          Description
+        </p>
+        <p className="text-base font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
+          {data?.trip.about}
+        </p>
+      </div>
+    )}
+
+    {/* Trip Dates */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-box/50">
+        <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
+          Start Date
+        </p>
+        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+          {formatDate(data?.trip?.startDate)}
+        </p>
+      </div>
+      <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-box/50">
+        <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
+          End Date
+        </p>
+        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
+          {formatDate(data?.trip?.endDate)}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
           </div>
 
           <BagDetails />

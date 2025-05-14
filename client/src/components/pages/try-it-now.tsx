@@ -158,6 +158,7 @@ const handleDragEnd = (event: DragEndEvent) => {
         variant="outline"
       >
         <FaPlus className="text-xl dark:text-white" />
+        <span>Create new category</span>
       </Button>
 
       {/* Drag & Drop Categories */}

@@ -23,7 +23,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ liveUsers }) => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-4 sm:p-5 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+      <div className="bg-white dark:bg-dark-box p-4 sm:p-5 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 border">
         <div className="flex items-center gap-2 w-full sm:w-8/12">
           <Button
             variant="ghost"
@@ -39,7 +39,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ liveUsers }) => {
         </div>
       </div>
 
-      <div className="p-4 sm:p-5 bg-white rounded-lg mt-4 dark:bg-dark-box">
+      <div className="p-4 sm:p-5 bg-white rounded-lg mt-4 dark:bg-dark-box border">
         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
           Manage users, update changelogs, and control application settings from one central dashboard.
         </p>
@@ -68,12 +68,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ liveUsers }) => {
         </TabsList>
 
         <TabsContent value="chart" className="mt-4 sm:mt-5">
-          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box">
+          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box border">
             <LineChartAdmin liveUsers={liveUsers} />
           </div>
         </TabsContent>
         <TabsContent value="users" className="mt-4 sm:mt-5">
-          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box">
+          <div className="p-4 sm:p-5 bg-white rounded-lg dark:bg-dark-box border">
             <TableUsers />
           </div>
         </TabsContent>

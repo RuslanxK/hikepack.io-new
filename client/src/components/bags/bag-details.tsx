@@ -224,24 +224,30 @@ const BagDetails: React.FC = () => {
   return (
 
   <div className="container mx-auto">
-  <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
-  <div className="flex items-center gap-2 w-8/12">
+  <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
+  <div className="flex items-center gap-2 w-8/12 ">
   {!isSharedView && (
    <Button variant="ghost" size="icon" onClick={handleNavigateBack} className="bg-gray-100 hover:bg-gray-200 dark:hover:bg-dark-nav dark:bg-dark">
     <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
    </Button>
         )}
+
+<div className="ml-2">
+        <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+          Bag Title
+        </p>
    <h1
-  className="text-lg font-semibold flex items-center gap-2 ml-2"
+  className="text-lg font-semibold flex items-center gap-2"
   title={bag?.name}
 >
   {(bag?.name ?? "").length > 25 ? (bag?.name ?? "").slice(0, 25) + "..." : bag?.name}
 </h1>
+</div>
 
 </div>
-<div className="flex h-5 items-center space-x-4 text-sm">
 
-  
+
+<div className="flex h-5 items-center space-x-4 text-sm">
 
 {!isSharedView && (
           <Fragment>
@@ -264,10 +270,20 @@ const BagDetails: React.FC = () => {
         )}
     </div>
     </div>
-    <div className="p-5 bg-white rounded-lg mt-5 mb-5 dark:bg-dark-box">
-    <p className="text-gray-600 dark:text-gray-400">
-   {bag?.description}</p>
+    {bag?.description && (
+   
+    <div className="flex items-start mt-5 mb-5 rounded-lg p-6 bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+      <div className="w-full">
+        <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
+          Bag Description
+        </p>
+        <p className="text-base font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
+          {bag.description}
+        </p>
+      </div>
     </div>
+  )}
+
     <div className="bg-white dark:bg-dark-box rounded-lg mb-5">
     <ChartWithTable categories={categories} goal={bag?.goal} />
     </div>
@@ -278,6 +294,7 @@ const BagDetails: React.FC = () => {
         className="w-full py-6 mb-5 border border-2 border-dashed border-black dark:border-gray-400 dark:hover:border-white dark:bg-dark-box add-category-button"
         variant="outline">
         <Plus className="text-xl dark:text-white"/>
+       Create new category
       </Button>
     )}
 

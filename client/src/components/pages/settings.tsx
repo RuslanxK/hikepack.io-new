@@ -121,7 +121,7 @@ const Settings: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
+      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
         <div className="flex items-center gap-2 w-8/12">
           <Button
             variant="ghost"
@@ -137,11 +137,11 @@ const Settings: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box">
+      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box border">
         <p className="text-black dark:text-gray-300">Manage your account settings and personal preferences.</p>
       </div>
 
-      <Card className="bg-white dark:bg-dark-box rounded-lg mt-5">
+      <Card className="bg-white dark:bg-dark-box rounded-lg mt-5 border">
         <CardHeader className="flex flex-row justify-between">
           <h2 className="text-lg font-semibold">Update Account Information</h2>
             <Button variant="link" onClick={handleSaveChanges} disabled={updateUserMutation.isPending}>

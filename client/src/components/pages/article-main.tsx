@@ -31,7 +31,7 @@ const ArticleMain: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
+      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
         <div className="flex items-center gap-2 w-8/12">
           <Button
             variant="ghost"
@@ -47,7 +47,7 @@ const ArticleMain: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box">
+      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box border">
         <p className="text-black dark:text-gray-300">
           Explore expert tips, detailed guides, and inspiring adventures to elevate your journey and fuel your passion for discovery.
         </p>

@@ -41,7 +41,7 @@ const LastBagStatus: React.FC<LastBagStatusProps> = ({ user, bag }) => {
 
   return (
     <div className="h-screen md:h-fit my-10">
-     <h2 className="text-lg font-semibold text-center">
+     <h2 className="text-xl font-semibold text-center">
   My Last Bag Status{" "}
   <Button variant="link" className="p-0 text-lg" onClick={latestBagNavigate}>
     {(bag?.name ?? "").length > 20 ? (bag?.name ?? "").slice(0, 20) + "..." : bag?.name}
@@ -54,7 +54,7 @@ const LastBagStatus: React.FC<LastBagStatusProps> = ({ user, bag }) => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="p-10 bg-white dark:bg-dark-box rounded-lg flex flex-col justify-center"
+            className="p-10 bg-white dark:bg-dark-box rounded-lg flex flex-col justify-center border"
           >
             <div className="mb-5">{stat.icon}</div>
             <h3 className="text-md font-semibold text-black dark:text-gray-100">

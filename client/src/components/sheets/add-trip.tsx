@@ -113,7 +113,7 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
         </SheetHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Trip Name</Label>
             <Input
               id="name"
               name="name"
@@ -124,7 +124,7 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Country</Label>
+            <Label htmlFor="name">Destination Country</Label>
             <Select value={formData.country} onValueChange={(value) => handleSelectChange("country", value)}>
             <SelectTrigger className="rounded-lg w-full bg-light">
             <SelectValue placeholder="Select Country" />
@@ -134,17 +134,16 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
 
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Trip Description</Label>
             <Textarea
               id="about"
               name="about"
               className="resize-none"
               onChange={handleChange}
-              placeholder="Description"
-              required />
+              placeholder="Description" />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Distance</Label>
+            <Label htmlFor="description">Trip Distance</Label>
             <Slider
               id="trip-slider"
               name="distance"
@@ -164,15 +163,14 @@ const AddTripSheet: React.FC<AddTripSheetProps> = ({ isOpen, onClose, onSubmit, 
               <Calendar
                 initialFocus
                 mode="range"
-                defaultMonth={date?.from}
                 selected={date}
                 onSelect={setDate}
-                className='m-auto'
+                className='m-auto border border-2 rounded-lg w-full flex justify-center bg-light'
                 numberOfMonths={1}/>
                 </div>
            
           <div className="flex flex-col gap-2">
-            <Label htmlFor="imageUrl">Upload Image (Max size: 2MB)</Label>
+            <Label htmlFor="imageUrl">Trip Image (Max size: 2MB)</Label>
             <Input
               id="imageUrl"
               name="imageUrl"

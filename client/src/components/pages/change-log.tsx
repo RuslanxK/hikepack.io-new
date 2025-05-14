@@ -30,7 +30,7 @@ const ChangeLog: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
+      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
         <div className="flex items-center gap-2 w-8/12">
           <Button
             variant="ghost"
@@ -46,14 +46,14 @@ const ChangeLog: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box">
+      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box border">
         <p className="text-black dark:text-gray-300">
           View the latest updates, fixes, and features added to the app to
           enhance your experience.
         </p>
       </div>
 
-     {changelogData?.length ?  <div className="p-8 bg-white rounded-lg mt-5 dark:bg-dark-box space-y-4">
+     {changelogData?.length ?  <div className="p-8 bg-white rounded-lg mt-5 dark:bg-dark-box space-y-4 border">
         {changelogData?.map((log: ChangeLogType) => (
           <SingleChangeLog key={log._id} log={log} user={user || {}} />
         ))}

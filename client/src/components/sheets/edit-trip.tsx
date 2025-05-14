@@ -114,7 +114,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
         </SheetHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Trip Name</Label>
             <Input
               id="name"
               name="name"
@@ -126,7 +126,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
           </div>
 
                     <div className="flex flex-col gap-2">
-                      <Label htmlFor="name">Country</Label>
+                      <Label htmlFor="name">Destination Country</Label>
                       <Select
               value={formData.country}
               onValueChange={(value) => handleSelectChange("country", value)}
@@ -142,7 +142,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
 
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="about">Description</Label>
+            <Label htmlFor="about">Trip Description</Label>
             <Textarea
               id="about"
               name="about"
@@ -150,11 +150,10 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
               className="resize-none"
               onChange={handleChange}
               placeholder="Description"
-              required
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="distance">Distance</Label>
+            <Label htmlFor="distance">Trip Distance</Label>
             <Slider
               id="distance"
               name="distance"
@@ -178,12 +177,12 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
                 defaultMonth={date?.from}
                 selected={date}
                 onSelect={setDate}
-                className='m-auto'
+                className='m-auto border border-2 rounded-lg w-full flex justify-center bg-light'
                 numberOfMonths={1}/>
               </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="imageUrl">Change Image (Max size: 2MB)</Label>
+            <Label htmlFor="imageUrl">Change Trip Image (Max size: 2MB)</Label>
             <Input
               id="imageUrl"
               name="imageUrl"

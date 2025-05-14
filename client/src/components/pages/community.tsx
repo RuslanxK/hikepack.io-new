@@ -28,7 +28,7 @@ const Community = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
+      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
         <div className="flex items-center gap-2 w-8/12">
           <Button
             variant="ghost"
@@ -42,12 +42,12 @@ const Community = () => {
           </h1>
         </div>
       </div>
-      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box">
+      <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box border">
         <p className="text-black dark:text-gray-300">
           Discover top-rated bags for every journey. Whether you're conquering remote peaks or exploring dense forests, find your perfect companion.
         </p>
       </div>
-      <div className="rounded-lg mt-5 bg-white dark:bg-dark-box p-5">
+      <div className="rounded-lg mt-5 bg-white dark:bg-dark-box p-5 border">
         <CommunityTable data={communityBags} />
       </div>
     </Fragment>

@@ -81,7 +81,7 @@ const ReportBug: React.FC = () => {
 
   return (
     <Fragment>
-      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
+      <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center border">
         <div className="flex items-center gap-2 w-8/12">
           <Button
             variant="ghost"
@@ -98,7 +98,7 @@ const ReportBug: React.FC = () => {
       </div>
 
      
-      <div className="bg-white dark:bg-dark-box p-8 rounded-lg mt-5">
+      <div className="bg-white dark:bg-dark-box p-8 rounded-lg mt-5 border">
         <h1 className="text-xl font-semibold mb-4"> Let us know what you're reaching out about!</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
         <Label htmlFor="bug-title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">

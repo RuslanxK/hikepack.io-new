@@ -275,7 +275,7 @@ exports.getTripAndUserByBagId = async (bagId) => {
   }
 
   const user = await User.findById(bag.owner)
-    .select("username email imageUrl")
+    .select("username email imageUrl country")
     .lean();
 
   if (!user) {

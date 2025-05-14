@@ -136,7 +136,7 @@ const LocalDataTable: React.FC<LocalDataTableProps> = ({ data, onUpdateCategory,
 
   return (
     <div
-      className="dark:bg-dark-box rounded-lg border-l-8 bg-white"
+      className="dark:bg-dark-box rounded-lg border-l-8 bg-white border"
       style={{ ...style, borderLeftColor: data.color }}
       ref={setNodeRef}
     >
