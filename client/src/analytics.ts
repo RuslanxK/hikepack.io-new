@@ -1,8 +1,10 @@
 import ReactGA from 'react-ga4';
 
+const GA_ID = import.meta.env.VITE_GA4_ID;
+
 export const initGA = () => {
-  if (import.meta.env.MODE === 'production') {
-    ReactGA.initialize(`${import.meta.env.VITE_GA4_ID}`)
+  if (import.meta.env.MODE === 'production' && GA_ID) {
+    ReactGA.initialize(GA_ID);
   }
 };
 
@@ -21,5 +23,11 @@ interface EventParams {
 export const trackEvent = ({ category, action, label }: EventParams) => {
   if (import.meta.env.MODE === 'production') {
     ReactGA.event({ category, action, label });
+  }
+};
+
+export const setUserId = (userId: string) => {
+  if (import.meta.env.MODE === 'production' && userId) {
+    ReactGA.set({ user_id: userId });
   }
 };

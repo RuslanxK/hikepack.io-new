@@ -26,7 +26,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useEffect, useState } from "react";
 import { getSocket, disconnectSocket } from "@/lib/websocketService";
 import Cookies from "js-cookie";
-import { initGA, trackPage } from "./analytics";
+import { initGA, trackPage, setUserId} from "./analytics";
 import { useLocation } from 'react-router-dom';
 
 
@@ -35,10 +35,21 @@ function App() {
   const [liveUsers, setLiveUsers] = useState(0);
   const location = useLocation();
 
-  useEffect(() => {
-    initGA();
-  }, []);
+ useEffect(() => {
+  initGA();
 
+  const userString = localStorage.getItem("user");
+  if (userString) {
+    try {
+      const user = JSON.parse(userString);
+      if (user && user._id) {
+        setUserId(user._id);
+      }
+    } catch (error) {
+      console.error("Failed to parse user from localStorage:", error);
+    }
+  }
+}, []);
 
    useEffect(() => {
     trackPage(location.pathname + location.search);
