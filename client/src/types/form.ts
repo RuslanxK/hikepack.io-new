@@ -6,8 +6,8 @@ export interface FormData {
     country?: string
     birthdate?: string
     gender?: string
-    distanceUnit?: string
-    weightUnit?: string
+    distance?: string
+    weightOption?: string
     activityLevel?: string
     imageUrl?: File | null;
     hasCompletedProfile?: boolean

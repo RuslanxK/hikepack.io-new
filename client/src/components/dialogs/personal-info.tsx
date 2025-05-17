@@ -121,8 +121,8 @@ const PersonalInfoDialog: React.FC<PersonalInfoFormProps> = ({
           <div className="w-full md:w-[47.9%] space-y-1">
             <Label>Distance Unit</Label>
             <Select
-              onValueChange={(value) => updateFormData({ distanceUnit: value })}
-              value={formData.distanceUnit || ""}
+              onValueChange={(value) => updateFormData({ distance: value })}
+              value={formData.distance || ""}
             >
               <SelectTrigger className="rounded-lg bg-gray-100">
                 <SelectValue placeholder="Select Distance Unit" />
@@ -138,8 +138,8 @@ const PersonalInfoDialog: React.FC<PersonalInfoFormProps> = ({
           <div className="w-full md:w-[47.9%] space-y-1">
             <Label>Weight Unit</Label>
             <Select
-              onValueChange={(value) => updateFormData({ weightUnit: value })}
-              value={formData.weightUnit || ""}
+              onValueChange={(value) => updateFormData({ weightOption: value })}
+              value={formData.weightOption || ""}
             >
               <SelectTrigger className="rounded-lg bg-gray-100">
                 <SelectValue placeholder="Select Weight Unit" />

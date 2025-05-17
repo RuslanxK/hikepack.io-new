@@ -60,8 +60,8 @@ const { setUser, user } = useUser();
   country: "",
   birthdate: "",
   gender: "",
-  distanceUnit: "",
-  weightUnit: "",
+  distance: "",
+  weightOption: "",
   activityLevel: "",
 });
 
@@ -73,11 +73,14 @@ const handleDialogClose = () => {
 
 
 const updateUserMutation = useMutation<void, Error, FormData>({
-  mutationFn: async (updatedData) => {
-    return await apiService.put("/user/update", updatedData);
+  mutationFn: async () => {
+    return await apiService.put("/user/update", formData);
   },
   onSuccess: (_, updatedData) => {
-    setUser({ ...user, ...updatedData });  // ✅ merge and update directly
+
+     console.log(formData)
+    const newUser = { ...user, ...updatedData };
+    setUser(newUser);
     handleDialogClose();
   },
   onError: (err) => {
@@ -202,14 +205,15 @@ const updateUserMutation = useMutation<void, Error, FormData>({
 
      {showPersonalDialog && (
   <PersonalInfoDialog
-    onClose={handleDialogClose}
-    formData={formData}
-    onUpdate={() => updateUserMutation.mutate(formData)}
-    updateFormData={(data) =>
-      setFormData((prev) => ({ ...prev, ...data }))
-    }
-    isUpdating={updateUserMutation.isPending} 
-  />
+  onClose={handleDialogClose}
+  formData={formData}
+  onUpdate={() => updateUserMutation.mutate(formData)}
+  updateFormData={(data) => {
+    const updated = { ...formData, ...data };
+    setFormData(updated);
+  }}
+  isUpdating={updateUserMutation.isPending}
+/>
 )}
 
 
