@@ -179,7 +179,7 @@ const RegisterPage = () => {
             )}
           </div>
 
-          <div className="text-center text-sm mt-4 text-muted-foreground dark:text-gray-400">
+          <div className="text-center text-sm mt-4 text-black dark:text-gray-400">
             Already have an account?{" "}
             <Link to="/login" className="underline hover:text-primary dark:hover:text-primary">
               Login here
