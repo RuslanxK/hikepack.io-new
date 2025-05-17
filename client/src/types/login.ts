@@ -25,6 +25,7 @@ export interface User {
   country?: string;
   isAdmin?: boolean;
   lastLoggedIn?: Date | null;
+  hasCompletedProfile?: boolean,
   latestBagWeight?: number;
   createdAt?: Date; // Managed by Mongoose timestamps
   updatedAt?: Date; // Managed by Mongoose timestamps

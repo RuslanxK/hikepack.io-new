@@ -103,7 +103,7 @@ const ShareMain = () => {
               title={liked ? "Unlike" : "Like"}
             >
               {liked ? (
-                <HeartOff className="text-primary w-5 h-5" />
+                <HeartOff className="text-red-600 w-5 h-5" />
               ) : (
                 <Heart className="text-gray-400 w-5 h-5" />
               )}
@@ -187,7 +187,7 @@ const ShareMain = () => {
     {data?.trip.about && (
       <div>
         <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
-          Description
+          Trip Description
         </p>
         <p className="text-base font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
           {data?.trip.about}

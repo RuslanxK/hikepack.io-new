@@ -11,7 +11,7 @@ const generateRegisterHTML = (id) => {
 </head>
 <body>
   <div style="text-align: center; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto;">
-    <img src="https://www.hikepack.io/images/logo-black.png" alt="Hikepack Logo" style="max-width: 100px; margin-bottom: 13px; margin-top: 13px;">
+    <img src="https://www.hikepack.io/logo-black.png" alt="Hikepack Logo" style="max-width: 100px; margin-bottom: 13px; margin-top: 13px;">
     
 
     <h2 style="font-size: 22px; font-family: Arial, sans-serif; font-weight: 500; color: #292929; margin-bottom: 16px;">
@@ -59,7 +59,7 @@ const generateForgotPasswordHTML = (token) => {
 </head>
 <body>
   <div style="text-align: center; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto;">
-    <img src="https://www.hikepack.io/images/logo-black.png" alt="Hikepack Logo" style="max-width: 100px; margin-bottom: 13px; margin-top: 13px;">
+    <img src="https://www.hikepack.io/logo-black.png" alt="Hikepack Logo" style="max-width: 100px; margin-bottom: 13px; margin-top: 13px;">
     
     <h2 style="font-size: 22px; font-family: Arial, sans-serif; font-weight: 500; color: #292929; margin-bottom: 16px;">
       Forgotten your password?

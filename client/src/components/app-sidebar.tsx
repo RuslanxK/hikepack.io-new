@@ -18,7 +18,7 @@ import BuyCoinsDialog from "./dialogs/buy-coins";
 
 
 
-const colorfulButtonClass =
+export const colorfulButtonClass =
   "relative font-extrabold w-full py-4 mt-3 border-4 shadow-2xl overflow-hidden transition-all duration-500 " +
   "before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500 " +
   "text-white bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 border-red-300 hover:-translate-y-1 " +

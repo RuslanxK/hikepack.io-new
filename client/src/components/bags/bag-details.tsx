@@ -23,6 +23,7 @@ import { getSteps } from '../guide/steps';
 import { bagStepsConfig } from '../guide/stepsConfig';
 import { Sparkles } from 'lucide-react';
 import { AISuggestionsModal } from "../dialogs/ai-suggestions";
+import { colorfulButtonClass } from "../app-sidebar";
 
 
 
@@ -299,17 +300,32 @@ const BagDetails: React.FC = () => {
     )}
 
 {!isSharedView && (
+
+  <div className="flex gap-4">
   <Button
+    onClick={() => setIsAISuggestionsOpen(true)}
+    className={`${colorfulButtonClass} mt-0 py-6`}
+    variant="default"
+  >
+    <span className="relative z-10 flex items-center gap-2">
+      GENERATE CUSTOM REQUEST <Sparkles className="w-10 h-10" />
+    </span>
+  </Button>
+
+   <Button
     onClick={() => setIsAISuggestionsOpen(true)}
     className="relative font-extrabold w-full py-6 mb-5 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500
       text-white bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 border-purple-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400"
     variant="default"
   >
     <span className="relative z-10 flex items-center gap-2">
-      GET AI SUGGESTIONS <Sparkles className="w-10 h-10" />
+     GENERATE AI SUGGESTIONS <Sparkles className="w-10 h-10" />
     </span>
   </Button>
+  </div>
+
 )}
+
 
   <Fragment>
      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors} id="builder-dnd">

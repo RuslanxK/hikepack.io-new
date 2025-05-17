@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   resetPasswordToken: { type: String, default: null },
   resetPasswordExpires: { type: String, default: null },
+  hasCompletedProfile: {type: Boolean},
   distance: { type: String, default: "miles" },
   emailVerificationToken: { type: String, default: null },
   emailVerificationExpires: { type: String, default: null },

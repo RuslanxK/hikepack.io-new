@@ -13,6 +13,7 @@ import {ApiError, LoginResponse, InputFieldProps} from "@/types/login"
 import { useUser } from "@/context/user-context";
 import Cookies from "js-cookie"; 
 import { useGoogleLogin } from "@react-oauth/google";
+import PersonalInfoDialog from "../dialogs/personal-info";
 
 
 interface GoogleLoginResponse {
@@ -22,9 +23,12 @@ interface GoogleLoginResponse {
     email: string;
     username: string;
     imageUrl?: string;
+    hasCompletedProfile?: boolean,
     isAdmin: boolean;
   };
 }
+
+
 
 const InputField = ({ id, label, type, value, placeholder, onChange, children }: InputFieldProps) => (
   <div className="grid gap-2">
@@ -46,11 +50,43 @@ const ErrorAlert = ({ message }: { message: string }) => (
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
 
-  const { setUser } = useUser(); 
+const { setUser, user } = useUser();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPersonalDialog, setShowPersonalDialog] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+  country: "",
+  birthdate: "",
+  gender: "",
+  distanceUnit: "",
+  weightUnit: "",
+  activityLevel: "",
+});
+
+
+const handleDialogClose = () => {
+  setShowPersonalDialog(false);
+  window.location.href = "/";
+};
+
+
+const updateUserMutation = useMutation<void, Error, FormData>({
+  mutationFn: async (updatedData) => {
+    return await apiService.put("/user/update", updatedData);
+  },
+  onSuccess: (_, updatedData) => {
+    setUser({ ...user, ...updatedData });  // ✅ merge and update directly
+    handleDialogClose();
+  },
+  onError: (err) => {
+    console.error("Failed to update user", err);
+  },
+});
+
+
+
 
   const loginMutation = useMutation<LoginResponse, AxiosError<ApiError>, { email: string; password: string }>({
     mutationFn: (loginData) => apiService.login<LoginResponse>(loginData),
@@ -80,7 +116,12 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     onSuccess: (data) => {
       Cookies.set("token", data.token, { secure: true, sameSite: "strict", expires: 7 });
       setUser(data.user);
-      window.location.href = "/";
+   if (!data.user.hasCompletedProfile) {
+    setShowPersonalDialog(true);
+  } else {
+    window.location.href = "/";
+  }
+      
     },
     onError: (error) => {
       console.error("Google login failed:", error);
@@ -158,6 +199,20 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
         Don&apos;t have an account?{" "}
         <Link to="/register" className="underline underline-offset-4">Sign up</Link>
       </div>
+
+     {showPersonalDialog && (
+  <PersonalInfoDialog
+    onClose={handleDialogClose}
+    formData={formData}
+    onUpdate={() => updateUserMutation.mutate(formData)}
+    updateFormData={(data) =>
+      setFormData((prev) => ({ ...prev, ...data }))
+    }
+    isUpdating={updateUserMutation.isPending} 
+  />
+)}
+
+
     </div>
   );
 }

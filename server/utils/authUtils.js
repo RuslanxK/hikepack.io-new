@@ -45,6 +45,7 @@ const findOrCreateUser = async (profile) => {
       lastLoggedIn: new Date(),
       verified: true,
     });
+    
     await user.save();
   } else {
     user.lastLoggedIn = new Date();
@@ -55,6 +56,10 @@ const findOrCreateUser = async (profile) => {
 
     if (adminEmails.includes(profile.email) && !user.isAdmin) {
       user.isAdmin = true;
+    }
+
+     if (!user.hasCompletedProfile) {
+      user.hasCompletedProfile = true;
     }
 
     await user.save();

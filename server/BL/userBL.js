@@ -51,6 +51,7 @@ exports.loginUser = async (email, password) => {
   if (!isPasswordValid) throw new Error("Invalid password");
 
   user.lastLoggedIn = new Date();
+  user.hasCompletedProfile = true;
   await user.save();
 
   const token = jwt.sign(user._doc, process.env.JWT_SECRET, { expiresIn: "7d" });
@@ -61,6 +62,7 @@ exports.loginUser = async (email, password) => {
 
   return { message: "Login successful", token, user: userResponse };
 };
+
 
 exports.googleLogin = async (googleAccessToken, res) => {
   const response = await axios.get("https://www.googleapis.com/oauth2/v1/userinfo", {
