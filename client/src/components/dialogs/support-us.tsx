@@ -100,24 +100,34 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
 </DialogDescription>
 
           <div className="flex flex-col items-center">
-            <Coffee className="w-14 h-14 text-yellow-500 mb-4" />
+            <Coffee className="w-14 h-14 text-primary mb-4" />
             <p className="text-lg font-medium mb-4">Choose your coffee amount:</p>
 
-            <div className="flex justify-center gap-4 mb-4">
-              {[1, 3, 5].map((amount) => (
-                <Button
-                  key={amount}
-                  variant={selectedTab === amount ? "ghost" : "outline"}
-                  onClick={() => {
-                    setSelectedTab(amount);
-                    setCustomCoffee("");
-                  }}
-                  className={`w-20 ${selectedTab === amount ? "bg-yellow-500 text-white" : ""}`}
-                >
-                  {amount}x Coffee
-                </Button>
-              ))}
-            </div>
+          <div className="flex justify-center gap-4 mb-4">
+  {[1, 3, 5].map((amount) => {
+    const isSelected = selectedTab === amount;
+
+    return (
+      <Button
+        key={amount}
+        onClick={() => {
+          setSelectedTab(amount);
+          setCustomCoffee("");
+        }}
+        className={`
+          w-24
+          transition
+          ${isSelected
+            ? "bg-primary text-white dark:bg-primary dark:text-white"
+            : "bg-white text-black border border-gray-300 hover:bg-gray-100 dark:bg-zinc-800 dark:text-white dark:border-zinc-600 dark:hover:bg-zinc-700"
+          }
+        `}
+      >
+        {amount}x Coffee
+      </Button>
+    );
+  })}
+</div>
 
             <div className="flex flex-col items-center mb-4">
               <Input
@@ -126,7 +136,7 @@ const SupportUsDialog: React.FC<SupportUsDialogProps> = ({ isOpen, onClose }) =>
                 value={customCoffee}
                 onChange={handleCustomInputChange}
                 placeholder="Enter coffee count"
-                className="w-32 p-2 border border-gray-300 rounded-md text-center"
+                className="w-32 p-2 border border-gray-300 rounded-md w-full"
               />
             </div>
 

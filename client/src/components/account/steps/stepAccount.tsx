@@ -88,33 +88,46 @@ const StepAccount: React.FC<StepProps> = ({ formData, updateFormData, setIsNextD
   
   return (
     <div className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <Label>Email</Label>
-        <Input
-          type="email"
-          required
-          value={formData.email}
-          onChange={(e) => updateFormData({ email: e.target.value })}
-          onBlur={handleEmailBlur}
-          placeholder="Enter your email"
-          className={`${emailError ? "border-red-500 focus:ring-red-500" : ""}`}
-        />
-        {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
-      </div>
-      <div className="space-y-1">
-        <Label>Username</Label>
-        <Input
-          type="text"
-          required
-          value={formData.username}
-          onChange={(e) => updateFormData({ username: e.target.value })}
-          onBlur={handleUsernameBlur}
-          placeholder="Enter username"
-          className={`${usernameError ? "border-red-500 focus:ring-red-500" : ""}`}
-        />
-        {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
-      </div>
-    </div>
+  {/* Email */}
+  <div className="space-y-1">
+    <Label className="dark:text-white">Email</Label>
+    <Input
+      type="email"
+      required
+      value={formData.email}
+      onChange={(e) => updateFormData({ email: e.target.value })}
+      onBlur={handleEmailBlur}
+      placeholder="Enter your email"
+      className={`
+        bg-light dark:bg-dark 
+        text-black dark:text-white 
+        placeholder:text-gray-400 dark:placeholder:text-gray-500 
+        ${emailError ? "border-red-500 focus:ring-red-500" : "border-input dark:border-gray-600"}
+      `}
+    />
+    {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+  </div>
+
+  {/* Username */}
+  <div className="space-y-1">
+    <Label className="dark:text-white">Username</Label>
+    <Input
+      type="text"
+      required
+      value={formData.username}
+      onChange={(e) => updateFormData({ username: e.target.value })}
+      onBlur={handleUsernameBlur}
+      placeholder="Enter username"
+      className={`
+        bg-light dark:bg-dark 
+        text-black dark:text-white 
+        placeholder:text-gray-400 dark:placeholder:text-gray-500 
+        ${usernameError ? "border-red-500 focus:ring-red-500" : "border-input dark:border-gray-600"}
+      `}
+    />
+    {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
+  </div>
+</div>
   );
 };
 

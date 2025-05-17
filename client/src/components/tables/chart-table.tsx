@@ -103,9 +103,9 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
     <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Base</h4>
 
     <div className="flex items-center sm:justify-start mb-2">
-      <span className="text-sm text-gray-500">{totalBaseWeight.toFixed(2)} {weightUnit}</span>
-      <span className="text-sm text-gray-400 mx-2">/</span>
-      <span className="text-sm text-gray-500">{goal} {user?.weightOption}</span>
+      <span className="text-sm text-gray-500 dark:text-light">{totalBaseWeight.toFixed(2)} {weightUnit}</span>
+      <span className="text-sm text-gray-400 mx-2 dark:text-light">/</span>
+      <span className="text-sm text-gray-500 dark:text-light">{goal} {user?.weightOption}</span>
     </div>
 
     {goal && !isNaN(Number(goal)) && (() => {
@@ -119,11 +119,11 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
       return (
         <>
           <div className="flex justify-between items-center mb-1">
-            <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500"}`}>
+            <span className={`text-xs font-medium ${isOver ? "text-red-500" : "text-gray-500 dark:text-light"}`}>
               {percentage.toFixed(0)}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+          <div className="w-full bg-primary/20 dark:bg-primary/30 rounded-full h-2 overflow-hidden">
             <div
               className={`${isOver ? "bg-red-500" : "bg-primary"} h-2 rounded-full transition-all duration-500`}
               style={{ width: `${safePercent}%` }}
@@ -142,7 +142,7 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
     </div>
     <div className="flex flex-col w-full">
       <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Worn</h4>
-      <span className="text-sm text-gray-500">{totalWornWeight.toFixed(2)} {weightUnit}</span>
+      <span className="text-sm text-gray-500 dark:text-light">{totalWornWeight.toFixed(2)} {weightUnit}</span>
     </div>
   </div>
 
@@ -152,7 +152,7 @@ const ChartWithTable: React.FC<ChartWithTableProps> = ({ categories, goal }) => 
     </div>
     <div className="flex flex-col w-full">
       <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-1">Total</h4>
-      <span className="text-sm text-gray-500">{totalWeight.toFixed(2)} {weightUnit}</span>
+      <span className="text-sm text-gray-500 dark:text-light">{totalWeight.toFixed(2)} {weightUnit}</span>
     </div>
   </div>
 </div>

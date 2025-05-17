@@ -177,7 +177,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
                 defaultMonth={date?.from}
                 selected={date}
                 onSelect={setDate}
-                className='m-auto border border-2 rounded-lg w-full flex justify-center bg-light'
+                className='m-auto border border-2 rounded-lg w-full flex justify-center bg-light dark:bg-dark-box'
                 numberOfMonths={1}/>
               </div>
 

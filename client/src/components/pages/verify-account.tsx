@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiService } from "@/lib/apiService";
 import LoadingPage from "../loader";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle, XCircle } from "lucide-react";
 import { User } from "@/types/login";
 
@@ -32,42 +32,40 @@ const VerifyAccount = () => {
 
   useEffect(() => {
     if (!id) return;
-
     if (user?.verified) {
-      navigate("/login"); 
+      navigate("/login");
     } else if (user && !user.verified) {
       mutate();
     }
   }, [id, user, mutate, navigate]);
-
 
   if (isFetchingUser || isPending) return <LoadingPage />;
 
   const hasError = isError || error || getError || getIsError;
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 p-6">
-      <Alert variant={hasError ? "destructive" : "default"} className="w-fit">
-        <div className="flex flex-col items-center gap-4 p-3">
+    <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-dark-box px-4 text-center">
+      <div className="px-8 py-10 max-w-md w-full">
+        <div className="flex flex-col items-center gap-4">
           {hasError ? (
             <>
-              <XCircle className="h-14 w-14 text-red-500" />
-              <AlertTitle className="text-xl font-bold">Verification Failed</AlertTitle>
+              <XCircle className="h-14 w-14 text-destructive animate-pulse" />
+              <AlertTitle className="text-xl font-bold text-destructive">Verification Failed</AlertTitle>
               <AlertDescription className="text-gray-600 dark:text-gray-300 text-md">
                 {error?.message || getError?.message || "An error occurred while verifying your account."}
               </AlertDescription>
             </>
           ) : (
             <>
-              <CheckCircle className="h-14 w-14 text-green-500" />
-              <AlertTitle className="text-xl font-bold">Account Verified!</AlertTitle>
+              <CheckCircle className="h-14 w-14 text-primary animate-float" />
+              <AlertTitle className="text-2xl font-bold text-primary">Account Verified!</AlertTitle>
               <AlertDescription className="text-gray-600 dark:text-gray-300 text-md">
-                Your account has been successfully verified. Redirecting...
+                Your account has been successfully verified.<br />Redirecting to login...
               </AlertDescription>
             </>
           )}
         </div>
-      </Alert>
+      </div>
     </div>
   );
 };

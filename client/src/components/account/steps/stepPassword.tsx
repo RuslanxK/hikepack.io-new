@@ -46,33 +46,50 @@ const StepPassword: React.FC<StepProps> = ({ formData, updateFormData, setIsNext
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <Label>Password</Label>
-        <Input
-          type="password"
-          value={formData.password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
-          placeholder="Enter your password"
-          className={`${passwordError ? "border-red-500 focus:ring-red-500" : ""}`}
-        />
-        {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-      </div>
-      <div className="space-y-1">
-        <Label>Repeat Password</Label>
-        <Input
-          type="password"
-          value={formData.repeatPassword}
-          onChange={(e) => handleRepeatPasswordChange(e.target.value)}
-          placeholder="Repeat your password"
-          className={`${
-            repeatPasswordError ? "border-red-500 focus:ring-red-500" : ""
-          }`}
-        />
-        {repeatPasswordError && (
-          <p className="text-red-500 text-sm mt-1">{repeatPasswordError}</p>
-        )}
-      </div>
-    </div>
+  {/* Password */}
+  <div className="space-y-1">
+    <Label className="dark:text-white">Password</Label>
+    <Input
+      type="password"
+      value={formData.password}
+      onChange={(e) => handlePasswordChange(e.target.value)}
+      placeholder="Enter your password"
+      className={`
+        bg-light dark:bg-dark
+        text-black dark:text-white
+        placeholder:text-gray-400 dark:placeholder:text-gray-500
+        ${passwordError 
+          ? "border-red-500 focus:ring-red-500" 
+          : "border-input dark:border-dark-box"}
+      `}
+    />
+    {passwordError && (
+      <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+    )}
+  </div>
+
+  {/* Repeat Password */}
+  <div className="space-y-1">
+    <Label className="dark:text-white">Repeat Password</Label>
+    <Input
+      type="password"
+      value={formData.repeatPassword}
+      onChange={(e) => handleRepeatPasswordChange(e.target.value)}
+      placeholder="Repeat your password"
+      className={`
+        bg-light dark:bg-dark
+        text-black dark:text-white
+        placeholder:text-gray-400 dark:placeholder:text-gray-500
+        ${repeatPasswordError 
+          ? "border-red-500 focus:ring-red-500" 
+          : "border-input dark:border-dark-box"}
+      `}
+    />
+    {repeatPasswordError && (
+      <p className="text-red-500 text-sm mt-1">{repeatPasswordError}</p>
+    )}
+  </div>
+</div>
   );
 };
 

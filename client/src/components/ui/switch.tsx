@@ -13,7 +13,7 @@ const Switch = React.forwardRef<
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       "disabled:cursor-not-allowed disabled:opacity-50",
       "data-[state=checked]:bg-primary dark:data-[state=checked]:bg-primary-dark",
-      "data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-gray-700",
+      "data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-dark-box",
       className
     )}
     {...props}

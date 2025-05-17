@@ -47,7 +47,7 @@ export const CommunityTable: React.FC<CommunityTableProps> = ({ data }) => {
       </div>
 
       {/* Responsive table container */}
-      <div className="overflow-x-auto w-full rounded-md border dark:border-gray-700">
+      <div className="overflow-x-auto w-full rounded-md border dark:border-dark-box">
         <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>

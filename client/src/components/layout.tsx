@@ -10,16 +10,16 @@ import { AlignJustify, X } from "lucide-react";
 const MobileHeader = () => {
 
   const navigate = useNavigate()
-
   const { openMobile, toggleSidebar } = useSidebar();
 
   return (
-    <div className="sticky top-0 p-4 md:hidden flex items-center justify-between bg-white dark:bg-dark border-b z-50">
-      <img src="/logo-black.png" width={85} alt="Logo" onClick={() => navigate("/") } />
-      <button onClick={toggleSidebar}>
-        {openMobile ? <X /> : <AlignJustify />}
-      </button>
-    </div>
+   <div className="sticky top-0 p-4 md:hidden flex items-center justify-between bg-white dark:bg-dark-box border-b z-50">
+  <img src="/logo-black.png" width={85} alt="Logo" onClick={() => navigate("/")} className="block dark:hidden cursor-pointer"/>
+  <img src="/logo-white.png" width={85} alt="Logo" onClick={() => navigate("/")} className="hidden dark:block cursor-pointer"/>
+  <button onClick={toggleSidebar}>
+    {openMobile ? <X /> : <AlignJustify />}
+  </button>
+</div>
   );
 };
 

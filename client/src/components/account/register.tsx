@@ -57,8 +57,8 @@ const RegisterPage = () => {
     country: '',
     birthdate: "",
     gender: "",
-    distanceUnit: "",
-    weightUnit: "",
+    distance: "",
+    weightOption: "",
     activityLevel: "",
   });
 
@@ -84,8 +84,8 @@ const RegisterPage = () => {
     newFormData.append("country", formData.country);
     newFormData.append("birthdate", formData.birthdate);
     newFormData.append("gender", formData.gender);
-    newFormData.append("distanceUnit", formData.distanceUnit);
-    newFormData.append("weightUnit", formData.weightUnit);
+    newFormData.append("distance", formData.distance);
+    newFormData.append("weightOption", formData.weightOption);
     newFormData.append("activityLevel", formData.activityLevel);
   
     if (formData.imageUrl) {
@@ -110,71 +110,95 @@ const RegisterPage = () => {
   const progressPercentage = ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box">
-      <div className="flex flex-col h-full p-6 md:p-10">
-  <div className="mb-6">
-    <img src="/logo-black.png" width={85} alt="Logo" />
-  </div>
-        <div className="flex flex-col justify-center">
-          <div className="text-center mb-10">
-            <h1 className="text-2xl font-bold mb-1">{steps[currentStep].name}</h1>
-            <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
-          </div>
+    <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box text-black dark:text-white">
+  {/* Left Section */}
+  <div className="flex flex-col h-full p-6 md:p-10">
+    <div className="mb-6">
+      {/* Logo: light/dark */}
+      <img src="/logo-black.png" width={85} alt="Logo" className="block dark:hidden" />
+      <img src="/logo-white.png" width={85} alt="Logo" className="hidden dark:block" />
+    </div>
 
-          <div className="flex justify-center">
-            <Progress value={progressPercentage} className="h-2 rounded-md max-w-sm" />
-          </div>
-          
-          <div className="flex-1 flex items-center justify-center mt-10">
-            <div className="w-full max-w-sm">
-              
-            {errorMessage && <div className="mb-5"> <ErrorAlert message={errorMessage} /></div>}
+    <div className="flex flex-col justify-center">
+      <div className="text-center mb-10">
+        <h1 className="text-2xl font-bold mb-1">{steps[currentStep].name}</h1>
+        <p className="text-sm text-muted-foreground dark:text-gray-400">
+          {steps[currentStep].description}
+        </p>
+      </div>
 
-              <StepComponent
-                formData={formData}
-                updateFormData={updateFormData}
-                setIsNextDisabled={setIsNextDisabled} 
-              />
-              <div className="flex flex-col justify-between mt-6">
-                <Button
-                  variant="outline"
-                  className="mb-4"
-                  onClick={prevStep}
-                  disabled={currentStep === 0}
-                >
-                  Previous
-                </Button>
-                {currentStep < steps.length - 1 ? (
-                  <Button
-                    className="text-white"
-                    onClick={nextStep}
-                    disabled={isNextDisabled}>
-                    Next
-                  </Button>
-                ) : (
-                  <Button className="text-white" onClick={handleSubmit} disabled={createUserMutation.isPending}>
-                    {createUserMutation.status === "pending" ? "Creating Account..." : "Create Account"}
-                  </Button>
-                )}
-              </div>
-              <div className="text-center text-sm mt-4">
-                Already have an account?{" "}
-                <Link to="/login" className="underline">
-                  Login here
-                </Link>
-              </div>
+      <div className="flex justify-center">
+        <Progress
+          value={progressPercentage}
+          className="h-2 rounded-md max-w-sm bg-gray-200 dark:bg-gray-400"
+        />
+      </div>
+
+      <div className="flex-1 flex items-center justify-center mt-10">
+        <div className="w-full max-w-sm">
+          {errorMessage && (
+            <div className="mb-5">
+              <ErrorAlert message={errorMessage} />
             </div>
+          )}
+
+          <StepComponent
+            formData={formData}
+            updateFormData={updateFormData}
+            setIsNextDisabled={setIsNextDisabled}
+          />
+
+          <div className="flex flex-col justify-between mt-6">
+            <Button
+              variant="outline"
+              className="mb-4 dark:bg-dark dark:text-white dark:border-dark-box hover:dark:bg-black"
+              onClick={prevStep}
+              disabled={currentStep === 0}
+            >
+              Previous
+            </Button>
+
+            {currentStep < steps.length - 1 ? (
+              <Button
+                className="text-white bg-primary dark:bg-primary dark:hover:bg-primary/80"
+                onClick={nextStep}
+                disabled={isNextDisabled}
+              >
+                Next
+              </Button>
+            ) : (
+              <Button
+                className="text-white bg-primary dark:bg-primary dark:hover:bg-primary/80"
+                onClick={handleSubmit}
+                disabled={createUserMutation.isPending}
+              >
+                {createUserMutation.status === "pending"
+                  ? "Creating Account..."
+                  : "Create Account"}
+              </Button>
+            )}
+          </div>
+
+          <div className="text-center text-sm mt-4 text-muted-foreground dark:text-gray-400">
+            Already have an account?{" "}
+            <Link to="/login" className="underline hover:text-primary dark:hover:text-primary">
+              Login here
+            </Link>
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/register.webp"
-          alt="Register"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
     </div>
+  </div>
+
+  {/* Right Section */}
+  <div className="relative hidden lg:block">
+    <img
+      src="/register.webp"
+      alt="Register"
+      className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.3] dark:grayscale"
+    />
+  </div>
+</div>
   );
 };
 

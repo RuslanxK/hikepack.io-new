@@ -96,7 +96,7 @@ export function RecentItemsBar() {
   
 
   return (
-    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-48 md:w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-dark hide-scroll-bar`}>
+    <div className={`fixed top-0 right-0 z-40 h-screen md:h-auto md:relative ${isOpen ? "w-48 md:w-72" : "w-5"} border-l border-gray-200 dark:border-dark-box bg-primary dark:bg-emerald-900 hide-scroll-bar`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-20 sm:top-auto sm:right-auto z-10 w-5 h-8 bg-secondary dark:bg-secondary dark:border-dark-box rounded-r-md flex items-center justify-center"
@@ -141,7 +141,7 @@ export function RecentItemsBar() {
 
       {/* Modal */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-      <DialogContent className="max-w-lg rounded-xl bg-white dark:bg-dark p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+      <DialogContent className="max-w-lg rounded-xl bg-white dark:bg-dark p-6 shadow-xl border border-gray-200 dark:border-dark-box">
   <DialogHeader>
     <DialogTitle className="text-lg font-bold text-gray-800 dark:text-white">
       Add "{selectedItem?.name}" to Categories
@@ -156,7 +156,7 @@ export function RecentItemsBar() {
     categories.map((category) => (
       <label
         key={category._id}
-        className="flex items-center justify-between px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-dark-nav"
+        className="flex items-center justify-between px-4 py-2 border border-gray-200 dark:border-dark-box rounded-md hover:bg-gray-50 dark:hover:bg-dark-nav dark:bg-dark-box"
       >
         <span className="text-sm text-gray-700 dark:text-gray-200">
           {category.name ? category.name : "Unnamed Category"}
@@ -180,7 +180,7 @@ export function RecentItemsBar() {
     <Button
       onClick={handleAddToCategories}
       disabled={isSaving || selectedCategories.length === 0}
-      className="bg-primary text-white hover:bg-gray-900"
+      className="bg-primary text-white hover:bg-primary/90"
     >
       {isSaving ? "Saving..." : "Add"}
     </Button>

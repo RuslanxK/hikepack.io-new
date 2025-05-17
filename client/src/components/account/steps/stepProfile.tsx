@@ -30,7 +30,7 @@ const StepProfile: React.FC<StepProps> = ({ formData, updateFormData }) => {
         alt="Profile Preview"
         className="w-24 h-24 rounded-full object-cover mb-4"
       />
-      <Input type="file" onChange={handleFileChange} />
+      <Input type="file" className="dark:bg-dark" onChange={handleFileChange} />
     </div>
   );
 };

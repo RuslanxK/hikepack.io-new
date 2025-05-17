@@ -273,7 +273,7 @@ const BagDetails: React.FC = () => {
     </div>
     {bag?.description && (
    
-    <div className="flex items-start mt-5 mb-5 rounded-lg p-6 bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+    <div className="flex items-start mt-5 mb-5 rounded-lg p-6 bg-white dark:bg-dark-box border border-gray-200 dark:border-dark-box">
       <div className="w-full">
         <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
           Bag Description

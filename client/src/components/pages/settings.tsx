@@ -150,9 +150,9 @@ const Settings: React.FC = () => {
             </Button>
         </CardHeader>
         <CardContent>
-  <div className="flex flex-col lg:flex-row gap-5 dark:bg-dark rounded-lg">
+  <div className="flex flex-col lg:flex-row gap-5 dark:bg-dark-box rounded-lg">
     {/* Profile Image & Upload */}
-    <div className="flex flex-col items-center lg:items-start rounded-lg p-5 border w-full lg:w-[280px]">
+    <div className="flex flex-col items-center lg:items-start rounded-lg p-5 border dark:border-dark-box w-full lg:w-[280px] bg-white dark:bg-dark">
       <img
         src={formData.imageUrl || "./default-profile-placeholder.png"}
         alt="Profile Preview"
@@ -172,7 +172,7 @@ const Settings: React.FC = () => {
     </div>
 
     {/* Form Fields Grid */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full p-5 border rounded-lg">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full p-5 border rounded-lg dark:bg-dark">
       <div>
         <Label htmlFor="username">Username</Label>
         <Input

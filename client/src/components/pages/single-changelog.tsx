@@ -30,16 +30,16 @@ const SingleChangeLog: React.FC<SingleChangeLogProps> = ({ log, user }) => {
   };
 
   return (
-    <div className="border-b pb-4 flex items-start gap-3">
+    <div className="border-b dark:border-zinc-600 pb-4 flex items-start gap-4">
       <CheckCircle className="w-6 h-6 text-primary mt-1" />
-      <div>
+      <div className="flex flex-col gap-4">
         <h2 className="text-lg font-semibold text-black dark:text-gray-200">
           {log.title}
         </h2>
         <p className="text-sm text-gray-700 dark:text-gray-400">
           {log.description}
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 dark:text-gray-300 mt-1">
           {new Date(log.createdAt).toLocaleDateString()}
         </p>
       </div>

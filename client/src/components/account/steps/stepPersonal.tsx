@@ -24,115 +24,126 @@ interface StepProps {
 const StepPersonal: React.FC<StepProps> = ({ formData, updateFormData }) => {
 
   return (
-    <div className="flex flex-wrap gap-y-6 gap-x-4">
-      <div className="w-full md:w-[47.9%] space-y-1">
-        <Label>Country</Label>
-        <Select
-          onValueChange={(value) => updateFormData({ country: value })}
-          value={formData.country || 'United States'}
-        >
-          <SelectTrigger className="rounded-lg bg-gray-100">
-            <SelectValue placeholder="Select Country" />
-          </SelectTrigger>
-          <SelectContent>
-          {countries.map((country) => (
-         <SelectItem key={country.flag} value={country.name}>{country.name}</SelectItem>
-         ))}
-       </SelectContent>
-        </Select>
-      </div> 
-      <div className="w-full md:w-[47.9%] space-y-1">
-  <Label>Birthdate</Label>
-  <Popover>
-    <PopoverTrigger asChild>
-      <button className="w-full flex items-center justify-between px-3 py-2 border rounded-lg bg-gray-100 text-left text-sm">
-        {formData.birthdate
-          ? format(new Date(formData.birthdate), "PPP")
-          : "Select Birthdate"}
-        <CalendarIcon className="ml-2 h-4 w-4" />
-      </button>
-    </PopoverTrigger>
-    <PopoverContent align="start" className="w-auto p-0">
-      <Calendar
-        mode="single"
-        selected={formData.birthdate ? new Date(formData.birthdate) : undefined}
-        onSelect={(date) => {
-          if (date) {
-            // Adjust for timezone difference
-            const adjustedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-            updateFormData({ birthdate: adjustedDate.toISOString().split("T")[0] });
-          }
-        }}
-        initialFocus
-        disabled={(date) => isBefore(endOfToday(), date)} 
-      />
-    </PopoverContent>
-  </Popover>
-</div>
+   <div className="flex flex-wrap gap-y-6 gap-x-4">
+  {/* Country */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Country</Label>
+    <Select
+      onValueChange={(value) => updateFormData({ country: value })}
+      value={formData.country || 'United States'}
+    >
+      <SelectTrigger className="rounded-lg bg-gray-100 dark:bg-dark dark:text-white dark:border-dark-box">
+        <SelectValue placeholder="Select Country" />
+      </SelectTrigger>
+      <SelectContent className="dark:bg-dark-box dark:text-white">
+        {countries.map((country) => (
+          <SelectItem key={country.flag} value={country.name}>
+            {country.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  </div>
 
-      <div className="w-full md:w-[47.9%] space-y-1">
-        <Label>Gender</Label>
-        <Select
-          onValueChange={(value) => updateFormData({ gender: value })}
-          value={formData.gender || ""}
-        >
-          <SelectTrigger className="rounded-lg bg-gray-100">
-            <SelectValue placeholder="Select Gender" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="male">Male</SelectItem>
-            <SelectItem value="female">Female</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="w-full md:w-[47.9%] space-y-1">
-        <Label>Distance Unit</Label>
-        <Select
-          onValueChange={(value) => updateFormData({ distanceUnit: value })}
-          value={formData.distanceUnit || ""}
-        >
-          <SelectTrigger className="rounded-lg bg-gray-100">
-            <SelectValue placeholder="Select Distance Unit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="km">Kilometers</SelectItem>
-            <SelectItem value="miles">Miles</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="w-full md:w-[47.9%] space-y-1">
-        <Label>Weight Unit</Label>
-        <Select
-          onValueChange={(value) => updateFormData({ weightUnit: value })}
-          value={formData.weightUnit || ""}
-        >
-          <SelectTrigger className="rounded-lg bg-gray-100">
-            <SelectValue placeholder="Select Weight Unit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="kg">Kilograms</SelectItem>
-            <SelectItem value="lb">Pounds</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="w-full md:w-[47.9%] space-y-1">
-        <Label>Activity Level</Label>
-        <Select
-          onValueChange={(value) => updateFormData({ activityLevel: value })}
-          value={formData.activityLevel || ""}
-        >
-          <SelectTrigger className="rounded-lg bg-gray-100">
-            <SelectValue placeholder="Select Activity Level" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="beginner">Beginner</SelectItem>
-            <SelectItem value="intermediate">Intermediate</SelectItem>
-            <SelectItem value="advanced">Advanced</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
+  {/* Birthdate */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Birthdate</Label>
+    <Popover>
+      <PopoverTrigger asChild>
+        <button className="w-full flex items-center justify-between px-3 py-2 border rounded-lg bg-gray-100 dark:bg-dark text-left text-sm dark:text-white dark:border-dark-box">
+          {formData.birthdate
+            ? format(new Date(formData.birthdate), "PPP")
+            : "Select Birthdate"}
+          <CalendarIcon className="ml-2 h-4 w-4" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-auto p-0 dark:bg-dark">
+        <Calendar
+          mode="single"
+          selected={formData.birthdate ? new Date(formData.birthdate) : undefined}
+          onSelect={(date) => {
+            if (date) {
+              const adjustedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+              updateFormData({ birthdate: adjustedDate.toISOString().split("T")[0] });
+            }
+          }}
+          initialFocus
+          disabled={(date) => isBefore(endOfToday(), date)}
+        />
+      </PopoverContent>
+    </Popover>
+  </div>
+
+  {/* Gender */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Gender</Label>
+    <Select
+      onValueChange={(value) => updateFormData({ gender: value })}
+      value={formData.gender || ""}
+    >
+      <SelectTrigger className="rounded-lg bg-gray-100 dark:bg-dark dark:text-white dark:border-dark-box">
+        <SelectValue placeholder="Select Gender" />
+      </SelectTrigger>
+      <SelectContent className="dark:bg-dark-box dark:text-white">
+        <SelectItem value="male">Male</SelectItem>
+        <SelectItem value="female">Female</SelectItem>
+        <SelectItem value="other">Other</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Distance Unit */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Distance Unit</Label>
+    <Select
+      onValueChange={(value) => updateFormData({ distance: value })}
+      value={formData.distance || ""}
+    >
+      <SelectTrigger className="rounded-lg bg-gray-100 dark:bg-dark dark:text-white dark:border-dark-box">
+        <SelectValue placeholder="Select Distance Unit" />
+      </SelectTrigger>
+      <SelectContent className="dark:bg-dark-box dark:text-white">
+        <SelectItem value="km">Kilometers</SelectItem>
+        <SelectItem value="miles">Miles</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Weight Unit */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Weight Unit</Label>
+    <Select
+      onValueChange={(value) => updateFormData({ weightOption: value })}
+      value={formData.weightOption || ""}
+    >
+      <SelectTrigger className="rounded-lg bg-gray-100 dark:bg-dark dark:text-white dark:border-dark-box">
+        <SelectValue placeholder="Select Weight Unit" />
+      </SelectTrigger>
+      <SelectContent className="dark:bg-dark-box dark:text-white">
+        <SelectItem value="kg">Kilograms</SelectItem>
+        <SelectItem value="lb">Pounds</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Activity Level */}
+  <div className="w-full md:w-[47.9%] space-y-1">
+    <Label className="dark:text-white">Activity Level</Label>
+    <Select
+      onValueChange={(value) => updateFormData({ activityLevel: value })}
+      value={formData.activityLevel || ""}
+    >
+      <SelectTrigger className="rounded-lg bg-gray-100 dark:bg-dark dark:text-white dark:border-dark-box">
+        <SelectValue placeholder="Select Activity Level" />
+      </SelectTrigger>
+      <SelectContent className="dark:bg-dark-box dark:text-white">
+        <SelectItem value="beginner">Beginner</SelectItem>
+        <SelectItem value="intermediate">Intermediate</SelectItem>
+        <SelectItem value="advanced">Advanced</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+</div>
   );
 };
 

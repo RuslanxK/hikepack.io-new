@@ -84,15 +84,19 @@ const ShareMain = () => {
     <div className="w-full">
       {/* Fixed Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full z-50 bg-white px-4 md:px-10 py-4 ${
+        className={`fixed top-0 left-0 w-full z-50 bg-white dark:bg-dark-box px-4 md:px-10 py-4 ${
           hasShadow ? "shadow-md" : ""
         }`}
       >
         <div className="flex justify-between items-center">
           {/* Left: Logo */}
           <RouterLink to="/" className="flex items-center gap-3">
-            <img src="/logo-black.png" alt="Logo" width={85} />
-          </RouterLink>
+  {/* Light mode logo */}
+  <img src="/logo-black.png" alt="Logo" width={85} className="block dark:hidden" />
+  
+  {/* Dark mode logo */}
+  <img src="/logo-white.png" alt="Logo" width={85} className="hidden dark:block" />
+</RouterLink>
 
           {/* Right: Like + Auth */}
           <div className="flex items-center gap-5">
@@ -135,7 +139,7 @@ const ShareMain = () => {
         <div className="pt-24 w-full lg:w-4/5 m-auto">
           {/* User Info */}
           <div className="flex flex-col mb-5 bg-transparent dark:bg-transparent">
-          <div className="flex items-center gap-6 sm:gap-8 p-6 rounded-lg bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-6 sm:gap-8 p-6 rounded-lg bg-white dark:bg-dark-box border border-gray-200 dark:border-dark-box">
   {/* Avatar */}
   <div className="relative">
     <img
@@ -171,7 +175,7 @@ const ShareMain = () => {
 </div>
 
 
- <div className="flex items-start mt-5 rounded-lg p-6 bg-white dark:from-dark-box dark:via-dark-box/80 dark:to-dark-box border border-gray-200 dark:border-gray-700">
+ <div className="flex items-start mt-5 rounded-lg p-6 bg-white dark:bg-dark-box border border-gray-200 dark:border-dark-box">
   <div className="w-full space-y-6">
     {/* Trip Title */}
     <div>
@@ -197,7 +201,7 @@ const ShareMain = () => {
 
     {/* Trip Dates */}
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-box/50">
+      <div className="p-4 rounded-lg border border-gray-200 dark:border-dark-box bg-gray-50 dark:bg-primary/20">
         <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
           Start Date
         </p>
@@ -205,7 +209,7 @@ const ShareMain = () => {
           {formatDate(data?.trip?.startDate)}
         </p>
       </div>
-      <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-box/50">
+      <div className="p-4 rounded-lg border border-gray-200 dark:border-dark-box bg-gray-50 dark:bg-primary/20">
         <p className="text-[11px] uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400 mb-1">
           End Date
         </p>

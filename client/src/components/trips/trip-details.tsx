@@ -306,7 +306,7 @@ const TripDetails: React.FC = () => {
 </div>
 
 <div className="flex flex-wrap md:flex-nowrap gap-2 items-center text-sm">
-  <div className="flex items-center min-w-[160px] bg-light px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-dark-box/50 whitespace-nowrap">
+  <div className="flex items-center min-w-[160px] bg-light px-4 py-2.5 rounded-lg border border-gray-200 dark:border-dark dark:bg-dark whitespace-nowrap">
     <MapPin size={18} className="mr-2 shrink-0" />
     <span className="truncate">
       Distance: {trip?.distance} {user?.distance}
@@ -315,7 +315,7 @@ const TripDetails: React.FC = () => {
 
   <Separator orientation="vertical" className="hidden md:block dark:bg-gray-500" />
 
-  <div className="flex items-center min-w-[160px] px-4 bg-light py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-dark-box/50 whitespace-nowrap">
+  <div className="flex items-center min-w-[160px] px-4 bg-light py-2.5 rounded-lg border border-gray-200 dark:border-dark dark:bg-dark whitespace-nowrap">
     <CalendarFold size={18} className="mr-2 shrink-0" />
     <span className="truncate">{tripStatus}</span>
   </div>

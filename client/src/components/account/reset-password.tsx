@@ -64,68 +64,82 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box">
-     <div className="flex flex-col h-full p-6 md:p-10">
-  <div className="mb-6">
-    <img src="/logo-black.png" width={85} alt="Logo" />
-  </div>
+   <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box text-black dark:text-white">
+  {/* Left side: form */}
+  <div className="flex flex-col h-full p-6 md:p-10">
+    <div className="mb-6">
+      {/* Light logo */}
+      <img src="/logo-black.png" width={85} alt="Logo" className="block dark:hidden" />
+      {/* Dark logo */}
+      <img src="/logo-white.png" width={85} alt="Logo" className="hidden dark:block" />
+    </div>
 
-        <div className="flex flex-col justify-center">
-          <div className="text-center mb-10">
-            <h1 className="text-2xl font-bold mb-1">Reset Password</h1>
-            <p className="text-sm text-muted-foreground">
-              Enter your email address to reset your password.
-            </p>
-          </div>
+    <div className="flex flex-col justify-center">
+      <div className="text-center mb-10">
+        <h1 className="text-2xl font-bold mb-1">Reset Password</h1>
+        <p className="text-sm text-muted-foreground dark:text-gray-400">
+          Enter your email address to reset your password.
+        </p>
+      </div>
 
-          <div className="flex justify-center">
-            <div className="w-full max-w-sm">
-              {errorMessage && (
-                <div className="mb-5">
-                  <ErrorAlert message={errorMessage} />
-                </div>
-              )}
-
-              {successMessage && (
-                <div className="mb-5">
-                  <SuccessAlert message={successMessage} />
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <Button type="submit" className="text-white w-full" disabled={checkEmailMutation.status === "pending"}>
-                  {checkEmailMutation.status === "pending" ? "Checking..." : "Submit"}
-                </Button>
-              </form>
-
-              <div className="text-center text-sm mt-4">
-                Remembered your password?{" "}
-                <Link to="/login" className="underline">
-                  Login here
-                </Link>
-              </div>
+      <div className="flex justify-center">
+        <div className="w-full max-w-sm">
+          {errorMessage && (
+            <div className="mb-5">
+              <ErrorAlert message={errorMessage} />
             </div>
+          )}
+
+          {successMessage && (
+            <div className="mb-5">
+              <SuccessAlert message={successMessage} />
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="space-y-1">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                className="bg-white dark:bg-dark text-black dark:text-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <Button
+              type="submit"
+              className="text-white w-full dark:bg-primary dark:hover:bg-primary/80"
+              disabled={checkEmailMutation.status === "pending"}
+            >
+              {checkEmailMutation.status === "pending" ? "Checking..." : "Submit"}
+            </Button>
+          </form>
+
+          <div className="text-center text-sm mt-4">
+            <span className="text-muted-foreground dark:text-gray-400">
+              Remembered your password?{" "}
+              <Link to="/login" className="underline hover:text-primary dark:hover:text-primary">
+                Login here
+              </Link>
+            </span>
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/reset-pass.webp"
-          alt="Reset Password"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
     </div>
+  </div>
+
+  {/* Right side: image */}
+  <div className="relative hidden bg-muted lg:block">
+    <img
+      src="/reset-pass.webp"
+      alt="Reset Password"
+      className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.3] dark:grayscale"
+    />
+  </div>
+</div>
+
   );
 };
 

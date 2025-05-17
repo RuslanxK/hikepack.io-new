@@ -45,12 +45,12 @@ export function TableUsers() {
           placeholder="Search by email or username"
           value={userSearchTerm}
           onChange={(e) => setUserSearchTerm(e.target.value)}
-          className="w-full sm:w-80"
+          className="w-full sm:w-80 border border-light"
         />
       </div>
 
       {/* Scrollable horizontal area with visible scroll bar */}
-      <div className="w-full overflow-x-auto border rounded-lg dark:border-dark-nav">
+      <div className="w-full overflow-x-auto border rounded-lg dark:border-dark-box">
         <div className="min-w-[1000px]">
           <Table>
             <TableHeader>
