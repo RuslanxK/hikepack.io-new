@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./components/layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import Home from "./components/home/Home";
@@ -26,10 +26,24 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useEffect, useState } from "react";
 import { getSocket, disconnectSocket } from "@/lib/websocketService";
 import Cookies from "js-cookie";
+import { initGA, trackPage } from "./analytics";
+import { useLocation } from 'react-router-dom';
+
 
 function App() {
 
   const [liveUsers, setLiveUsers] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    initGA();
+  }, []);
+
+
+   useEffect(() => {
+    trackPage(location.pathname + location.search);
+  }, [location]);
+
 
   
   useEffect(() => {
@@ -50,7 +64,6 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <Router>
         <Layout>
           <Routes>
            <Route path="/share/:id" element={<ShareMain/>}/>
@@ -71,14 +84,12 @@ function App() {
             <Route path="/contact-us" element={<ReportBug/>}/>
             <Route path="/admin" element={<AdminPanel liveUsers={liveUsers} />}/>
             </Route>
-         
             <Route element={<PublicRoutes />}>
             <Route path="/login" element={<Login/>}/>
            <Route path="/welcome" element={ <DndProvider backend={HTML5Backend}><Welcome/> </DndProvider> }/>
             </Route>
           </Routes>
         </Layout>
-      </Router>
     </ThemeProvider>
   );
 }

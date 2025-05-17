@@ -7,6 +7,7 @@ import './index.css'
 import { UserProvider } from './context/user-context';
 import { SearchProvider } from './context/search-context';
 import { GoogleOAuthProvider } from "@react-oauth/google"
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 const googleClientId = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID;
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
     <SearchProvider>
     <UserProvider>
+    <Router>
       <App />
+    </Router>
     </UserProvider>
     </SearchProvider>
     </QueryClientProvider>
