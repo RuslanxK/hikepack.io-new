@@ -28,7 +28,7 @@ export const AISuggestionsModal = ({
 
 
   const [response, setResponse] = useState<{ categoryName: string; items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[] }[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing top gear for your trip");
@@ -204,7 +204,7 @@ export const AISuggestionsModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-dark-box w-[1000px] max-h-[90vh] sm:max-h-[600px] lg:max-h-[650px] h-fit p-8 rounded-lg relative overflow-y-auto flex flex-col">
+      <div className="bg-white dark:bg-dark-box w-[1000px] max-h-[90vh] p-8 rounded-lg relative overflow-y-auto">
 
         <button
           onClick={handleModalClose}
@@ -218,33 +218,33 @@ export const AISuggestionsModal = ({
   <div className="overflow-y-auto flex-1">
   {!loading && (
   response.length === 0 ? (
-    <div className="flex flex-1 items-center justify-center h-full">
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center bg-primary/10 gap-10 p-4 sm:p-10 rounded-lg max-w-5xl w-full">
-   { <div className="w-full md:w-1/2 flex flex-col items-start text-left space-y-5 max-w-[500px]">
+    <div className="flex flex-1 items-center justify-center ">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 p-4 rounded-lg w-full">
+   { <div className="w-full  flex flex-col items-start text-left space-y-5">
      <h3 className="text-3xl font-extrabold text-black dark:text-white relative z-10 flex items-center gap-2">
           Gear Up Smartly for Your Next Adventure
         </h3>
-        <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-        Powered by advanced AI, our system evaluates your trip details, bag specifications, and personal preferences to generate a highly curated checklist — as if crafted by a professional hiker with decades of experience. It ensures you're fully equipped, from core necessities to specialized gear, leaving no critical item behind.
-        </p>
+       <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+       Our AI analyzes your trip and gear to create a smart, complete checklist — like a pro hiker packed it for you.
+       </p>
         <Button
           onClick={handleSubmit}
+          disabled={loading}
           variant="default"
-          className="relative font-extrabold w-full py-6 mb-5 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500
-         text-white bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 border-purple-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400"
+          className="w-full py-6 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white shadow-lg hover:-translate-y-1 transition-all duration-300"
         >
-          <span className="relative z-10 flex items-center gap-2">GENERATE AI SUGGESTIONS NOW </span>
-          <span className="font-normal text-xs flex items-center">costs (2 <img src="/currency-icon.svg" alt="credits" className="w-4 h-4 rounded-full mr-1 ml-1" />)</span> 
+          <span className="relative z-10 flex items-center gap-2">Generate AI Suggestions Now <Send className="w-5 h-5" /></span>
+        
         </Button>
       </div>}
   
-        <div className="w-full md:w-1/2 max-w-[500px]">
-        <img
-          src="/hiker.webp"
-          alt="Hiker in the mountains"
-          className="w-full object-cover shadow-lg rounded-lg"
-        />
-      </div>
+      <div className="md:w-1/2">
+              <img
+                src="/suggestions-ai.webp"
+                alt="Hiker"
+                className="rounded-lg shadow-lg"
+              />
+            </div>
     </div>
   </div>
   ) : (
@@ -284,53 +284,42 @@ export const AISuggestionsModal = ({
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   {loading ? (
- <div className="col-span-2 flex items-center justify-center h-fit">
-  <div className="w-[900px] h-fit bg-primary/5 dark:bg-dark-box rounded-xl flex flex-col md:flex-row items-center justify-center gap-10 p-10">
+ <div className="col-span-2 flex items-center justify-center">
+  <div className="w-[900px] dark:bg-dark-box rounded-xl flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+    
 
-  <div className="w-full md:w-1/2 max-w-[500px]">
-        <img
-          src="/hiker-organize.webp"
-          alt="Hiker in the mountains"
-          className="w-full object-cover shadow-lg rounded-lg"
-        />
-      </div>
+  <div className="relative w-full md:w-1/2 flex flex-col justify-center items-center text-center md:items-start md:text-left">
+  <div className="w-20 h-20 mb-6 relative m-auto">
+    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary blur-lg opacity-70 animate-ping" />
+    <div className="relative z-10 w-full h-full rounded-full bg-gradient-to-r from-primary to-indigo-500 shadow-lg" />
+  </div>
 
-  <div className="w-full md:w-1/2 max-w-[400px] flex flex-col justify-center">
-  <h3 className="text-2xl text-primary font-bold mb-8 text-center md:text-left">Processing...</h3>
+  <h3 className="text-2xl font-bold mb-6 m-auto">
+    AI is processing your request...
+  </h3>
 
-    <ul className="space-y-6">
-      
-  {loadingMessages.map((msg, index) => (
-    <li key={index} className="relative flex items-center gap-3">
-      <div className="relative flex items-center justify-center w-5 h-5">
-        <div
-          className={`w-4 h-4 rounded-full shrink-0 z-10 ${
-            currentLoadingMessage === msg
-              ? 'bg-primary'
-              : 'bg-gray-300 dark:bg-gray-600'
-          }`}
-        />
-        {currentLoadingMessage === msg && (
-          <div className="absolute w-6 h-6 border-2 border-primary/60 border-t-transparent rounded-full animate-spin" />
-        )}
-      </div>
-      <span
-        className={`text-md transition-opacity duration-300 ${
-          currentLoadingMessage === msg
-            ? 'text-gray-800 dark:text-gray-100'
-            : 'text-gray-400 dark:text-gray-500'
-        }`}
-      >
-        {msg}
-      </span>
-    </li>
-  ))}
-</ul>
+   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 max-w-md text-center">
+  Our intelligent system is analyzing your input, cross-referencing gear data, and tailoring personalized suggestions for your adventure.
+</p>
+
+  <div className="w-full max-w-sm px-4 py-3 border border-dashed border-primary/50 dark:border-gray-700 rounded-lg bg-white/20 dark:bg-dark-input/40 backdrop-blur-md shadow-md m-auto">
+    <span className="text-sm text-primary font-medium tracking-wide animate-typewriter whitespace-nowrap block overflow-hidden border-r-2 border-primary pr-1">
+      {currentLoadingMessage}
+    </span>
+  </div>
+</div>
+
+ <div className="md:w-1/2 w-full flex justify-center">
+      <img
+        src="/process.webp"
+        alt="AI Custom"
+        className="w-full max-w-[400px] object-cover rounded-lg shadow-xl"
+      />
+    </div>
 
 </div>
 
   </div>
-</div>
 
           ) : errorMessage ? (
             <div className="col-span-2 text-center text-red-500 font-semibold">

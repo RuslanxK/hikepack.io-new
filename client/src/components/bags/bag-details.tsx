@@ -24,7 +24,7 @@ import { bagStepsConfig } from '../guide/stepsConfig';
 import { Sparkles } from 'lucide-react';
 import { AISuggestionsModal } from "../dialogs/ai-suggestions";
 import { colorfulButtonClass } from "../app-sidebar";
-
+import CustomTextRequestModal from "../dialogs/custom-text-request";
 
 
 
@@ -41,6 +41,8 @@ const BagDetails: React.FC = () => {
   const [isSettingCategories, setIsSettingCategories] = useState(true);
   const [isAISuggestionsOpen, setIsAISuggestionsOpen] = useState(false);
   const [addingCategory, setAddingCategory] = useState(false)
+  const [isCustomRequestOpen, setIsCustomRequestOpen] = useState(false);
+
 
   const { toast } = useToast()
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
@@ -303,7 +305,7 @@ const BagDetails: React.FC = () => {
 
   <div className="flex gap-4 flex-col sm:flex-row">
   <Button
-    onClick={() => setIsAISuggestionsOpen(true)}
+    onClick={() => setIsCustomRequestOpen(true)}
     className={`${colorfulButtonClass} mt-0 py-6`}
     variant="default"
   >
@@ -346,6 +348,15 @@ const BagDetails: React.FC = () => {
   bagId={bag?._id}
   tripId={bag?.tripId}
   categories={categories}
+/>
+
+<CustomTextRequestModal
+  isOpen={isCustomRequestOpen}
+  onClose={() => setIsCustomRequestOpen(false)}
+  onSubmit={(text) => {
+    console.log("Custom input:", text);
+    
+  }}
 />
 
 

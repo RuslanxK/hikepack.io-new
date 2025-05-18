@@ -15,6 +15,7 @@ export default {
 
       animation: {
         float: 'float 1.5s ease-in-out infinite',
+        typewriter: 'typewriter 2.5s steps(30) infinite',
       },
 
       keyframes: {
@@ -22,6 +23,10 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+         typewriter: {
+      '0%': { width: '0' },
+      '100%': { width: '100%' },
+    },
       },
 
       colors: {
