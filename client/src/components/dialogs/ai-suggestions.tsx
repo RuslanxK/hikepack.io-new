@@ -28,7 +28,7 @@ export const AISuggestionsModal = ({
 
 
   const [response, setResponse] = useState<{ categoryName: string; items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[] }[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing top gear for your trip");
