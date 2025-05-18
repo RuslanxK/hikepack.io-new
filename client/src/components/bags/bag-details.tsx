@@ -301,7 +301,7 @@ const BagDetails: React.FC = () => {
 
 {!isSharedView && (
 
-  <div className="flex gap-4">
+  <div className="flex gap-4 flex-col sm:flex-row">
   <Button
     onClick={() => setIsAISuggestionsOpen(true)}
     className={`${colorfulButtonClass} mt-0 py-6`}

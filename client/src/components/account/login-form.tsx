@@ -57,11 +57,11 @@ const { setUser, user } = useUser();
   const [errorMessage, setErrorMessage] = useState('');
   const [showPersonalDialog, setShowPersonalDialog] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-  country: "",
+  country: "United States",
   birthdate: "",
   gender: "",
-  distance: "",
-  weightOption: "",
+  distance: "miles",
+  weightOption: "lb",
   activityLevel: "",
 });
 
