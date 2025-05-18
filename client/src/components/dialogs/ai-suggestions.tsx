@@ -204,7 +204,7 @@ export const AISuggestionsModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-dark-box w-[1000px] max-h-[90vh] p-8 rounded-lg relative overflow-y-auto">
+      <div className="bg-white dark:bg-dark-box w-[1000px] max-h-[90vh] p-6 pt-10 rounded-lg relative overflow-y-auto">
 
         <button
           onClick={handleModalClose}
@@ -219,10 +219,10 @@ export const AISuggestionsModal = ({
   {!loading && (
   response.length === 0 ? (
     <div className="flex flex-1 items-center justify-center ">
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 p-4 rounded-lg w-full">
-   { <div className="w-full  flex flex-col items-start text-left space-y-5">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 rounded-lg w-full">
+   { <div className="w-full flex flex-col items-start text-left space-y-5">
      
-  <h3 className="text-3xl font-extrabold text-black dark:text-white flex items-center gap-2 mb-4">
+  <h3 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white flex items-center gap-2">
     Let our smart AI do the thinking for you!
   </h3>
 
@@ -273,8 +273,8 @@ export const AISuggestionsModal = ({
 
     <Fragment>
   <div className="">
-    <h2 className="text-xl sm:text-2xl font-bold text-primary mb-4 text-center sm:text-left">
-    We Found Gear Suggestions Just for You!
+    <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">
+    ✨ We've Picked the Best Gear for Your Adventure!
     </h2>
     <div className="flex flex-col sm:flex-row w-full gap-3 p-4 rounded-xl bg-primary/10 dark:bg-dark shadow-md mb-5">
       <input
@@ -308,7 +308,7 @@ export const AISuggestionsModal = ({
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   {loading ? (
  <div className="col-span-2 flex items-center justify-center">
-  <div className="w-[900px] dark:bg-dark-box bg-white/70 rounded-xl flex flex-col-reverse md:flex-row items-center justify-between gap-10 p-6 relative overflow-hidden">
+  <div className="w-[900px] dark:bg-dark-box bg-white/70 rounded-xl flex flex-col-reverse md:flex-row items-center justify-between  p-2 relative overflow-hidden">
 
     {/* LEFT SIDE */}
     <div className="relative w-full md:w-1/2 flex flex-col justify-center items-center text-center md:items-start md:text-left z-10">
@@ -384,7 +384,7 @@ export const AISuggestionsModal = ({
     {category.items.map((item, idx) => (
       <li
         key={idx}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white dark:bg-dark-input rounded-md shadow hover:shadow-primary/30 transition dark:bg-dark-box"
+        className="flex flex-row sm:flex-row items-center justify-between gap-4 p-4 bg-white dark:bg-dark-input rounded-md shadow hover:shadow-primary/30 transition dark:bg-dark-box"
       >
         <div className="flex flex-col gap-1">
           <span className="font-semibold text-gray-800 dark:text-white">{item.name}</span>

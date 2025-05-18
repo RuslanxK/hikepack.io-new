@@ -105,7 +105,7 @@ const CustomRequestModal: React.FC<CustomRequestModalProps> = ({
         {!loading && !response && (
           <div className="flex flex-col md:flex-row items-center gap-10">
            <div className="space-y-5 w-full">
-  <h3 className="text-3xl font-extrabold text-black dark:text-white">
+  <h3 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white">
    ✍️ Write Your Own Request
   </h3>
   <p className="text-gray-600 dark:text-gray-300">
