@@ -293,7 +293,7 @@ export const AISuggestionsModal = ({
             : "dark:bg-gray-100 text-gray-200 dark:text-gray-600 cursor-not-allowed"
         }`}
       >
-      <span className="relative z-10 flex items-center gap-1"> Send <span className="flex items-center gap-1 text-xs text-gray-200 dark:text-gray-600">( 2 coins <img src="/currency-icon.svg" alt="coin" className="w-5 h-5" />)</span> <Send className="w-5 h-5" /></span>
+      <span className="relative z-10 flex items-center gap-1"> Send <span className="flex items-center gap-1 text-xs text-gray-200 dark:text-gray-600">( 2 credits <img src="/currency-icon.svg" alt="coin" className="w-5 h-5" />)</span> <Send className="w-5 h-5" /></span>
 
       </Button>
     </div>

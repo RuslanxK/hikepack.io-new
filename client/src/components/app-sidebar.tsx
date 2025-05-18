@@ -156,8 +156,8 @@ const UserProfile = () => {
 
     <div className="flex items-center justify-end" onClick={() => setShowBuyCoins(true)}>
         <img src={"/currency-icon.svg"} alt="credits" className="w-5 h-5 rounded-full"/>
-        <span className="ml-2 text-sm">
-        <b className={(user?.coins ?? 0) > 0 ? "text-primary" : "text-red-600"}>{user?.coins ?? 0} </b> coins</span>
+        <span className="ml-2 text-sm text-gray-500">
+        <b className={(user?.coins ?? 0) > 0 ? "text-primary" : "text-red-600"}>{user?.coins ?? 0} </b> credits</span>
         </div>
 
       <button
