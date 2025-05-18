@@ -105,12 +105,11 @@ const CustomRequestModal: React.FC<CustomRequestModalProps> = ({
         {!loading && !response && (
           <div className="flex flex-col md:flex-row items-center gap-10">
            <div className="space-y-5 w-full">
-  <h3 className="text-2xl font-extrabold text-black dark:text-white">
-    Write your own request
+  <h3 className="text-3xl font-extrabold text-black dark:text-white">
+   ✍️ Write Your Own Request
   </h3>
   <p className="text-gray-600 dark:text-gray-300">
-    Describe what kind of suggestions you want. The more specific,
-    the better the results!
+   Got something specific in mind? Tell our AI exactly what you’re looking for — the more details you provide, the smarter and more tailored your suggestions will be.
   </p>
   <Textarea
     value={userInput}
@@ -124,19 +123,10 @@ const CustomRequestModal: React.FC<CustomRequestModalProps> = ({
     disabled={!userInput.trim()}
     className="w-full py-6 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white shadow-lg hover:-translate-y-1 transition-all duration-300"
   >
-    <span className="flex items-center justify-center gap-2">
-      Generate Custom Suggestions
-      <Send className="w-5 h-5" />
-    </span>
+   <span className="relative z-10 flex items-center gap-2">Generate <span className="flex items-center gap-1 text-xs text-gray-200">( 2 credits <img src="/currency-icon.svg" alt="coin" className="w-4 h-4" />)</span> <Send className="w-5 h-5" /></span>
   </Button>
 </div>
-            <div className="md:w-1/2">
-              <img
-                src="/custom-ai.webp"
-                alt="Hiker"
-                className="rounded-lg shadow-lg"
-              />
-            </div>
+           
           </div>
         )}
 

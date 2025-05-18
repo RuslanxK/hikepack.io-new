@@ -28,7 +28,7 @@ export const AISuggestionsModal = ({
 
 
   const [response, setResponse] = useState<{ categoryName: string; items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[] }[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing top gear for your trip");
@@ -221,30 +221,52 @@ export const AISuggestionsModal = ({
     <div className="flex flex-1 items-center justify-center ">
     <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 p-4 rounded-lg w-full">
    { <div className="w-full  flex flex-col items-start text-left space-y-5">
-     <h3 className="text-3xl font-extrabold text-black dark:text-white relative z-10 flex items-center gap-2">
-          Gear Up Smartly for Your Next Adventure
-        </h3>
-       <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-       Our AI analyzes your trip and gear to create a smart, complete checklist — like a pro hiker packed it for you.
-       </p>
+     
+  <h3 className="text-3xl font-extrabold text-black dark:text-white flex items-center gap-2 mb-4">
+    Let our smart AI do the thinking for you!
+  </h3>
+
+ <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-base">
+  <li className="flex items-start gap-3 p-4 rounded-xl border border-primary/30 bg-light dark:bg-dark dark:border-white/10 transition-transform">
+    <span className="text-2xl">🧠</span>
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+      Based on your trip and gear details, we’ll instantly create a personalized packing list that feels like it was made by a pro hiker who’s done this a hundred times.
+    </p>
+  </li>
+
+  <li className="flex items-start gap-3 p-4 rounded-xl border border-primary/30 bg-light dark:bg-dark dark:border-white/10 transition-transform">
+    <span className="text-2xl">🎒</span>
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+      From must-haves to smart extras, you’ll get everything you need — and nothing you don’t. Even if your bag is completely empty, our AI can build your entire gear setup from scratch.
+    </p>
+  </li>
+
+  <li className="flex items-start gap-3 p-4 rounded-xl border border-primary/30 bg-light dark:bg-dark dark:border-white/10 transition-transform">
+    <span className="text-2xl">⚖️</span>
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+      It understands what’s missing, what to add, and how to make your backpack fully ready and well-balanced — all tailored to your adventure.
+    </p>
+  </li>
+
+  <li className="flex items-start gap-3 p-4 rounded-xl border border-primary/30 bg-light dark:bg-dark dark:border-white/10 transition-transform">
+    <span className="text-2xl">📝</span>
+    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+      You can also add a custom note to guide the AI — whether it’s a specific style, climate, or gear preference, your input helps shape the perfect list.
+    </p>
+  </li>
+</ul>
         <Button
           onClick={handleSubmit}
           disabled={loading}
           variant="default"
           className="w-full py-6 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white shadow-lg hover:-translate-y-1 transition-all duration-300"
         >
-          <span className="relative z-10 flex items-center gap-2">Generate AI Suggestions Now <Send className="w-5 h-5" /></span>
+          <span className="relative z-10 flex items-center gap-2">Generate <span className="flex items-center gap-1 text-xs text-gray-200">( 2 credits <img src="/currency-icon.svg" alt="coin" className="w-4 h-4" />)</span> <Send className="w-5 h-5" /></span>
+          
         
         </Button>
       </div>}
-  
-      <div className="md:w-1/2">
-              <img
-                src="/suggestions-ai.webp"
-                alt="Hiker"
-                className="rounded-lg shadow-lg"
-              />
-            </div>
+
     </div>
   </div>
   ) : (
@@ -254,24 +276,25 @@ export const AISuggestionsModal = ({
     <h2 className="text-xl sm:text-2xl font-bold text-primary mb-4 text-center sm:text-left">
     We Found Gear Suggestions Just for You!
     </h2>
-    <div className="flex flex-col sm:flex-row w-full gap-3 p-4 rounded-xl bg-primary/10 dark:bg-dark-box shadow-md mb-5">
+    <div className="flex flex-col sm:flex-row w-full gap-3 p-4 rounded-xl bg-primary/10 dark:bg-dark shadow-md mb-5">
       <input
         type="text"
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
         placeholder="Refine AI suggestions..."
-        className="w-full px-4 py-2 border border-primary/30 dark:border-gray-700 rounded-md bg-white dark:bg-dark-input text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full px-4 py-2 border border-primary/30 dark:border-gray-700 rounded-md bg-white dark:bg-dark text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
       />
       <Button
         onClick={handleSubmit}
         disabled={!userInput.trim()}
-        className={`w-full sm:w-auto px-3 py-2 flex items-center justify-center gap-1 rounded-md font-semibold transition-all duration-200 focus:ring-2 focus:ring-primary/50 ${
+        className={`w-full sm:w-60 py-2 flex items-center justify-center gap-1 rounded-md font-semibold transition-all duration-200 focus:ring-2 focus:ring-primary/50 ${
           userInput.trim()
             ? "bg-primary text-white hover:bg-primary/90"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "dark:bg-gray-100 text-gray-200 dark:text-gray-600 cursor-not-allowed"
         }`}
       >
-       <Send className="w-4 h-4" />
+      <span className="relative z-10 flex items-center gap-1"> Send <span className="flex items-center gap-1 text-xs text-gray-200 dark:text-gray-600">( 2 coins <img src="/currency-icon.svg" alt="coin" className="w-5 h-5" />)</span> <Send className="w-5 h-5" /></span>
+
       </Button>
     </div>
   </div>
@@ -285,41 +308,54 @@ export const AISuggestionsModal = ({
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   {loading ? (
  <div className="col-span-2 flex items-center justify-center">
-  <div className="w-[900px] dark:bg-dark-box rounded-xl flex flex-col-reverse md:flex-row items-center justify-between gap-10">
-    
+  <div className="w-[900px] dark:bg-dark-box bg-white/70 rounded-xl flex flex-col-reverse md:flex-row items-center justify-between gap-10 p-6 relative overflow-hidden">
 
-  <div className="relative w-full md:w-1/2 flex flex-col justify-center items-center text-center md:items-start md:text-left">
-  <div className="w-20 h-20 mb-6 relative m-auto">
-    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary blur-lg opacity-70 animate-ping" />
-    <div className="relative z-10 w-full h-full rounded-full bg-gradient-to-r from-primary to-indigo-500 shadow-lg" />
-  </div>
+    {/* LEFT SIDE */}
+    <div className="relative w-full md:w-1/2 flex flex-col justify-center items-center text-center md:items-start md:text-left z-10">
+      <div className="w-20 h-20 mb-6 relative m-auto">
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary blur-lg opacity-70 animate-ping" />
+        <div className="relative z-10 w-full h-full rounded-full bg-gradient-to-r from-primary to-indigo-500 shadow-lg" />
+      </div>
 
-  <h3 className="text-2xl font-bold mb-6 m-auto">
-    AI is processing your request...
-  </h3>
+      <h3 className="text-2xl font-bold mb-4 m-auto text-black dark:text-white">
+         Processing your request...
+      </h3>
 
-   <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 max-w-md text-center">
-  Our intelligent system is analyzing your input, cross-referencing gear data, and tailoring personalized suggestions for your adventure.
-</p>
+      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 text-center max-w-md m-auto">
+      Our AI is analyzing your trip, gear preferences, and environment to deliver the most optimized setup for your adventure.
+     </p>
 
-  <div className="w-full max-w-sm px-4 py-3 border border-dashed border-primary/50 dark:border-gray-300 rounded-lg bg-white/20 dark:bg-light backdrop-blur-md shadow-md m-auto">
-    <span className="text-sm text-primary dark:text-primary font-medium tracking-wide animate-typewriter whitespace-nowrap block overflow-hidden border-r-2 border-primary pr-1">
-      {currentLoadingMessage}
-    </span>
-  </div>
-</div>
 
- <div className="md:w-1/2 w-full flex justify-center">
+      <div className="w-full max-w-sm px-4 py-3 border border-dashed border-primary/50 dark:border-gray-300 rounded-lg bg-white/20 dark:bg-light backdrop-blur-md shadow-md m-auto">
+        <span className="text-sm text-primary dark:text-primary font-medium tracking-wide animate-typewriter whitespace-nowrap block overflow-hidden border-r-2 border-primary pr-1">
+          {currentLoadingMessage}
+        </span>
+      </div>
+    </div>
+
+    {/* RIGHT SIDE */}
+    <div className="md:w-1/2 w-full relative h-[320px] flex items-center justify-center z-0">
+      {/* Main Image */}
       <img
         src="/process.webp"
         alt="AI Custom"
-        className="w-full max-w-[400px] object-cover rounded-lg shadow-xl"
+        className="w-[230px] rounded-xl shadow-lg absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      />
+      {/* Supporting Image 1 */}
+      <img
+        src="/suggestions-ai.webp"
+        alt="Gear 1"
+        className="w-[120px] rounded-lg shadow-md absolute top-6 left-10 rotate-[-8deg] z-30"
+      />
+      {/* Supporting Image 2 */}
+      <img
+        src="/back-walking.webp"
+        alt="Gear 2"
+        className="w-[100px] rounded-lg shadow-md absolute bottom-6 right-10 rotate-[10deg] z-30"
       />
     </div>
-
-</div>
-
   </div>
+</div>
 
           ) : errorMessage ? (
             <div className="col-span-2 text-center text-red-500 font-semibold">
@@ -329,7 +365,7 @@ export const AISuggestionsModal = ({
             response.map((category, index) => (
               <div
   key={index}
-  className="relative p-6 rounded-xl bg-primary/10 dark:bg-dark-box shadow-lg border border-primary/20 dark:border-primary/40"
+  className="relative p-6 rounded-xl bg-primary/10 dark:bg-dark shadow-lg border border-primary/20 dark:border-dark-box"
 >
   <div className="absolute top-4 right-4 flex items-center space-x-2">
     <button
@@ -348,12 +384,12 @@ export const AISuggestionsModal = ({
     {category.items.map((item, idx) => (
       <li
         key={idx}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white dark:bg-dark-input rounded-md shadow hover:shadow-primary/30 transition"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white dark:bg-dark-input rounded-md shadow hover:shadow-primary/30 transition dark:bg-dark-box"
       >
         <div className="flex flex-col gap-1">
           <span className="font-semibold text-gray-800 dark:text-white">{item.name}</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">{item.description}</span>
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs text-gray-400 dark:text-gray-400">
             Qty: {item.qty} · {item.weight}{item.weightOption} · Priority: {item.priority}
           </span>
         </div>
