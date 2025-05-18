@@ -28,7 +28,7 @@ export const AISuggestionsModal = ({
 
 
   const [response, setResponse] = useState<{ categoryName: string; items: { name: string; qty: number; description: string; priority: string; weightOption: string; weight: number }[] }[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDropdownForItem, setShowDropdownForItem] = useState<string | null>(null);
   const [currentLoadingMessage, setCurrentLoadingMessage] = useState("Preparing top gear for your trip");
@@ -298,12 +298,12 @@ export const AISuggestionsModal = ({
     AI is processing your request...
   </h3>
 
-   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 max-w-md text-center">
+   <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 max-w-md text-center">
   Our intelligent system is analyzing your input, cross-referencing gear data, and tailoring personalized suggestions for your adventure.
 </p>
 
-  <div className="w-full max-w-sm px-4 py-3 border border-dashed border-primary/50 dark:border-gray-700 rounded-lg bg-white/20 dark:bg-dark-input/40 backdrop-blur-md shadow-md m-auto">
-    <span className="text-sm text-primary font-medium tracking-wide animate-typewriter whitespace-nowrap block overflow-hidden border-r-2 border-primary pr-1">
+  <div className="w-full max-w-sm px-4 py-3 border border-dashed border-primary/50 dark:border-gray-300 rounded-lg bg-white/20 dark:bg-light backdrop-blur-md shadow-md m-auto">
+    <span className="text-sm text-primary dark:text-primary font-medium tracking-wide animate-typewriter whitespace-nowrap block overflow-hidden border-r-2 border-primary pr-1">
       {currentLoadingMessage}
     </span>
   </div>

@@ -117,7 +117,7 @@ const CustomRequestModal: React.FC<CustomRequestModalProps> = ({
     onChange={(e) => setUserInput(e.target.value)}
     placeholder="Example: I’m going on a rainy 3-day hike in Iceland and need ultralight gear."
     rows={5}
-    className="w-full p-4 rounded border border-gray-300 dark:border-gray-600 bg-light dark:bg-dark-input text-sm dark:text-white resize-none"
+    className="w-full p-4 rounded border border-gray-300 dark:border-dark bg-light dark:bg-dark text-sm dark:text-white resize-none"
   />
   <Button
     onClick={handleSubmit}
