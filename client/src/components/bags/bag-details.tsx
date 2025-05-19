@@ -22,10 +22,8 @@ import JoyrideWrapper from '../guide/JoyrideWrapper';
 import { getSteps } from '../guide/steps';
 import { bagStepsConfig } from '../guide/stepsConfig';
 import { Sparkles } from 'lucide-react';
-import { AISuggestionsModal } from "../dialogs/ai-suggestions";
 import { colorfulButtonClass } from "../app-sidebar";
-import CustomTextRequestModal from "../dialogs/custom-text-request";
-
+import UnifiedSuggestionsModal from "../dialogs/ai-suggestions";
 
 
 const BagDetails: React.FC = () => {
@@ -39,10 +37,10 @@ const BagDetails: React.FC = () => {
   const [isSheetEditOpen, setIsSheetEditOpen] = useState(false);
   const [editBagError, setEditBagError] = useState<string | null>(null)
   const [isSettingCategories, setIsSettingCategories] = useState(true);
-  const [isAISuggestionsOpen, setIsAISuggestionsOpen] = useState(false);
   const [addingCategory, setAddingCategory] = useState(false)
-  const [isCustomRequestOpen, setIsCustomRequestOpen] = useState(false);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<'ai' | 'custom'>('ai');
+ 
 
   const { toast } = useToast()
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
@@ -305,7 +303,10 @@ const BagDetails: React.FC = () => {
 
   <div className="flex gap-4 flex-col sm:flex-row">
   <Button
-    onClick={() => setIsCustomRequestOpen(true)}
+    onClick={() => {
+  setModalMode('custom');
+  setModalOpen(true);
+}}
     className={`${colorfulButtonClass} mt-0 py-6`}
     variant="default"
   >
@@ -315,7 +316,10 @@ const BagDetails: React.FC = () => {
   </Button>
 
    <Button
-    onClick={() => setIsAISuggestionsOpen(true)}
+   onClick={() => {
+  setModalMode('ai');
+  setModalOpen(true);
+}}
     className="relative font-extrabold w-full py-6 mb-5 border-4 shadow-2xl overflow-hidden transition-all duration-500 before:absolute before:inset-0 before:blur-lg before:opacity-50 before:transition-all before:duration-500
       text-white bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 border-purple-300 hover:-translate-y-1 before:bg-gradient-to-r before:from-purple-400 before:via-pink-400 before:to-indigo-400"
     variant="default"
@@ -342,21 +346,13 @@ const BagDetails: React.FC = () => {
 
   {isJoyrideRun && <JoyrideWrapper steps={getSteps(bagStepsConfig)} run={true} />}
 
-  <AISuggestionsModal 
-  isOpen={isAISuggestionsOpen} 
-  onClose={() => setIsAISuggestionsOpen(false)}
+ <UnifiedSuggestionsModal
+  isOpen={modalOpen}
+  onClose={() => setModalOpen(false)}
+  mode={modalMode}
   bagId={bag?._id}
   tripId={bag?.tripId}
   categories={categories}
-/>
-
-<CustomTextRequestModal
-  isOpen={isCustomRequestOpen}
-  onClose={() => setIsCustomRequestOpen(false)}
-  onSubmit={(text) => {
-    console.log("Custom input:", text);
-    
-  }}
 />
 
 

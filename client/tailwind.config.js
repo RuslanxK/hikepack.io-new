@@ -15,7 +15,10 @@ export default {
 
       animation: {
         float: 'float 1.5s ease-in-out infinite',
-        typewriter: 'typewriter 2.5s steps(30) infinite',
+        typewriter: 'typewriter 2.5s steps(40) forwards',
+        blink: 'blink 1s step-end infinite',
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        
       },
 
       keyframes: {
