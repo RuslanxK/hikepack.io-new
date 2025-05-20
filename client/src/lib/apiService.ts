@@ -111,20 +111,20 @@ export const apiService = {
 
 
 export const loadingMessages = [
-    "Preparing top gear for your trip",
-    "Checking your trip details",
-    "Analyzing your bag data",
-    "Building your hiking setup",
+    "Preparing top gear for your trip...",
+    "Checking your trip details...",
+    "Analyzing your bag data...",
+    "Building your hiking setup...",
     "Finding missing essentials",
   ];
 
 
 export const loadingCustomMessages = [
-  "Understanding your custom request...",
+  "Reading your request...",
   "Checking for related gear...",
   "Analyzing hiking context...",
   "Looking up best-fit gear...",
-  "Creating something awesome...",
+  "Generating results...",
 ];
   
 

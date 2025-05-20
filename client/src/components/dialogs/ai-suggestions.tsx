@@ -249,9 +249,9 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
 
 
  {loading && (
-  <div className="w-full max-w-5xl mx-auto p-10 dark:to-dark-input relative overflow-hidden">
+  <div className="w-full max-w-5xl mx-auto p-8 dark:to-dark-input relative overflow-hidden">
     <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-      <div className="relative w-28 h-28 flex-shrink-0">
+      <div className="relative w-24 h-24 flex-shrink-0">
         <div className="absolute inset-0 rounded-full border-4 border-green-400 opacity-20 animate-ping-slow z-0" />
         <div className="relative z-10 w-full h-full rounded-full bg-gradient-to-br from-green-500 to-lime-500 shadow-2xl border-4 border-white/30 animate-spin-slow" />
         <div className="absolute inset-1 flex items-center justify-center text-white text-2xl font-bold z-20">
@@ -259,8 +259,8 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
         </div>
       </div>
       <div className="flex-1 space-y-6 dark:text-gray-100">
-        <h3 key={currentMessage} className="text-3xl text-primary dark:text-light sm:text-4xl font-extrabold overflow-hidden whitespace-nowrap border-r-2 border-green-600 w-[20ch] sm:w-[30ch] md:w-[40ch] animate-typewriter">{currentMessage}</h3>
-        <div className="flex items-start gap-3 justify-center md:justify-start text-sm leading-relaxed px-2 max-w-md mx-auto">
+        <h3 key={currentMessage} className="text-xl sm:text-3xl text-primary dark:text-light sm:text-4xl font-extrabold overflow-hidden whitespace-nowrap border-r-2 border-green-600 w-[20ch] sm:w-[30ch] md:w-[40ch] animate-typewriter">{currentMessage}</h3>
+        <div className="flex items-start gap-3 justify-center md:justify-start text-sm leading-relaxed  max-w-md mx-auto">
           <p>
             Our AI is navigating trail maps, analyzing terrain and weather, and optimizing your backpack configuration. The ultimate hiking setup is almost ready. 🏔️
           </p>
