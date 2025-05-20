@@ -12,7 +12,6 @@ import BuyCoinsDialog from "./buy-coins";
 import { loadingMessages, loadingCustomMessages } from "@/lib/apiService";
 import { Textarea } from "../ui/textarea";
 import { Item } from "@/types/item";
-import { Input } from "../ui/input";
 
 interface UnifiedSuggestionsModalProps {
   isOpen: boolean;
@@ -54,6 +53,8 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
     }
   }, [loading, mode]);
 
+
+
   const handleSubmit = useCallback(async () => {
     const storedUser = localStorage.getItem("user");
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
@@ -80,6 +81,8 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
         body: JSON.stringify(body),
       });
 
+      setUserInput("")
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
 
@@ -89,6 +92,7 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setUser(updatedUser);
       }
+      
     } catch (error) {
   if (error instanceof Error) {
     setErrorMessage(error.message);
@@ -99,6 +103,8 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
   setLoading(false);
 }
   }, [API_URL, bagId, tripId, userInput, itemNamesOnly, setUser, mode]);
+
+  
 
   const handleAddCategoryToBag = async (categoryName: string, items: Item[]) => {
     try {
@@ -225,7 +231,7 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
             <h3 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white">
               🔁 Generate More Suggestions
             </h3>
-            <Input
+            <Textarea
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Refine or add new details for your next suggestion..."
@@ -233,6 +239,7 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
             />
             <Button
               onClick={handleSubmit}
+              disabled={!userInput}
               className="w-full py-6 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
               <span className="relative z-10 flex items-center gap-2">Generate Again <span className="flex items-center gap-1 text-xs text-gray-200">( 2 credits <img src="/currency-icon.svg" alt="coin" className="w-4 h-4" />)</span> <Send className="w-5 h-5" /></span>
@@ -264,7 +271,11 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
 )}
 
 
-
+{Array.isArray(response) && response.length > 0 && (
+  <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+    ✨ Suggested Packing List
+  </h2>
+)}
   
 
         {Array.isArray(response) && response.length > 0 && response.map((category, index) => (
