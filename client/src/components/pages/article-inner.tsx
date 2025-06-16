@@ -42,7 +42,6 @@ const ArticleInner: React.FC = () => {
     <Fragment>
       <div className="bg-white dark:bg-dark-box p-5 rounded-lg flex justify-between items-center">
         <div className="flex items-center gap-2 ">
-
           <div>
           <Button
             variant="ghost"
