@@ -255,8 +255,8 @@
 }
 
 .blog table {
-  width: 100%;
-  max-width: 100%;
+  width: fit-content;
+  max-width: fit-content;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
