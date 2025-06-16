@@ -1,6 +1,8 @@
 const Article = require("../models/article");
 const mongoose = require("mongoose");
 const uploadToS3 = require("../utils/uploadToS3")
+const deleteFromS3 = require("../utils/deleteFromS3");
+
 
 exports.getAllArticles = async () => {
   return await Article.find();
@@ -42,15 +44,36 @@ exports.createArticle = async (title, description, file) => {
   return await newArticle.save();
 };
 
+
 exports.deleteArticle = async (articleId, isAdmin) => {
   if (!isAdmin) {
     throw new Error("Access Denied: Admins only");
   }
 
-  const deletedArticle = await Article.findByIdAndDelete(articleId);
-  if (!deletedArticle) {
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    throw new Error("Invalid Article ID format");
+  }
+
+  const article = await Article.findById(articleId);
+  if (!article) {
     throw new Error("Article not found");
   }
 
+  if (
+    article.imageUrl &&
+    article.imageUrl.includes('light-pack-planner.s3.eu-north-1.amazonaws.com')
+  ) {
+    try {
+      console.log(`Deleting article image from S3: ${article.imageUrl}`);
+      await deleteFromS3(article.imageUrl);
+    } catch (err) {
+      console.warn("Failed to delete article image from S3:", err.message);
+    }
+  } else {
+    console.log("Article image is not from S3 or does not exist, skipping deletion.");
+  }
+
+  // ✅ Delete the article from MongoDB
+  const deletedArticle = await Article.findByIdAndDelete(articleId);
   return deletedArticle;
 };
