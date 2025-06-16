@@ -82,7 +82,7 @@ const AddBagSheet: React.FC<AddBagSheetProps> = ({ isOpen, onClose, onSubmit, er
               id="name"
               name="name"
               onChange={handleChange}
-              placeholder="Name"
+              placeholder="Example: Ultralight Weekend Pack"
               required
             />
           </div>
@@ -93,7 +93,7 @@ const AddBagSheet: React.FC<AddBagSheetProps> = ({ isOpen, onClose, onSubmit, er
               name="description"
               className="resize-none"
               onChange={handleChange}
-              placeholder="Description"
+              placeholder="Example: Gear setup for a 3-day lightweight hiking trip"
               />
           </div>
           <div className="flex flex-col gap-2">

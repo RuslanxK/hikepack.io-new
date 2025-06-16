@@ -206,7 +206,7 @@ export const DataTable: React.FC<DataTableProps> = React.memo(({ data }) => {
    </Button>
   )}
   
-   <Input type="text" value={category}  onChange={isSharedView ? undefined : (e) => setCategory(e.target.value)} onBlur={isSharedView ? undefined : handleCategoryBlur} placeholder="Enter category" readOnly={isSharedView} className="w-full h-8 text-sm bg-white border-0 border-b dark:border-zinc-500 rounded-none focus:outline-none"/>
+   <Input type="text" value={category}  onChange={isSharedView ? undefined : (e) => setCategory(e.target.value)} onBlur={isSharedView ? undefined : handleCategoryBlur} placeholder="Example: Cooking Gear, First Aid, Clothing..." readOnly={isSharedView} className="w-full h-8 text-sm bg-white border-0 border-b dark:border-zinc-500 rounded-none focus:outline-none"/>
        
   {!isSharedView && (
    <Button variant="ghost" size="icon" onClick={handleDeleteCategory}>

@@ -93,7 +93,7 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Bag name"
+              placeholder="Example: Ultralight Weekend Pack"
               required
             />
           </div>
@@ -105,7 +105,7 @@ const EditBagSheet: React.FC<EditBagSheetProps> = ({ isOpen, onClose, onSubmit, 
               value={formData.description}
               className="resize-none"
               onChange={handleChange}
-              placeholder="Describe the bag"
+              placeholder="Example: Gear setup for a 3-day lightweight hiking trip"
              
             />
           </div>

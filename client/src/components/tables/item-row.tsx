@@ -17,6 +17,43 @@ import { useRef } from "react";
 import { useItemDnD } from "@/hooks/use-item-dnd";
 
 
+
+const exampleSets = [
+  { name: "Sleeping Bag", description: "Ultralight 3-season down bag" },
+  { name: "Trekking Poles", description: "Collapsible carbon fiber poles" },
+  { name: "Backpack", description: "Frameless 40L ultralight pack" },
+  { name: "Headlamp", description: "Rechargeable LED hiking headlamp" },
+  { name: "Tent", description: "2-person ultralight tent with vestibule" },
+  { name: "Water Filter", description: "Compact gravity water filtration system" },
+  { name: "Stove", description: "Lightweight canister stove with ignition" },
+  { name: "Cookpot", description: "Titanium pot with measuring marks" },
+  { name: "Spork", description: "Long-handle titanium spork" },
+  { name: "Rain Jacket", description: "Waterproof breathable shell" },
+  { name: "Fleece Jacket", description: "Lightweight thermal fleece mid-layer" },
+  { name: "Base Layer Top", description: "Merino wool long sleeve shirt" },
+  { name: "Base Layer Bottom", description: "Merino wool leggings" },
+  { name: "Insulated Jacket", description: "850-fill down puffer with hood" },
+  { name: "Camp Shoes", description: "Ultralight foam sandals" },
+  { name: "Socks", description: "Merino wool hiking socks" },
+  { name: "First Aid Kit", description: "Compact kit with essentials" },
+  { name: "Sunscreen", description: "Mini SPF 50 broad spectrum cream" },
+  { name: "Bug Spray", description: "Travel-size DEET insect repellent" },
+  { name: "Power Bank", description: "10,000mAh USB charger for phones" },
+  { name: "Map", description: "Printed topographic trail map" },
+  { name: "Compass", description: "Simple field compass with sighting mirror" },
+  { name: "Multi-tool", description: "Mini multitool with knife and pliers" },
+  { name: "Dry Bag", description: "10L waterproof roll-top stuff sack" },
+  { name: "Bear Bag", description: "Ultralight food storage sack with rope" },
+  { name: "Toiletry Kit", description: "Toothbrush, toothpaste, and soap bar" },
+  { name: "Trowel", description: "Ultralight titanium poop shovel" },
+  { name: "Notebook", description: "Weatherproof pocket journal" },
+  { name: "Lighter", description: "Mini Bic-style lighter" },
+  { name: "Gloves", description: "Insulated and touchscreen-compatible gloves" }
+];
+
+
+
+
 interface ItemRowProps {
   item: Item;
   index: number;
@@ -28,6 +65,10 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
 
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [example] = useState(() => {
+  return exampleSets[Math.floor(Math.random() * exampleSets.length)];
+});
+
 
   const queryClient = useQueryClient();
   const { user } = useUser();
@@ -258,7 +299,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
           type="text"
           name="name"
           value={formData.name}
-          placeholder="Name"
+          placeholder={`Example: ${example.name}`}
           className="w-52 md:w-full h-8 text-sm bg-white rounded-none dark:bg-dark-item"
           onChange={isSharedView ? undefined : handleChange}
           onBlur={isSharedView ? undefined : handleBlur}
@@ -271,7 +312,7 @@ const ItemRow: React.FC<ItemRowProps> = memo(({ item, index, onSelect, moveItem 
           type="text"
           name="description"
           value={formData.description}
-          placeholder="Description"
+          placeholder={`Example: ${example.description}`}
           className="w-80 md:w-full h-8 text-sm bg-white rounded-none dark:bg-dark-item"
           onChange={isSharedView ? undefined : handleChange}
           onBlur={isSharedView ? undefined : handleBlur}

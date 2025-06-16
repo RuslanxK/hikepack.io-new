@@ -120,7 +120,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Name"
+              placeholder="Example: Alps Hiking Adventure"
               required
             />
           </div>
@@ -149,7 +149,7 @@ const EditTripSheet: React.FC<EditTripSheetProps> = ({ isOpen, onClose, onSubmit
               value={formData.about}
               className="resize-none"
               onChange={handleChange}
-              placeholder="Description"
+              placeholder="Example: A 10-day hiking trip through the Swiss Alps with scenic views and camping" 
             />
           </div>
           <div className="flex flex-col gap-2">
