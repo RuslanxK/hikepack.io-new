@@ -145,8 +145,12 @@
 .blog h2 {
   font-size: 24px;
   font-weight: 700;
-  padding-top: 8px;
-  padding-bottom: 6px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background-color: hsl(var(--muted) / 0.6); /* soft light bg */
+  color: hsl(var(--foreground));
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .blog h3 {
