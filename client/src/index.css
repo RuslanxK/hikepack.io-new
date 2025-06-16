@@ -256,7 +256,7 @@
 
 .blog table {
   width: 100%;
-  max-width: 75%;
+  max-width: 100%;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
@@ -298,6 +298,13 @@
 
 .blog td {
   font-size: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid hsl(var(--border));
+  display: grid; /* enables inner layout control */
+  grid-template-columns: 1fr; /* single-column fallback */
+  gap: 4px;
+  white-space: normal; /* allow text to wrap */
+  word-break: break-word;
 }
 
 .blog tr:last-child td {
