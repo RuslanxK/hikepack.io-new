@@ -321,11 +321,9 @@
   }
 
   .blog table {
-    font-size: 13px;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    display: block;
+    width: fit-content;
+    max-width: calc(100% - 250px); /* Or any custom width limit */
+    margin: 0 auto;
   }
 
   .blog th,
