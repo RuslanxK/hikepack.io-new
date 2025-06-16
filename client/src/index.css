@@ -241,8 +241,8 @@
 }
 
 .blog table {
-  width: max-content;
-  max-width: 100%;
+  width: fit-content;
+  max-width: 100%; /* ensures it doesn't overflow the blog container */
   border-collapse: collapse;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -251,9 +251,8 @@
   color: hsl(var(--foreground));
   border: 1px solid hsl(var(--border));
   border-radius: 8px;
-  overflow: auto;
-  display: block;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden; /* prevents scrolling */
+  display: table; /* prevents unnecessary block layout */
   table-layout: auto;
 }
 
