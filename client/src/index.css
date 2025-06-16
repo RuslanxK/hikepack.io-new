@@ -124,7 +124,7 @@
 
 .blog * {
   color: hsl(var(--foreground));
-  max-width: 100%;
+
 }
 
 .blog div,
