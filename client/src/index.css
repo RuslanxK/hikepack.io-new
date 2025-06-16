@@ -84,9 +84,6 @@
   }
 }
 
-html, body {
-  overflow-x: hidden;
-}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -122,6 +119,7 @@ html, body {
   padding: 40px;
   line-height: 1.7;
   font-size: 15px;
+  max-width: 100%;
   word-wrap: break-word;
 }
 
@@ -235,6 +233,18 @@ html, body {
   margin: 24px 0;
   border-color: hsl(var(--border));
 }
+
+.blog a,
+.blog code,
+.blog pre,
+.blog td,
+.blog th {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
 
 .blog img {
   border-radius: 8px;
