@@ -255,20 +255,19 @@
 }
 
 .blog table {
-  width: fit-content;
-  max-width: 700px;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  table-layout: auto;
   font-size: 14px;
   background-color: hsl(var(--card));
   color: hsl(var(--foreground));
   border: 1px solid hsl(var(--border));
   border-radius: 8px;
-  overflow-x: auto;
-  display: block;
-  -webkit-overflow-scrolling: touch;
-  table-layout: auto;
 }
 
 .blog thead {

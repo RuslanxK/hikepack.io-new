@@ -63,7 +63,7 @@ const ArticleInner: React.FC = () => {
           alt={article.title}
           className="w-full rounded-lg mb-5"/>
        <p className="text-sm dark:text-white mb-4 bg-secondary/20 rounded-sm pl-5 pr-5 pt-1 pb-1 text-secondary w-fit">Posted on: {formattedDate}</p>
-       <div className="table-wrapper" dangerouslySetInnerHTML={{ __html: article.description }}></div>
+       <div dangerouslySetInnerHTML={{ __html: article.description }}></div>
       </div>
     </Fragment>
   );
