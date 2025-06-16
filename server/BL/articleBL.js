@@ -1,5 +1,6 @@
 const Article = require("../models/article");
 const mongoose = require("mongoose");
+const uploadToS3 = require("../utils/uploadToS3")
 
 exports.getAllArticles = async () => {
   return await Article.find();
@@ -17,16 +18,25 @@ exports.getArticleById = async (articleId) => {
 };
 
 exports.createArticle = async (title, description, file) => {
-  const imageUrlPath = file ? file.originalname : null;
+  if (!title || !description) {
+    throw new Error("Title and description are required");
+  }
 
-  if (!title || !description || !file) {
-    throw new Error("All fields are required");
+  let imageUrl = null;
+
+  if (file) {
+    try {
+      imageUrl = await uploadToS3(file, "articles");
+    } catch (err) {
+      console.error("Error uploading article image to S3:", err);
+      throw new Error("Failed to upload article image");
+    }
   }
 
   const newArticle = new Article({
     title,
     description,
-    imageUrl: imageUrlPath,
+    imageUrl, // will be null if no image uploaded
   });
 
   return await newArticle.save();

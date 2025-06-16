@@ -10,15 +10,18 @@ const itemRouter = require("./routers/itemRouter")
 const articleRouter = require('./routers/articleRouter')
 const changeLogRouter = require("./routers/changelogRouter")
 const reportRouter = require("./routers/reportRouter")
+// const checkoutRouter = require("./routers/checkoutRouter")
 const { Server } = require('socket.io');
 const http = require('http');
 const User = require("./models/user")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const aiRoutes = require("./BL/openAI")
-
-
+const axios = require("axios")
 dotenv.config();
+
+
+const PRINTIFY_API_TOKEN = process.env.PRINTIFY_API_TOKEN
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -49,10 +52,32 @@ app.use('/api/items', itemRouter)
 app.use('/api/articles', articleRouter)
 app.use('/api/changelogs', changeLogRouter)
 app.use('/api/report', reportRouter);
+// app.use("/api/checkout", checkoutRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
+
+
+// app.get('/api/products', async (req, res) => {
+//   try {
+//     const response = await axios.get(
+//       'https://api.printify.com/v1/shops/22520921/products.json',
+//       {
+//         headers: {
+//           Authorization: `Bearer ${PRINTIFY_API_TOKEN}`,
+//         },
+//       }
+//     );
+
+//     res.json(response.data);
+    
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching products', error });
+//   }
+// });
+
 
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {

@@ -28,6 +28,8 @@ import { getSocket, disconnectSocket } from "@/lib/websocketService";
 import Cookies from "js-cookie";
 import { initGA, trackPage, setUserId} from "./analytics";
 import { useLocation } from 'react-router-dom';
+// import ProductPage from "./product-page";
+// import CartPage from "./components/products/cart-page";
 
 
 function App() {
@@ -90,6 +92,8 @@ function App() {
             <Route path="/changelog" element={<ChangeLog/>}/>
             <Route path="/contact-us" element={<ReportBug/>}/>
             <Route path="/admin" element={<AdminPanel liveUsers={liveUsers} />}/>
+           
+            
             </Route>
             <Route element={<PublicRoutes />}>
             <Route path="/register" element={<Register/>}/>
