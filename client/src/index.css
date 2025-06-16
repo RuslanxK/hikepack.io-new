@@ -254,20 +254,23 @@
   object-fit: cover;
 }
 
+.blog .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
 .blog table {
-  width: fit-content;
-  max-width: 100%;
+  min-width: 100%;
+  width: max-content;
+  max-width: none; 
   border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
   font-size: 14px;
   background-color: hsl(var(--card));
   color: hsl(var(--foreground));
   border: 1px solid hsl(var(--border));
   border-radius: 8px;
-  overflow-x: auto;
-  display: block;
-  -webkit-overflow-scrolling: touch;
   table-layout: auto;
 }
 
