@@ -27,6 +27,7 @@ export interface User {
   lastLoggedIn?: Date | null;
   hasCompletedProfile?: boolean,
   latestBagWeight?: number;
+  isActive: boolean; 
   createdAt?: Date; // Managed by Mongoose timestamps
   updatedAt?: Date; // Managed by Mongoose timestamps
   

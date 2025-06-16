@@ -151,3 +151,16 @@ exports.checkEmailExists = async (email) => {
 
   return { exists: false };
 };
+
+
+
+exports.toggleUserActiveStatus = async (userId) => {
+  const user = await User.findById(userId);
+  if (!user) throw new Error("User not found");
+  if (user.isAdmin) throw new Error("Cannot deactivate an admin");
+
+  user.isActive = !user.isActive;
+  await user.save();
+  
+  return { message: `User ${user.isActive ? 'activated' : 'deactivated'} successfully`, user };
+};

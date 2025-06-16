@@ -14,10 +14,24 @@ import { useSearch } from "@/context/search-context";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Fragment } from "react/jsx-runtime";
+import { Button } from "@/components/ui/button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 export function TableUsers() {
   const navigate = useNavigate();
   const { userSearchTerm, setUserSearchTerm } = useSearch();
+const queryClient = useQueryClient();
+
+
+ const toggleMutation = useMutation({
+    mutationFn: async (userId: string) =>
+      await apiService.put(`/user/toggle-active/${userId}`, {}),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
 
   const { data: users, isLoading, isError, error } = useQuery<User[]>({
     queryKey: ["users"],
@@ -29,11 +43,16 @@ export function TableUsers() {
     console.error(error);
     navigate("/error");
   }
+  
+  
 
   const filteredUsers = users?.filter((user) =>
     user.email?.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
     user.username?.toLowerCase().includes(userSearchTerm.toLowerCase())
   );
+
+
+
 
   return (
     <Fragment>
@@ -63,6 +82,8 @@ export function TableUsers() {
                 <TableHead>Registered</TableHead>
                 <TableHead>Last Active</TableHead>
                 <TableHead>Verified</TableHead>
+                <TableHead>Status</TableHead>
+
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -90,6 +111,22 @@ export function TableUsers() {
                       : "Never"}
                   </TableCell>
                   <TableCell>{user.verified ? "Yes" : "No"}</TableCell>
+                  <TableCell>
+  <Button
+  className={`text-white px-4 rounded-full ${
+    user.isActive ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
+  }`}
+  onClick={() => {
+    if (user._id) toggleMutation.mutate(user._id);
+  }}
+  disabled={user.isAdmin}
+>
+  {user.isActive ? "Deactivate" : "Activate"}
+</Button>
+
+</TableCell>
+
+                  
                 </TableRow>
               ))}
             </TableBody>

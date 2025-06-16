@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   coins: {type: Number, default: 2 },
   lastLoggedIn: { type: Date, default: null },
+  isActive: { type: Boolean, default: true },
+
 }, { timestamps: true });
 
 

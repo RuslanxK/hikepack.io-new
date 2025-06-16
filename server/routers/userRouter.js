@@ -1,6 +1,6 @@
 const express = require("express");
 const authMiddleware = require("../middleware/auth");
-const { getAllUsers, getUserById, registerUser, loginUser, googleLogin, updateUser, updatePassword, checkEmailExists} = require("../BL/userBL");
+const { getAllUsers, getUserById, registerUser, loginUser, googleLogin, updateUser, updatePassword, checkEmailExists, toggleUserActiveStatus} = require("../BL/userBL");
 const User = require("../models/user")
 const upload = require("../configs/upload");
 
@@ -134,6 +134,19 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
+
+router.put("/toggle-active/:id", authMiddleware, async (req, res) => {
+  try {
+    const updated = await toggleUserActiveStatus(req.params.id);
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error("Error toggling active status:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 router.get("/:id", async (req, res) => {

@@ -152,7 +152,7 @@ const Settings: React.FC = () => {
         <CardContent>
   <div className="flex flex-col lg:flex-row gap-5 dark:bg-dark-box rounded-lg">
     {/* Profile Image & Upload */}
-    <div className="flex flex-col items-center lg:items-start rounded-lg p-5 border dark:border-dark-box w-full lg:w-[280px] bg-white dark:bg-dark">
+    <div className="flex flex-col items-center lg:items-start rounded-lg p-5 border dark:border-dark-box w-full lg:w-[350px] bg-white dark:bg-dark">
       <img
         src={formData.imageUrl || "./default-profile-placeholder.png"}
         alt="Profile Preview"
