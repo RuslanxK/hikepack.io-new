@@ -139,6 +139,8 @@ color: #058373;
 
 .blog h2 {
 font-size: 22px;
+padding-top: 5px;
+padding-bottom: 5px;
 font-weight: 600;
 }
 
@@ -158,11 +160,69 @@ gap: 5px;
 font-size: 14px;
 }
 
+
+
+.blog table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  background-color: hsl(var(--card));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.blog thead {
+  background-color: hsl(var(--muted));
+  font-weight: 600;
+  text-align: left;
+}
+
+.blog th,
+.blog td {
+  padding: 12px 16px;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.blog tbody tr:hover {
+  background-color: hsl(var(--accent));
+  transition: background-color 0.2s ease-in-out;
+}
+
+.blog th {
+  font-size: 13px;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.blog td {
+  font-size: 14px;
+}
+
+.blog tr:last-child td {
+  border-bottom: none;
+}
+
+
 @media (min-width: 640px) {
   .blog img {
     height: 500px;
     object-fit: cover;
     object-position: center;
+  }
+
+
+   .blog table {
+    font-size: 13px;
+  }
+
+  .blog th,
+  .blog td {
+    padding: 10px;
   }
 }
 
