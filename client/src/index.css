@@ -321,14 +321,23 @@
   }
 
   .blog table {
-    width: fit-content;
-    max-width: calc(100% - 250px); /* Or any custom width limit */
-    margin: 0 auto;
+    font-size: 13px;
+    
   }
 
   .blog th,
   .blog td {
     padding: 10px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .blog table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
   }
 }
 
