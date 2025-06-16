@@ -54,20 +54,15 @@ const ArticleInner: React.FC = () => {
           </Button>
           </div>
 
-         <h1
-  className="text-lg font-semibold flex items-center gap-2 break-words leading-snug"
-  title={article.title}
->
-  {article.title.length > 50 ? article.title.slice(0, 50) + "..." : article.title}
-</h1>
+         <h1 className="text-xl font-semibold flex items-center gap-2 break-words leading-snug" title={article.title}>{article.title}</h1>
         </div>
       </div>
 
       <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box blog">
         <img
-           src={article.imageUrl || "/article-placeholder.webp"}
+          src={article.imageUrl || "/article-placeholder.webp"}
           alt={article.title}
-          className="w-full  object-cover rounded-lg mb-5"/>
+          className="w-full rounded-lg mb-5"/>
        <p className="text-sm text-black dark:text-white mb-4">Posted on: {formattedDate}</p>
        <div dangerouslySetInnerHTML={{ __html: article.description }}></div>
       </div>

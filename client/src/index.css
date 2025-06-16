@@ -158,6 +158,14 @@ gap: 5px;
 font-size: 14px;
 }
 
+@media (min-width: 640px) {
+  .blog img {
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 
 .hide-scroll-bar ::-webkit-scrollbar {
   display: none;
