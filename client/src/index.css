@@ -147,8 +147,8 @@
   font-weight: 700;
   padding: 10px 14px;
   border-radius: 6px;
-  background-color: hsl(var(--chart-4) / 0.25); /* Yellowish */
-  color: hsl(var(--chart-4));
+  background-color: hsl(var(--chart-2) / 0.2); /* Teal */
+  color: hsl(var(--chart-2));
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -156,23 +156,8 @@
 .blog h3 {
   font-size: 20px;
   font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background-color: hsl(var(--chart-2) / 0.2); /* Teal */
-  color: hsl(var(--chart-2));
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.blog h4 {
-  font-size: 18px;
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background-color: hsl(var(--chart-5) / 0.2); /* Orange */
-  color: hsl(var(--chart-5));
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 10px;
+  margin-bottom: 6px;
 }
 
 .blog p {

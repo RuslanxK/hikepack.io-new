@@ -63,7 +63,7 @@ const ArticleInner: React.FC = () => {
           src={article.imageUrl || "/article-placeholder.webp"}
           alt={article.title}
           className="w-full rounded-lg mb-5"/>
-       <p className="text-sm text-black dark:text-white mb-4 bg-primary/20 rounded-full p-2 text-primary">Posted on: {formattedDate}</p>
+       <p className="text-sm dark:text-white mb-4 bg-primary/20 rounded-full pl-5 pr-5 text-primary w-fit">Posted on: {formattedDate}</p>
        <div dangerouslySetInnerHTML={{ __html: article.description }}></div>
       </div>
     </Fragment>
