@@ -58,7 +58,7 @@ const ArticleInner: React.FC = () => {
 
       <div className="p-5 bg-white rounded-lg mt-5 dark:bg-dark-box blog">
         <img
-           src={"/article-placeholder.webp"}
+           src={article.imageUrl || "/article-placeholder.webp"}
           alt={article.title}
           className="w-full h-60 object-cover rounded-lg mb-5"/>
        <p className="text-sm text-black dark:text-white mb-4">Posted on: {formattedDate}</p>

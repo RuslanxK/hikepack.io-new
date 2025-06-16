@@ -55,7 +55,7 @@ const [showDeleteAlert, setShowDeleteAlert] = useState(false);
       className="rounded-lg dark:bg-dark-box bg-white cursor-pointer shadow-lg"
     >
       <img
-        src="/article-placeholder.webp"
+        src={article.imageUrl || "/article-placeholder.webp"}
         alt={article.title}
         onClick={() => navigate(`/article/${article._id}`)}
         className="w-full h-40 object-cover rounded-t-lg mb-3"
