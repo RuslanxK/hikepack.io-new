@@ -47,6 +47,10 @@ exports.loginUser = async (email, password) => {
   if (!user) throw new Error("User not found");
   if (!user.verified) throw new Error("Account not verified. Please check your email.");
 
+   if (!user.isActive) {
+    throw new Error("Your account has been blocked. Please contact support.");
+  }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw new Error("Invalid password");
 
@@ -65,6 +69,8 @@ exports.loginUser = async (email, password) => {
 
 
 exports.googleLogin = async (googleAccessToken, res) => {
+
+
   const response = await axios.get("https://www.googleapis.com/oauth2/v1/userinfo", {
     headers: { Authorization: `Bearer ${googleAccessToken}` },
   });
@@ -73,11 +79,17 @@ exports.googleLogin = async (googleAccessToken, res) => {
   if (!profile.email) throw new Error("Invalid Google token");
 
   const user = await findOrCreateUser(profile);
+
+   if (!user.isActive) {
+    throw new Error("Your account has been blocked. Please contact support.");
+  }
+
   const jwtToken = generateJwtToken(user);
   setTokenCookie(res, jwtToken);
 
   return { token: jwtToken, user };
 };
+
 
 exports.updateUser = async (userId, updates, file) => {
   const user = await User.findById(userId);
