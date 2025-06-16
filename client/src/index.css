@@ -322,6 +322,10 @@
 
   .blog table {
     font-size: 13px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
   }
 
   .blog th,
