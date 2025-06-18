@@ -300,12 +300,14 @@ const [response, setResponse] = useState<AIResponseCategory[] | string | null>(n
                     </span>
                   </div>
                   <div className="relative">
-                    <button
-                      onClick={() => setShowDropdownForItem(prev => (prev === item.name ? null : item.name))}
-                      className="bg-primary/10 hover:bg-primary text-primary hover:text-white dark:bg-primary/20 dark:hover:bg-primary dark:text-white p-2 rounded-full shadow transition"
-                    >
-                      <Plus size={20} />
-                    </button>
+                   {categories.length > 0 && (
+  <button
+    onClick={() => setShowDropdownForItem(prev => (prev === item.name ? null : item.name))}
+    className="bg-primary/10 hover:bg-primary text-primary hover:text-white dark:bg-primary/20 dark:hover:bg-primary dark:text-white p-2 rounded-full shadow transition"
+  >
+    <Plus size={20} />
+  </button>
+)}
                     {showDropdownForItem === item.name && (
                       <div
                         className="absolute right-0 mt-2 w-64 bg-white dark:bg-dark-box border rounded shadow-lg z-50 p-2"
