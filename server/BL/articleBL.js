@@ -45,6 +45,28 @@ exports.createArticle = async (title, description, file) => {
 };
 
 
+exports.updateArticle = async (articleId, updatedFields) => {
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    throw new Error("Invalid Article ID format");
+  }
+
+  const article = await Article.findById(articleId);
+  if (!article) {
+    throw new Error("Article not found");
+  }
+
+  // Only update fields that are allowed
+  if (updatedFields.description !== undefined) {
+    article.description = updatedFields.description;
+  }
+
+  // Optionally add: title, imageUrl, etc.
+
+  const updatedArticle = await article.save();
+  return updatedArticle;
+};
+
+
 exports.deleteArticle = async (articleId, isAdmin) => {
   if (!isAdmin) {
     throw new Error("Access Denied: Admins only");
