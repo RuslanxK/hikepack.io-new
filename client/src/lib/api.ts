@@ -94,21 +94,10 @@ export const fetchCategoriesByBagId = async (
 };
 
 
-export const updateArticleById = async (id: string, data: { description: string }) => {
-  const response = await fetch(`/api/articles/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to update article");
-  }
-
-  return response.json();
+export const updateArticleById = async (id: string, data: Partial<Article>): Promise<Article> => {
+  const response = await apiService.put<Article, Partial<Article>>(`/articles/${id}`, data);
+  return response;
 };
-
-
 
 export const fetchOwnerAndTripByBagId = async (bagId: string): Promise<SharedData> => {
   return await apiService.get<SharedData>(`/bags/${bagId}/owner-and-trip`);
