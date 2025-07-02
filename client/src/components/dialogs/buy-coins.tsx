@@ -25,7 +25,7 @@ const packages = [
   { credits: 100, oldPrice: "$49.99", newPrice: "$29.99", color: "bg-yellow-50", recommended: true },
 ];
 
-const BuyCreditsDialog: React.FC<BuyCreditsDialogProps> = ({ isOpen, onClose, onPurchase }) => {
+const BuyCreditsDialog: React.FC<BuyCreditsDialogProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1);
   const [userCredits, setUserCredits] = useState(0);
   const [selectedPackage, setSelectedPackage] = useState<{ credits: number; newPrice: string } | null>(null);
@@ -77,7 +77,6 @@ const BuyCreditsDialog: React.FC<BuyCreditsDialogProps> = ({ isOpen, onClose, on
     if (!validateForm()) return;
     try {
       await coinSound.play();
-      onPurchase(selectedPackage!.credits);
       onClose();
     } catch (err) {
       console.error("Payment failed", err);
