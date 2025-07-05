@@ -112,27 +112,15 @@ const RegisterPage = () => {
   return (
     <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box text-black dark:text-white">
   {/* Left Section */}
-  <div className="flex flex-col h-full p-6 md:p-10">
-    <div className="mb-6">
+  <div className="flex flex-col h-full p-6 md:p-10 justify-center">
+   
+    <div className="flex flex-col justify-center h-full">
+
+       <div className="mb-6">
       {/* Logo: light/dark */}
       <img src="/logo-black.png" width={85} alt="Logo" className="block dark:hidden" />
       <img src="/logo-white.png" width={85} alt="Logo" className="hidden dark:block" />
     </div>
-
-    <div className="flex flex-col justify-center">
-      <div className="text-center mb-10">
-        <h1 className="text-2xl font-bold mb-1">{steps[currentStep].name}</h1>
-        <p className="text-sm text-muted-foreground dark:text-gray-400">
-          {steps[currentStep].description}
-        </p>
-      </div>
-
-      <div className="flex justify-center">
-        <Progress
-          value={progressPercentage}
-          className="h-2 rounded-md max-w-sm bg-gray-200 dark:bg-gray-400"
-        />
-      </div>
 
       <div className="flex-1 flex items-center justify-center mt-10">
         <div className="w-full max-w-sm">
@@ -141,6 +129,21 @@ const RegisterPage = () => {
               <ErrorAlert message={errorMessage} />
             </div>
           )}
+
+
+           <div className="text-center mb-10">
+        <h1 className="text-2xl font-bold mb-1">{steps[currentStep].name}</h1>
+        <p className="text-sm text-muted-foreground dark:text-gray-400">
+          {steps[currentStep].description}
+        </p>
+      </div>
+
+      <div className="flex justify-center mb-5">
+        <Progress
+          value={progressPercentage}
+          className="h-2 rounded-md max-w-sm bg-gray-200 dark:bg-gray-400"
+        />
+      </div>
 
           <StepComponent
             formData={formData}

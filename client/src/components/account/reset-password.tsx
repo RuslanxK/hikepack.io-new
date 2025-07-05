@@ -65,16 +65,16 @@ const ResetPassword = () => {
 
   return (
    <div className="grid min-h-screen lg:grid-cols-2 bg-white dark:bg-dark-box text-black dark:text-white">
-  {/* Left side: form */}
+ 
   <div className="flex flex-col h-full p-6 md:p-10">
     <div className="mb-6">
-      {/* Light logo */}
+      
       <img src="/logo-black.png" width={85} alt="Logo" className="block dark:hidden" />
-      {/* Dark logo */}
+      
       <img src="/logo-white.png" width={85} alt="Logo" className="hidden dark:block" />
     </div>
 
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center h-full">
       <div className="text-center mb-10">
         <h1 className="text-2xl font-bold mb-1">Reset Password</h1>
         <p className="text-sm text-muted-foreground dark:text-gray-400">
@@ -130,7 +130,6 @@ const ResetPassword = () => {
     </div>
   </div>
 
-  {/* Right side: image */}
   <div className="relative hidden bg-muted lg:block">
     <img
       src="/reset-pass.webp"

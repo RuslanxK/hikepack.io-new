@@ -25,6 +25,7 @@ const Settings: React.FC = () => {
 
   const [showCheck, setShowCheck] = useState(false); 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [open, setOpen] = useState(false);
 
   const [formData, setFormData] = useState<User>({
     _id: initialUser._id || "",
@@ -197,39 +198,44 @@ const Settings: React.FC = () => {
       </div>
 
       <div className="space-y-1">
-        <Label>Birthdate</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="w-full flex items-center justify-between px-3 py-2 border rounded-lg bg-white dark:bg-dark-box text-left text-sm">
-              {formData.birthdate
-                ? format(new Date(formData.birthdate), "PPP")
-                : "Select Birthdate"}
-              <CalendarIcon className="ml-2 h-4 w-4" />
-            </button>
-          </PopoverTrigger>
-          <PopoverContent align="start" className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={
-                formData.birthdate ? new Date(formData.birthdate) : undefined
-              }
-              onSelect={(date) => {
-                if (date && isBefore(date, new Date())) {
-                  const adjustedDate = new Date(
-                    date.getTime() - date.getTimezoneOffset() * 60000
-                  );
-                  setFormData((prev) => ({
-                    ...prev,
-                    birthdate: adjustedDate.toISOString().split("T")[0],
-                  }));
-                }
-              }}
-              disabled={(date) => isBefore(endOfToday(), date)}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
+  <Label htmlFor="birthdate">Birthdate</Label>
+  <Popover open={open} onOpenChange={setOpen}>
+    <PopoverTrigger asChild>
+      <Button
+        variant="outline"
+        id="birthdate"
+        className="w-full justify-between font-normal text-left"
+      >
+        {formData.birthdate
+          ? format(new Date(formData.birthdate), "PPP")
+          : "Select Birthdate"}
+        <CalendarIcon className="ml-2 h-4 w-4" />
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+      <Calendar
+        mode="single"
+        captionLayout="dropdown"
+        selected={formData.birthdate ? new Date(formData.birthdate) : undefined}
+        onSelect={(date) => {
+          if (date && isBefore(date, new Date())) {
+            const adjustedDate = new Date(
+              date.getTime() - date.getTimezoneOffset() * 60000
+            );
+            setFormData((prev) => ({
+              ...prev,
+              birthdate: adjustedDate.toISOString().split("T")[0],
+            }));
+            setOpen(false);
+          }
+        }}
+        disabled={(date) => isBefore(endOfToday(), date)}
+        initialFocus
+      />
+    </PopoverContent>
+  </Popover>
+</div>
+
 
       <div className="space-y-2">
         <Label>Gender</Label>
