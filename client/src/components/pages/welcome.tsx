@@ -156,7 +156,7 @@ const Welcome = () => {
             <div className='fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50' onClick={() => setLightboxOpen(false)}>
               <div className='relative w-full max-w-4xl p-4'>
                 <button className='absolute top-4 right-4 text-white text-3xl'>&times;</button>
-                <iframe className='w-full h-[200px] sm:h-[300px] md:h-[500px] rounded-lg' src='https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1' title='Video' allowFullScreen></iframe>
+                <iframe className='w-full h-[200px] sm:h-[300px] md:h-[500px] rounded-lg' src='https://www.youtube.com/watch?v=ZY_Dh-c7MIU' title='Video' allowFullScreen></iframe>
               </div>
             </div>
           )}
